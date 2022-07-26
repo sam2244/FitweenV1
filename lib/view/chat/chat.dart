@@ -1,4 +1,4 @@
-import 'package:fitweenV1/presenter/view/chat.dart';
+import 'package:fitweenV1/presenter/page/chat.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
