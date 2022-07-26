@@ -1,4 +1,5 @@
 import 'package:fitweenV1/global/config/theme.dart';
+import 'package:fitweenV1/presenter/global.dart';
 import 'package:fitweenV1/route.dart';
 import 'package:fitweenV1/view/developer.dart';
 import 'package:flutter/material.dart';
@@ -20,6 +21,8 @@ class Fitween extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    GlobalPresenter.initControllers();
+
     return ScreenUtilInit(
       designSize: const Size(375, 812),
       minTextAdapt: true,
