@@ -5,18 +5,24 @@ class Chat {
   String? userImageUrl;
   String? userNickname;
   String? crewCode;
-  Timestamp? date;
+  Timestamp? _date;
   String? text;
   String? imageUrl;
 
   Chat();
+
+  DateTime? get date => _date?.toDate();
+
+  Chat.fromJson(Map<String, dynamic> json) {
+    fromJson(json);
+  }
 
   void fromJson(Map<String, dynamic> json) {
     uid = json['uid'];
     userImageUrl = json['userImageUrl'];
     userNickname = json['userNickname'];
     crewCode = json['crewCode'];
-    date = json['date'];
+    _date = json['date'];
     text = json['text'];
     imageUrl = json['imageUrl'];
   }
@@ -27,7 +33,7 @@ class Chat {
     json['userImageUrl'] = userImageUrl;
     json['userNickname'] = userNickname;
     json['crewCode'] = crewCode;
-    json['date'] = date;
+    json['date'] = _date;
     json['text'] = text;
     json['imageUrl'] = imageUrl;
     return json;
