@@ -1,0 +1,64 @@
+name: fitweenV1
+description: Fitween Project Version 1
+
+publish_to: 'none'
+
+version: 1.0.0+1
+
+environment:
+  sdk: ">=2.17.3 <3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  firebase_core: ^1.19.1
+  firebase_auth: ^3.4.1
+  cloud_firestore: ^3.2.1
+  firebase_storage: ^10.3.1
+  google_sign_in: ^5.4.0
+  get: ^4.6.5
+  cupertino_icons: ^1.0.2
+  image_picker: ^0.8.5+3
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+  flutter_lints: ^2.0.0
+
+flutter:
+
+  uses-material-design: true
+
+  assets:
+    - assets/image/logo/apple.svg
+    - assets/image/logo/fitween.svg
+    - assets/image/logo/google.svg
+    - assets/image/page/greeting/greeting.svg
+    - assets/image/page/onboarding/background.svg
+    - assets/image/page/onboarding/carousel_01.svg
+    - assets/image/page/onboarding/carousel_02.svg
+    - assets/image/page/onboarding/carousel_03.svg
+    - assets/image/page/onboarding/carousel_04.svg
+    - assets/image/page/onboarding/carousel_05.svg
+    - assets/image/page/add_plan/bulk_up.svg
+    - assets/image/page/add_plan/diet.svg
+    - assets/image/page/add_plan/etc.svg
+    - assets/json/exercises.json
+
+fonts:
+  - family: Noto_Sans_KR
+    fonts:
+      - asset: assets/font/Noto_Sans_KR/NotoSansKR-Black.otf
+        weight: 900
+      - asset: assets/font/Noto_Sans_KR/NotoSansKR-Bold.otf
+        weight: 700
+      - asset: assets/font/Noto_Sans_KR/NotoSansKR-Medium.otf
+        weight: 500
+      - asset: assets/font/Noto_Sans_KR/NotoSansKR-Regular.otf
+        weight: 400
+      - asset: assets/font/Noto_Sans_KR/NotoSansKR-Light.otf
+        weight: 300
+      - asset: assets/font/Noto_Sans_KR/NotoSansKR-Thin.otf
+        weight: 200
