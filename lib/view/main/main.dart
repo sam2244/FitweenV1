@@ -12,16 +12,20 @@ class MainPage extends StatelessWidget {
     return Scaffold(
       appBar: const MainAppBar(),
       body: Center(
-          child: MainCard(
-            imageUrl: "image null",
-            category: "category",
-            title: "title",
-            hashtag: "hashtag",
-            srtDate: "2022.12.27",
-            endDate: "2022.07.27",
-            //endDate: DateTime.utc(2022,12,31).toString(),
-            memberNum: 13,
-            key: const Key("1"),
+          child: Column(
+            children: [
+              MainCard(
+                imageUrl: "image null",
+                category: "category",
+                title: "title",
+                hashtag: "hashtag",
+                srtDate: "2022.12.27",
+                endDate: "2022.07.27",
+                //endDate: DateTime.utc(2022,12,31).toString(),
+                memberNum: 13,
+                key: const Key("1"),
+              ),
+            ],
           )
       ),
       //body: Center(child: Text('아직 크루가 없어요!')),
