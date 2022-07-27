@@ -3,10 +3,12 @@ import 'package:get/get.dart';
 
 enum Sex {
   male, female;
-String get kr => ['남성', '여성'][index];
+  String get kr => ['남성', '여성'][index];
 }
 
 class FWUser {
+  static String defaultImageUrl = 'https://www.iconsdb.com/icons/preview/black/guest-xxl.png';
+
   String? uid;
   String? name;
   String? nickname;
@@ -17,7 +19,14 @@ class FWUser {
   List<String> doneIds = [];
   List<String> friendUids = [];
 
-  FWUser();
+  FWUser() {
+    imageUrl ??= defaultImageUrl;
+  }
+
+  FWUser.fromJson(Map<String, dynamic> json) {
+    fromJson(json);
+    imageUrl ??= defaultImageUrl;
+  }
 
   void fromJson(Map<String, dynamic> json) {
     uid = json['uid'];
@@ -26,9 +35,9 @@ class FWUser {
     sex = toSex(json[json['sex']]);
     regDate = json['regDate'];
     imageUrl = json['imageUrl'];
-    ongoingIds = json['ongoingIds'].cast<String>();
-    doneIds = json['doneIds'].cast<String>();
-    friendUids = json['friendUids'].cast<String>();
+    ongoingIds = (json['ongoingIds'] ?? []).cast<String>();
+    doneIds = (json['doneIds'] ?? []).cast<String>();
+    friendUids = (json['friendUids'] ?? []).cast<String>();
   }
 
   Map<String, dynamic> toJson() {
