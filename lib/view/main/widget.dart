@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -40,6 +41,46 @@ class MainAppBar extends StatelessWidget implements PreferredSizeWidget {
     );
   }
 }
+class MainCard extends StatefulWidget {
+  MainCard({required Key key, required this.category, required this.title, required this.hashtag, required this.srtDate, required this.endDate, required this.memberNum}) : super(key: key);
+
+  String category;
+  String title;
+  String hashtag;
+  String srtDate;
+  String endDate;
+  num memberNum;
+
+  @override
+  State<MainCard> createState() => _MainCardState();
+}
+
+class _MainCardState extends State<MainCard> {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.only(bottom: 0, right: 5),
+      child: Column(
+        children: [
+          Row(
+            children: [
+              Text(widget.title),
+              Row(
+                children: [
+                  Icon(Icons.person),
+                  Text("${widget.memberNum}명")
+                ],
+              ),
+            ],
+          ),
+          Text(widget.hashtag),
+          Text("기간 ${widget.srtDate} ~ ${widget.endDate}")
+        ],
+      )
+    );
+  }
+}
+
 class MainFloatingButton extends StatelessWidget {
   const MainFloatingButton({Key? key}) : super(key: key);
 
