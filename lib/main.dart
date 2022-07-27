@@ -1,3 +1,5 @@
+import 'package:firebase_core/firebase_core.dart';
+import 'package:fitweenV1/firebase_options.dart';
 import 'package:fitweenV1/global/config/theme.dart';
 import 'package:fitweenV1/presenter/global.dart';
 import 'package:fitweenV1/route.dart';
@@ -7,11 +9,11 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 void main() async {
-  // WidgetsFlutterBinding.ensureInitialized();
-  // await Firebase.initializeApp(
-  //   name: 'fitween',
-  //   options: DefaultFirebaseOptions.currentPlatform,
-  // );
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    name: 'fitween',
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
 
   runApp(const Fitween());
 }

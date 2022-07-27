@@ -81,17 +81,20 @@ class ChatPresenter extends GetxController {
   }
 
   bool isMyChat(int index) {
-    return UserPresenter.user.uid == chats[index].uid;
+    final userPresenter = Get.find<UserPresenter>();
+    return userPresenter.loggedUser.uid == chats[index].uid;
   }
 
   void addChat() {
+    final userPresenter = Get.find<UserPresenter>();
+
     if (messageCont.text == '') return;
     chats.add(Chat.fromJson({
       'date': Timestamp.now(),
       'text': messageCont.text,
-      'uid': UserPresenter.user.uid,
-      'userNickname': UserPresenter.user.nickname,
-      'userImageUrl': UserPresenter.user.imageUrl,
+      'uid': userPresenter.loggedUser.uid,
+      'userNickname': userPresenter.loggedUser.nickname,
+      'userImageUrl': userPresenter.loggedUser.imageUrl,
     }));
     messageCont.clear();
     update();

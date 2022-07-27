@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 
 enum Sex {
   male, female;
@@ -13,11 +14,20 @@ class FWUser {
   String? name;
   String? nickname;
   Sex? sex;
-  Timestamp? regDate;
+  Timestamp? _regDate;
+  Timestamp? _dateOfBirth;
   String? imageUrl;
   List<String> ongoingIds = [];
   List<String> doneIds = [];
   List<String> friendUids = [];
+
+  DateTime? get regDate => _regDate?.toDate();
+  DateTime? get dateOfBirth => _dateOfBirth?.toDate();
+  set regDate(DateTime? date) => _regDate = Timestamp.fromDate(date!);
+  set dateOfBirth(DateTime? date) => _dateOfBirth = Timestamp.fromDate(date!);
+
+  String? get dateOfBirthString => dateOfBirth == null
+      ? null : DateFormat('yyyy-MM-dd').format(dateOfBirth!);
 
   FWUser() {
     imageUrl ??= defaultImageUrl;
@@ -33,7 +43,7 @@ class FWUser {
     name = json['name'];
     nickname = json['nickname'];
     sex = toSex(json[json['sex']]);
-    regDate = json['regDate'];
+    _regDate = json['regDate'];
     imageUrl = json['imageUrl'];
     ongoingIds = (json['ongoingIds'] ?? []).cast<String>();
     doneIds = (json['doneIds'] ?? []).cast<String>();
@@ -46,7 +56,7 @@ class FWUser {
     json['name'] = name;
     json['nickname'] = nickname;
     json['sex'] = sex?.name;
-    json['regDate'] = regDate;
+    json['regDate'] = _regDate;
     json['imageUrl'] = imageUrl;
     json['ongoingIds'] = ongoingIds;
     json['doneIds'] = doneIds;

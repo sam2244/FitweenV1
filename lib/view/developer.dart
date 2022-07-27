@@ -13,28 +13,36 @@ class DeveloperPage extends StatelessWidget {
         child: Column(
           children: [
             TextButton(
+              onPressed: () => Get.toNamed('/login'),
+              child: const Text('LoginPage'),
+            ),
+            TextButton(
+              onPressed: () => Get.toNamed('/register'),
+              child: const Text('RegisterPage'),
+            ),
+            TextButton(
               onPressed: () => Get.toNamed('/main'),
-              child: Text('MainPage'),
+              child: const Text('MainPage'),
             ),
             TextButton(
               onPressed: () => Get.toNamed('/detail'),
-              child: Text('DetailPage'),
+              child: const Text('DetailPage'),
             ),
             TextButton(
               onPressed: () => Get.toNamed('/chat'),
-              child: Text('ChatPage'),
+              child: const Text('ChatPage'),
             ),
             TextButton(
               onPressed: () => Get.toNamed('/addCrew'),
-              child: Text('AddCrewPage'),
+              child: const Text('AddCrewPage'),
             ),
             TextButton(
               onPressed: () => Get.toNamed('/myCrew'),
-              child: Text('MyCrewPage'),
+              child: const Text('MyCrewPage'),
             ),
             TextButton(
               onPressed: () => Get.toNamed('/my'),
-              child: Text('MyPage'),
+              child: const Text('MyPage'),
             ),
           ],
         ),

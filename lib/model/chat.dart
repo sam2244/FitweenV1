@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:intl/intl.dart';
 
 class Chat {
   String? uid;
@@ -9,9 +10,11 @@ class Chat {
   String? text;
   String? imageUrl;
 
-  Chat();
-
   DateTime? get date => _date?.toDate();
+  set date(DateTime? date) => _date = Timestamp.fromDate(date!);
+  String? get timeString => DateFormat('hh:mm a').format(date!);
+
+  Chat();
 
   Chat.fromJson(Map<String, dynamic> json) {
     fromJson(json);

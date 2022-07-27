@@ -2,15 +2,19 @@ import 'package:fitweenV1/view/add_crew/add_crew.dart';
 import 'package:fitweenV1/view/chat/chat.dart';
 import 'package:fitweenV1/view/detail/detail.dart';
 import 'package:fitweenV1/view/developer.dart';
+import 'package:fitweenV1/view/login/login.dart';
 import 'package:fitweenV1/view/main/main.dart';
 import 'package:fitweenV1/view/my/my.dart';
 import 'package:fitweenV1/view/my_crew/my_crew.dart';
+import 'package:fitweenV1/view/register/register.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class FWRoute {
   static Map<String, Widget> get pages => {
     '/developer': const DeveloperPage(),
+    '/login': const LoginPage(),
+    '/register': const RegisterPage(),
     '/main': const MainPage(),
     '/detail': const DetailPage(),
     '/chat': const ChatPage(),
