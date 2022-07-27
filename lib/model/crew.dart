@@ -10,21 +10,27 @@ class Crew {
   Timestamp? endDate;
   bool isLocked = false;
   List<String> memberUids = [];
-  String? pacemakerUid;
+  String? leaderUid;
+  int memberLimit = 100;
 
   Crew();
+
+  Crew.fromJson(Map<String, dynamic> json) {
+    fromJson(json);
+  }
 
   void fromJson(Map<String, dynamic> json) {
     code = json['code'];
     title = json['title'];
     desc = json['desc'];
-    categories = json['categories'].cast<String>();
-    tags = json['tags'].cast<String>();
+    categories = (json['categories'] ?? []).cast<String>();
+    tags = (json['tags'] ?? []).cast<String>();
     startDate = json['startDate'];
     endDate = json['endDate'];
     isLocked = json['isLocked'];
-    memberUids = json['memberUids'].cast<String>();
-    pacemakerUid = json['friendUids'];
+    memberUids = (json['memberUids'] ?? []).cast<String>();
+    leaderUid = json['leaderUid'];
+    memberLimit = json['memberLimit'];
   }
 
   Map<String, dynamic> toJson() {
@@ -38,7 +44,8 @@ class Crew {
     json['endDate'] = endDate;
     json['isLocked'] = isLocked;
     json['memberUids'] = memberUids;
-    json['pacemakerUid'] = pacemakerUid;
+    json['leaderUid'] = leaderUid;
+    json['memberLimit'] = memberLimit;
     return json;
   }
 }
