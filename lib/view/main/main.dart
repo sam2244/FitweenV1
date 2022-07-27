@@ -13,12 +13,14 @@ class MainPage extends StatelessWidget {
       appBar: const MainAppBar(),
       body: Center(
           child: MainCard(
-              category: "category",
-              title: "title",
-              hashtag: "hashtag",
-              srtDate: DateTime.utc(2022,10,10).toString(),
-              endDate: DateTime.utc(2022,12,31).toString(),
-              memberNum: 13,
+            imageUrl: "image null",
+            category: "category",
+            title: "title",
+            hashtag: "hashtag",
+            srtDate: "2022.12.27",
+            endDate: "2022.07.27",
+            //endDate: DateTime.utc(2022,12,31).toString(),
+            memberNum: 13,
             key: const Key("1"),
           )
       ),

@@ -42,8 +42,9 @@ class MainAppBar extends StatelessWidget implements PreferredSizeWidget {
   }
 }
 class MainCard extends StatefulWidget {
-  MainCard({required Key key, required this.category, required this.title, required this.hashtag, required this.srtDate, required this.endDate, required this.memberNum}) : super(key: key);
+  MainCard({required Key key, required this.imageUrl, required this.category, required this.title, required this.hashtag, required this.srtDate, required this.endDate, required this.memberNum}) : super(key: key);
 
+  String imageUrl;
   String category;
   String title;
   String hashtag;
@@ -59,22 +60,60 @@ class _MainCardState extends State<MainCard> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.only(bottom: 0, right: 5),
+      padding: EdgeInsets.only(top: 16.h, bottom: 16.h, left: 32.w, right: 32.w),
       child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          Text(widget.imageUrl),
           Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(widget.title),
-              Row(
-                children: [
-                  Icon(Icons.person),
-                  Text("${widget.memberNum}명")
-                ],
+              Text(widget.title,
+                style: const TextStyle(
+                    fontWeight: FontWeight.bold
+                ,)
               ),
+              Container(
+                width: 63.w,
+                height: 25.h,
+                color: Colors.grey,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const Icon(Icons.person),
+                    Text("${widget.memberNum}명")
+                  ],
+                ),
+              )
             ],
           ),
           Text(widget.hashtag),
-          Text("기간 ${widget.srtDate} ~ ${widget.endDate}")
+          Text("기간 ${widget.srtDate} ~ ${widget.endDate}"),
+          Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              ElevatedButton.icon(
+                style: ButtonStyle(
+                  backgroundColor: MaterialStateProperty.all<Color>(Theme.of(context).colorScheme.primary,),
+                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                      const RoundedRectangleBorder(
+                      borderRadius: BorderRadius.zero,
+                      )
+                  )
+                ),
+                label: const Icon(Icons.chevron_right,
+                  color: Colors.white,
+                ),
+                icon: const Text("자세히 보기",
+                    style: TextStyle(
+                        color: Colors.white
+                    )
+                ),
+                onPressed: () => {},
+              ),
+            ],
+          ),
         ],
       )
     );
