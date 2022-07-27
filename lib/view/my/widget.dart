@@ -1,4 +1,3 @@
-import 'package:fitweenV1/presenter/page/my.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -45,23 +44,19 @@ class MyProfileImage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<MyPresenter>(
-      builder: (controller) {
-        return Column(
-          children: [
-            Padding(
-              padding: EdgeInsets.all(16.0.h),
-              child: const Text("profile image"),
-              /*ProfileImageCircle(
+    return Column(
+      children: [
+        Padding(
+          padding: EdgeInsets.all(16.0.h),
+          child: const Text("profile image"),
+          /*ProfileImageCircle(
                 size: 100.0.h,
                 user: MyPresenter.userPresenter.user,
                 //onPressed: () => controller.profileImagePressed(Theme.of(context)),
               ),*/
-            ),
-            const Text("이름"),
-          ],
-        );
-      }
+        ),
+        const Text("이름"),
+      ],
     );
   }
 }
