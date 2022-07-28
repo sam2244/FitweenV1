@@ -67,7 +67,7 @@ class MyProfileImage extends StatelessWidget {
                 //onPressed: () => controller.profileImagePressed(Theme.of(context)),
               ),*/
             ),
-            const Text("이름"),
+            Text(MyPresenter.userPresenter.loggedUser.nickname!),
           ],
         );
       },
