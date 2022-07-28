@@ -15,6 +15,8 @@ class Crew {
   bool isLocked = false;
   List<String> memberUids = [];
   String? leaderUid;
+  String? leaderImageUrl;
+  String? leaderNickname;
   int memberLimit = 100;
 
   DateTime? get startDate => _startDate?.toDate();
@@ -46,6 +48,8 @@ class Crew {
     isLocked = json['isLocked'];
     memberUids = (json['memberUids'] ?? []).cast<String>();
     leaderUid = json['leaderUid'];
+    leaderImageUrl = json['leaderImageUrl'];
+    leaderNickname = json['leaderNickname'];
     memberLimit = json['memberLimit'];
   }
 
@@ -61,6 +65,8 @@ class Crew {
     json['isLocked'] = isLocked;
     json['memberUids'] = memberUids;
     json['leaderUid'] = leaderUid;
+    json['leaderImageUrl'] = leaderImageUrl;
+    json['leaderNickname'] = leaderNickname;
     json['memberLimit'] = memberLimit;
     return json;
   }
