@@ -1,5 +1,7 @@
+import 'package:fitweenV1/presenter/page/my.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 
 // 마이 페이지의 위젯 모음
 
@@ -50,9 +52,10 @@ class MyProfileImage extends StatelessWidget {
                 user: MyPresenter.userPresenter.user,
                 //onPressed: () => controller.profileImagePressed(Theme.of(context)),
               ),*/
-        ),
-        const Text("이름"),
-      ],
-    );
-  }
+          ),
+          const Text("이름"),
+        ],
+      );
+    },
+  );
 }
