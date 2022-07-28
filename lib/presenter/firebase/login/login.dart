@@ -58,4 +58,15 @@ class LoginPresenter {
       MainPresenter.toMain();
     }
   }
+
+  static void fwLogout() {
+    final userPresenter = Get.find<UserPresenter>();
+    Get.offAllNamed('/login');
+    userPresenter.logout();
+  }
+
+  static void fwUserDelete(){
+    UserPresenter.deleteDB(UserPresenter().loggedUser);
+    fwLogout();
+  }
 }
