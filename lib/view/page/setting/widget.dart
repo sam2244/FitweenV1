@@ -20,9 +20,9 @@ class SettingAppBar extends StatelessWidget implements PreferredSizeWidget {
           leading: GetBuilder<SettingPresenter>(
               builder: (controller) {
                 return IconButton(
-                  icon: Icon(
+                  icon: const Icon(
                     Icons.arrow_back,
-                    color: Theme.of(context).colorScheme.primary,
+                    color: Colors.black,
                   ),
                   onPressed: controller.backPressed,
                 );
@@ -43,25 +43,26 @@ class MyProfileImageButton extends StatelessWidget {
         builder: (controller) {
           return Column(
             children: [
-              Container(
-                width: 70,
-                height: 70,
-                decoration: const BoxDecoration(
-                    color: Colors.black,
-                    borderRadius:
-                    BorderRadius.all(Radius.circular(100)) //모서리를 둥글게
-                ),
-                child: IconButton(
-                  icon: const Icon(Icons.person),
-                  color: Colors.white,
-                  iconSize: 45.0,
-                  onPressed: () => {}
-                  //onPressed: () => controller.profileImageChange(context,Theme.of(context)),
+              Padding(
+                padding: EdgeInsets.all(16.0.h),
+                child: Container(
+                  width: 70,
+                  height: 70,
+                  decoration: const BoxDecoration(
+                      color: Colors.black,
+                      borderRadius:
+                      BorderRadius.all(Radius.circular(100)) //모서리를 둥글게
+                  ),
+                  child: IconButton(
+                    icon: const Icon(Icons.person),
+                    color: Colors.white,
+                    iconSize: 45.0,
+                    onPressed: () => controller.profileImageChange(context,Theme.of(context)),
+                  ),
                 ),
               ),
               TextButton.icon(
-                onPressed: () => {},
-                //onPressed: () => controller.profileImageChange(context,Theme.of(context)),
+                onPressed: () => controller.profileImageChange(context,Theme.of(context)),
                 label: const Icon(Icons.add_photo_alternate_outlined, size: 24),
                 icon: Text("사진 변경",
                     style: Theme.of(context).textTheme.labelLarge,
