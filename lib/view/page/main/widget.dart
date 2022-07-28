@@ -2,6 +2,7 @@ import 'package:fitweenV1/global/config/theme.dart';
 import 'package:fitweenV1/model/crew.dart';
 import 'package:fitweenV1/presenter/page/main.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
 // 메인 페이지의 위젯 모음
@@ -36,78 +37,87 @@ class CrewCard extends StatelessWidget {
   const CrewCard({Key? key, required this.crew}) : super(key: key);
 
   final Crew crew;
-  
+
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(10.0),
-      child: Column(
-        children: [
-          Container(
-            height: 250.0,
-            color: FWTheme.grey.withOpacity(.3),
-            child: crew.imageUrl == null
-                ? const Center(
-              child: Icon(Icons.photo, color: FWTheme.grey, size: 40.0),
-            ) : Image.network(crew.imageUrl!),
-          ),
-          const SizedBox(height: 10.0),
-          Row(
-            children: [
-              const SizedBox(width: 10.0),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(crew.title!,
-                      style: const TextStyle(
-                        fontSize: 20.0,
-                        fontWeight: FontWeight.bold,
+    return InkWell(
+      onTap: () {
+        Get.toNamed('/detail', arguments: crew);
+      },
+      child: Padding(
+        padding: const EdgeInsets.all(10.0),
+        child: Column(
+          children: [
+            Container(
+              height: 250.0,
+              color: FWTheme.grey.withOpacity(.3),
+              child: crew.imageUrl == null
+                  ? const Center(
+                      child: Icon(Icons.photo, color: FWTheme.grey, size: 40.0),
+                    )
+                  : Image.network(crew.imageUrl!),
+            ),
+            const SizedBox(height: 10.0),
+            Row(
+              children: [
+                const SizedBox(width: 10.0),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        crew.title!,
+                        style: const TextStyle(
+                          fontSize: 20.0,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
-                    ),
-                    Row(
-                      children: crew.tags.map((tag) {
-                        return Padding(
-                          padding: const EdgeInsets.only(right: 5.0),
-                          child: Text('#$tag'),
-                        );
-                      }).toList(),
-                    ),
-                    Text('${DateFormat('yyyy.MM.dd').format(crew.startDate!)}~'
-                      '${DateFormat('yyyy.MM.dd').format(crew.endDate!)}',
-                      style: const TextStyle(fontSize: 12.0),
-                    ),
-                    Row(
-                      children: crew.categories.map((category) {
-                        return Padding(
-                          padding: const EdgeInsets.only(right: 5.0),
-                          child: Container(
-                            width: 50.0,
-                            decoration: BoxDecoration(
-                              border: Border.all(color: FWTheme.dark),
+                      Row(
+                        children: crew.tags.map((tag) {
+                          return Padding(
+                            padding: const EdgeInsets.only(right: 5.0),
+                            child: Text('#$tag'),
+                          );
+                        }).toList(),
+                      ),
+                      Text(
+                        '${DateFormat('yyyy.MM.dd').format(crew.startDate!)}~'
+                        '${DateFormat('yyyy.MM.dd').format(crew.endDate!)}',
+                        style: const TextStyle(fontSize: 12.0),
+                      ),
+                      Row(
+                        children: crew.categories.map((category) {
+                          return Padding(
+                            padding: const EdgeInsets.only(right: 5.0),
+                            child: Container(
+                              width: 50.0,
+                              decoration: BoxDecoration(
+                                border: Border.all(color: FWTheme.dark),
+                              ),
+                              child:
+                                  Text(category, textAlign: TextAlign.center),
                             ),
-                            child: Text(category, textAlign: TextAlign.center),
-                          ),
-                        );
-                      }).toList(),
-                    ),
-                  ],
+                          );
+                        }).toList(),
+                      ),
+                    ],
+                  ),
                 ),
-              ),
-              Container(
-                padding: const EdgeInsets.all(2.0),
-                color: FWTheme.grey,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    const Icon(Icons.person),
-                    Text('${crew.memberLimit}명'),
-                  ],
+                Container(
+                  padding: const EdgeInsets.all(2.0),
+                  color: FWTheme.grey,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const Icon(Icons.person),
+                      Text('${crew.memberLimit}명'),
+                    ],
+                  ),
                 ),
-              ),
-            ],
-          ),
-        ],
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }
