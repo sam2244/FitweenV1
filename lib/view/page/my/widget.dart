@@ -73,4 +73,3 @@ class MyProfileImage extends StatelessWidget {
     );
   }
 }
-
