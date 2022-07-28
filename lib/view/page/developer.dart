@@ -58,10 +58,10 @@ class _DeveloperPageState extends State<DeveloperPage> {
               onPressed: () => Get.toNamed('/myCrew'),
               child: const Text('MyCrewPage'),
             ),
-            TextButton(
-              onPressed: () => Get.toNamed('/my'),
-              child: const Text('MyPage'),
-            ),
+            // TextButton(
+            //   onPressed: () => Get.toNamed('/my'),
+            //   child: const Text('MyPage'),
+            // ),
           ],
         ) : TextButton(
           onPressed: () => Get.toNamed('/login'),

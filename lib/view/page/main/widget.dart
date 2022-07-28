@@ -121,7 +121,7 @@ class AddCrewButton extends StatelessWidget {
     return FloatingActionButton(
       onPressed: MainPresenter.addCrewButtonPressed,
       backgroundColor: Theme.of(context).colorScheme.primary,
-      child: const Icon(Icons.add, size: 38, color: Colors.white,),
+      child: const Icon(Icons.add, size: 38, color: Colors.white),
     );
   }
 }

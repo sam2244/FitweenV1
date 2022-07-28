@@ -1,4 +1,4 @@
-import 'package:fitweenV1/view/add_crew/widget.dart';
+import 'package:fitweenV1/view/page/add_crew/widget.dart';
 import 'package:flutter/material.dart';
 
 class AddCrewPage extends StatelessWidget {
