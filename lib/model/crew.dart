@@ -2,11 +2,9 @@ import 'dart:math';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fitweenV1/global/date.dart';
-import 'package:fitweenV1/view/page/my_crew/widget.dart';
-
+import 'package:fitweenV1/model/user.dart';
 
 enum CrewState { ongoing, done }
-
 
 class Crew {
   String? code;
@@ -24,6 +22,8 @@ class Crew {
   String? leaderImageUrl;
   String? leaderNickname;
   int memberLimit = 100;
+
+  List<FWUser> members = [];
 
   DateTime? get startDate => _startDate?.toDate();
   DateTime? get endDate => _endDate?.toDate();

@@ -3,9 +3,6 @@ import 'package:intl/intl.dart';
 
 class Chat {
   String? uid;
-  String? userImageUrl;
-  String? userNickname;
-  String? crewCode;
   Timestamp? _date;
   String? text;
   String? imageUrl;
@@ -22,9 +19,6 @@ class Chat {
 
   void fromJson(Map<String, dynamic> json) {
     uid = json['uid'];
-    userImageUrl = json['userImageUrl'];
-    userNickname = json['userNickname'];
-    crewCode = json['crewCode'];
     _date = json['date'];
     text = json['text'];
     imageUrl = json['imageUrl'];
@@ -33,9 +27,6 @@ class Chat {
   Map<String, dynamic> toJson() {
     Map<String, dynamic> json = {};
     json['uid'] = uid;
-    json['userImageUrl'] = userImageUrl;
-    json['userNickname'] = userNickname;
-    json['crewCode'] = crewCode;
     json['date'] = _date;
     json['text'] = text;
     json['imageUrl'] = imageUrl;

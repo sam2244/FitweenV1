@@ -8,13 +8,13 @@ class ChatPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Chat'),
       ),
       body: GetBuilder<ChatPresenter>(
         builder: (controller) {
-
           List<Widget> bubble(int index) => [
             Container(
               padding: const EdgeInsets.all(8.0),
@@ -44,7 +44,6 @@ class ChatPage extends StatelessWidget {
               ),
             ),
           ];
-
           return Column(
             children: [
               Expanded(
@@ -77,7 +76,7 @@ class ChatPage extends StatelessWidget {
                                             child: Padding(
                                               padding: const EdgeInsets.all(5.0),
                                               child: Image.network(
-                                                controller.chats[i].userImageUrl!,
+                                                controller.getImageUrl(controller.chats[i].uid!)!,
                                               ),
                                             ),
                                           ),
@@ -85,7 +84,7 @@ class ChatPage extends StatelessWidget {
                                       ),
                                     ),
                                     const SizedBox(width: 10.0),
-                                    Text(controller.chats[i].userNickname!),
+                                    Text(controller.getNickname(controller.chats[i].uid!)!),
                                   ],
                                 ),
                               ),
@@ -119,12 +118,12 @@ class ChatPage extends StatelessWidget {
                         height: 30.0,
                         child: TextFormField(
                           controller: ChatPresenter.messageCont,
-                          onFieldSubmitted: (_) => controller.addChat,
+                          onFieldSubmitted: (_) => controller.messageSubmitted,
                         ),
                       ),
                     ),
                     TextButton(
-                      onPressed: controller.addChat,
+                      onPressed: controller.messageSubmitted,
                       child: const Text('전송'),
                     ),
                   ],

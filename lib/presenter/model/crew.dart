@@ -10,12 +10,12 @@ class CrewPresenter extends GetxController {
   }
 
   void load() async {
-     final jsonList = (await f.collection('crews').get()).docs;
-     crews = [];
-     for (var data in jsonList) {
-       Map<String, dynamic> json = data.data();
-       addCrew(Crew.fromJson(json));
-     }
+    final jsonList = (await f.collection('crews').get()).docs;
+    crews = [];
+    for (var data in jsonList) {
+      Map<String, dynamic> json = data.data();
+      addCrew(Crew.fromJson(json));
+    }
   }
 
   void saveOne(Crew crew) {
