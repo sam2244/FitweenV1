@@ -56,7 +56,7 @@ class MyProfileImage extends StatelessWidget {
                 child: IconButton(
                   icon: const Icon(Icons.person),
                   color: Colors.white,
-                  iconSize: 45.0,
+                  iconSize: 50.0,
                   onPressed: () => controller.profileImageChange(context,Theme.of(context)),
                 ),
               ),
