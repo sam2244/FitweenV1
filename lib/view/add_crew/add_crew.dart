@@ -7,7 +7,7 @@ class AddCrewPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(title: const Text('크루 추가')),
       body: const AddCrew(),
     );
   }

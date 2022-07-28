@@ -1,3 +1,4 @@
+import 'package:fitweenV1/presenter/page/my.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -9,32 +10,27 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
   const MyAppBar({Key? key}) : super(key: key);
 
   @override
-  Size get preferredSize {
-    return const Size.fromHeight(60.0);
-  }
+  Size get preferredSize => const Size.fromHeight(60.0);
 
   @override
   Widget build(BuildContext context) {
-    return PreferredSize(
-      preferredSize: Size.fromHeight(60.0.h),
-        child: AppBar(
-          leading: Padding(
-            padding: EdgeInsets.all(15.0.h),
-            child: const Text("마이페이지"),
+    return AppBar(
+      leading: const Padding(
+        padding: EdgeInsets.all(15.0),
+        child: Text("마이페이지"),
+      ),
+      leadingWidth: 600.0,
+      actions: [
+        IconButton(
+          icon: Icon(
+            Icons.settings,
+            color: Theme.of(context).colorScheme.primary,
           ),
-          leadingWidth: 600.0,
-          actions: [
-            IconButton(
-              icon: Icon(
-                Icons.settings,
-                color: Theme.of(context).colorScheme.primary,
-              ),
-              onPressed: () => {},
-              //onPressed: MyPresenter.settingPressed,
-            ),
-          ],
-          elevation: 0.0,
-        )
+          onPressed: () {},
+          //onPressed: MyPresenter.settingPressed,
+        ),
+      ],
+      elevation: 0.0,
     );
   }
 }
@@ -56,9 +52,10 @@ class MyProfileImage extends StatelessWidget {
                 user: MyPresenter.userPresenter.user,
                 //onPressed: () => controller.profileImagePressed(Theme.of(context)),
               ),*/
-        ),
-        const Text("이름"),
-      ],
-    );
-  }
+          ),
+          const Text("이름"),
+        ],
+      );
+    },
+  );
 }

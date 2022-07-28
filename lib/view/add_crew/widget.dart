@@ -1,20 +1,14 @@
+import 'package:fitweenV1/global/date.dart';
+import 'package:fitweenV1/presenter/page/add_crew/add_crew.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
-
-import '../../presenter/page/add_crew/add_crew.dart';
-
-enum DateType { start, end }
 
 class AddCrew extends StatelessWidget {
   const AddCrew({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final crewCont = TextEditingController();
-    final timesCont = TextEditingController();
-    final descCont = TextEditingController();
-
     return GetBuilder<AddCrewPresenter>(
       builder: (controller) {
         return SingleChildScrollView(
@@ -22,8 +16,7 @@ class AddCrew extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 8, vertical: 16),
+                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 16),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -35,7 +28,7 @@ class AddCrew extends StatelessWidget {
                     SizedBox(
                       width: double.infinity,
                       child: TextFormField(
-                        controller: crewCont,
+                        controller: AddCrewPresenter.crewCont,
                         decoration: const InputDecoration(
                           border: OutlineInputBorder(),
                           hintText: '제목',
@@ -46,12 +39,9 @@ class AddCrew extends StatelessWidget {
                   ],
                 ),
               ),
-              const Divider(
-                thickness: 1.0,
-              ),
+              const Divider(thickness: 1.0),
               Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 8, vertical: 16),
+                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 16),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -68,25 +58,17 @@ class AddCrew extends StatelessWidget {
                         style: TextStyle(fontSize: 16.0),
                       ),
                     ),
-                    ListTile(
-                      title: const Text('offline'),
-                      leading: Radio<ParticipationMethod>(
-                        value: ParticipationMethod.offline,
-                        groupValue: controller.method,
-                        onChanged: (ParticipationMethod? value) {
-                          controller.changeMethod(value!);
-                        },
-                      ),
-                    ),
-                    ListTile(
-                      title: const Text('online'),
-                      leading: Radio<ParticipationMethod>(
-                        value: ParticipationMethod.online,
-                        groupValue: controller.method,
-                        onChanged: (ParticipationMethod? value) {
-                          controller.changeMethod(value!);
-                        },
-                      ),
+                    Column(
+                      children: ParticipationMethod.values.map((method) {
+                        return ListTile(
+                          title: Text(method.name),
+                          leading: Radio<ParticipationMethod>(
+                            value: method,
+                            groupValue: controller.method,
+                            onChanged: controller.setMethod,
+                          ),
+                        );
+                      }).toList(),
                     ),
                     const SizedBox(height: 8.0),
                     const Padding(
@@ -103,25 +85,22 @@ class AddCrew extends StatelessWidget {
                         child: Container(
                           width: 100.0,
                           padding: const EdgeInsets.symmetric(
-                              horizontal: 10, vertical: 5),
+                              horizontal: 10, vertical: 5,
+                          ),
                           decoration: BoxDecoration(
                               color: Colors.white,
                               borderRadius: BorderRadius.circular(10)),
-                          child: DropdownButton(
-                            value: controller.period,
-                            items: <String>['매일', '매주', '매월']
-                                .map<DropdownMenuItem<String>>((String value) {
-                              return DropdownMenuItem<String>(
+                          child: DropdownButton<Frequency>(
+                            value: controller.frequency,
+                            items: Frequency.values.map((value) {
+                              return DropdownMenuItem<Frequency>(
                                 value: value,
-                                child: Text(
-                                  value,
+                                child: Text(value.kr,
                                   style: const TextStyle(fontSize: 20.0),
                                 ),
                               );
                             }).toList(),
-                            onChanged: (String? value) {
-                              controller.changePeriod(value!);
-                            },
+                            onChanged: controller.setFrequency,
                             underline: Container(),
                             isExpanded: true,
                           ),
@@ -130,11 +109,11 @@ class AddCrew extends StatelessWidget {
                       SizedBox(
                         width: 150.0,
                         child: TextFormField(
-                          enabled: controller.period == '매일' ? false : true,
-                          controller: timesCont,
+                          enabled: controller.frequency != Frequency.daily,
+                          controller: AddCrewPresenter.timesCont,
                           decoration: InputDecoration(
                             border: const OutlineInputBorder(),
-                            hintText: controller.period == '매일' ? '매일' : '횟수',
+                            hintText: controller.frequency == Frequency.daily ? '매일': '횟수',
                           ),
                         ),
                       ),
@@ -142,36 +121,29 @@ class AddCrew extends StatelessWidget {
                   ],
                 ),
               ),
-              const Divider(
-                thickness: 1.0,
-              ),
+              const Divider(thickness: 1.0),
               const Padding(
                 padding: EdgeInsets.symmetric(horizontal: 8, vertical: 16),
-                child: Text(
-                  'Period',
+                child: Text('Period',
                   style: TextStyle(fontSize: 20.0),
                 ),
               ),
               const DateSelectionButton(type: DateType.start),
               const DateSelectionButton(type: DateType.end),
-              const Divider(
-                thickness: 1.0,
-              ),
+              const Divider(thickness: 1.0),
               Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 8, vertical: 16),
+                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 16),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text(
-                      'Description',
+                    const Text('Description',
                       style: TextStyle(fontSize: 20.0),
                     ),
                     const SizedBox(height: 8.0),
                     SizedBox(
                       width: double.infinity,
                       child: TextFormField(
-                        controller: descCont,
+                        controller: AddCrewPresenter.descCont,
                         decoration: const InputDecoration(
                           border: OutlineInputBorder(),
                           hintText: '설명',
@@ -181,6 +153,12 @@ class AddCrew extends StatelessWidget {
                       ),
                     ),
                   ],
+                ),
+              ),
+              Center(
+                child: OutlinedButton(
+                  onPressed: controller.submitted,
+                  child: const Text('추가하기'),
                 ),
               ),
             ],
@@ -220,8 +198,8 @@ class DateSelectionButton extends StatelessWidget {
                 Expanded(
                   child: InkWell(
                     onTap: {
-                      DateType.start: controller.startDateSelected,
-                      DateType.end: controller.endDateSelected,
+                      DateType.start: controller.startDateButtonPressed,
+                      DateType.end: controller.endDateButtonPressed,
                     }[type]!,
                     child: Container(
                       padding: const EdgeInsets.symmetric(vertical: 8.0),
@@ -242,8 +220,8 @@ class DateSelectionButton extends StatelessWidget {
                               child: Text(
                                 DateFormat('yyyy년 MM월 dd일').format(
                                     (type == DateType.start
-                                            ? controller.startDate
-                                            : controller.endDate) ??
+                                            ? controller.newCrew.startDate
+                                            : controller.newCrew.endDate) ??
                                         DateTime.now()),
                                 style: Theme.of(context).textTheme.labelLarge,
                               ),

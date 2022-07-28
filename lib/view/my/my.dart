@@ -11,7 +11,7 @@ class MyPage extends StatelessWidget {
       body: Center(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
+          children: const [
             MyProfileImage(),
           ],
         ),
