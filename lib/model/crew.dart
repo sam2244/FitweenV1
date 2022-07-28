@@ -2,12 +2,18 @@ import 'dart:math';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fitweenV1/global/date.dart';
+import 'package:fitweenV1/view/page/my_crew/widget.dart';
+
+
+enum CrewState { ongoing, done }
+
 
 class Crew {
   String? code;
   String? title;
   String? desc;
   String? imageUrl;
+  CrewState state = CrewState.ongoing;
   List<String> categories = [];
   List<String> tags = [];
   Timestamp? _startDate;
@@ -73,5 +79,10 @@ class Crew {
         Random().nextInt(chars.length),
       )),
     );
+  }
+
+  // 문자열을 상태 enum 으로 전환 ('ongoing' => State.ongoing)
+  static CrewState toState(String string) {
+    return CrewState.values.firstWhere((state) => state.name == string);
   }
 }
