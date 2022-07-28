@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:fitweenV1/presenter/page/my_crew.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
@@ -16,7 +17,7 @@ class FWUser {
   Sex? sex;
   Timestamp? _regDate;
   Timestamp? _dateOfBirth;
-  String? imageUrl;
+  String? imageUrl =  MyCrewPresenter.defaultProfile;
   List<String> ongoingIds = [];
   List<String> doneIds = [];
   List<String> friendUids = [];
@@ -65,6 +66,27 @@ class FWUser {
     json['friendUids'] = friendUids;
     return json;
   }
+
+  FWUser.fromMap(Map<String, dynamic> map) {
+    fromMap(map);
+  }
+
+  void fromMap(Map<String, dynamic> map) {
+    uid = map['uid'];
+    nickname = map['nickname'];
+    imageUrl = map['imageUrl'];
+    sex = map['sex'];
+    friendUids = map['friendUids'];
+  }
+
+  Map<String, dynamic> toMap() => {
+    'uid': uid,
+    'nickname': nickname,
+    'imageUrl': imageUrl,
+    'sex': sex,
+    'dateOfBirth': dateOfBirth,
+    'friendUids': friendUids,
+  };
 
   static Sex? toSex(String? string) => Sex.values.firstWhereOrNull(
       (sex) => sex.name == string,

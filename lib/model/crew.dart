@@ -34,6 +34,25 @@ class Crew {
     endDate = today;
   }
 
+  Crew.fromMap(Map<String, dynamic> map) {
+    fromMap(map);
+  }
+
+  void fromMap(Map<String, dynamic> map) {
+    title = map['title'];
+    imageUrl = map['imageUrl'];
+    categories = map['categories'];
+    memberUids = map['memberUids'];
+  }
+
+  Map<String, dynamic> toMap() => {
+    'title' : title,
+    'imageUrl': imageUrl,
+    'categories': categories,
+    'memberUids': memberUids,
+  };
+
+
   Crew.fromJson(Map<String, dynamic> json) {
     fromJson(json);
     generatePlanId();
