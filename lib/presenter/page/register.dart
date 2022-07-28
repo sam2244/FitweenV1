@@ -1,5 +1,6 @@
 import 'package:fitweenV1/model/user.dart';
 import 'package:fitweenV1/presenter/model/user.dart';
+import 'package:fitweenV1/presenter/page/main.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -29,9 +30,9 @@ class RegisterPresenter extends GetxController {
 
     // 로그인
     userPresenter.login(newcomer);
-    print(userPresenter.loggedUser.nickname);
 
     // 파이어베이스에 저장
     userPresenter.save();
+    MainPresenter.toMain();
   }
 }

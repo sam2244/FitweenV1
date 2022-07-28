@@ -4,6 +4,7 @@ import 'package:fitweenV1/model/user.dart';
 import 'package:fitweenV1/presenter/firebase/firebase.dart';
 import 'package:fitweenV1/presenter/firebase/login/google.dart';
 import 'package:fitweenV1/presenter/model/user.dart';
+import 'package:fitweenV1/presenter/page/main.dart';
 import 'package:get/get.dart';
 
 enum LoginType { google }
@@ -54,6 +55,7 @@ class LoginPresenter {
       // 파이어베이스 데이터로 로그인
       FWUser stranger = FWUser.fromJson(json);
       userPresenter.login(stranger);
+      MainPresenter.toMain();
     }
   }
 }

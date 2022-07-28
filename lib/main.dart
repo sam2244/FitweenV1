@@ -39,11 +39,21 @@ class Fitween extends StatelessWidget {
             useMaterial3: true,
             colorScheme: FWTheme.lightScheme,
             textTheme: FWTheme.textTheme,
+            appBarTheme: AppBarTheme(
+              iconTheme: IconThemeData(
+                color: FWTheme.lightScheme.primary,
+              ),
+            ),
           ),
           darkTheme: ThemeData(
             useMaterial3: true,
             colorScheme: FWTheme.darkScheme,
             textTheme: FWTheme.textTheme,
+            appBarTheme: AppBarTheme(
+              iconTheme: IconThemeData(
+                color: FWTheme.darkScheme.primary,
+              ),
+            ),
           ),
           home: const DeveloperPage(),
           getPages: FWRoute.getPages,

@@ -42,8 +42,9 @@ class FWUser {
     uid = json['uid'];
     name = json['name'];
     nickname = json['nickname'];
-    sex = toSex(json[json['sex']]);
+    sex = toSex(json['sex']);
     _regDate = json['regDate'];
+    _dateOfBirth = json['dateOfBirth'];
     imageUrl = json['imageUrl'];
     ongoingIds = (json['ongoingIds'] ?? []).cast<String>();
     doneIds = (json['doneIds'] ?? []).cast<String>();
@@ -57,6 +58,7 @@ class FWUser {
     json['nickname'] = nickname;
     json['sex'] = sex?.name;
     json['regDate'] = _regDate;
+    json['dateOfBirth'] = _dateOfBirth;
     json['imageUrl'] = imageUrl;
     json['ongoingIds'] = ongoingIds;
     json['doneIds'] = doneIds;

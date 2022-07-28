@@ -1,3 +1,4 @@
+import 'package:fitweenV1/view/my/widget.dart';
 import 'package:flutter/material.dart';
 
 class MyPage extends StatelessWidget {
@@ -6,7 +7,15 @@ class MyPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
+      appBar: const MyAppBar(),
+      body: Center(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: const [
+            MyProfileImage(),
+          ],
+        ),
+      )
     );
   }
 }

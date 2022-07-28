@@ -1,3 +1,4 @@
+import 'package:fitweenV1/view/add_crew/widget.dart';
 import 'package:flutter/material.dart';
 
 class AddCrewPage extends StatelessWidget {
@@ -6,7 +7,8 @@ class AddCrewPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(title: const Text('크루 추가')),
+      body: const AddCrew(),
     );
   }
 }
