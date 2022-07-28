@@ -3,7 +3,7 @@ import 'package:fitweenV1/firebase_options.dart';
 import 'package:fitweenV1/global/config/theme.dart';
 import 'package:fitweenV1/presenter/global.dart';
 import 'package:fitweenV1/route.dart';
-import 'package:fitweenV1/view/developer.dart';
+import 'package:fitweenV1/view/page/developer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';

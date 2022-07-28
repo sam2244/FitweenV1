@@ -1,12 +1,12 @@
-import 'package:fitweenV1/view/add_crew/add_crew.dart';
-import 'package:fitweenV1/view/chat/chat.dart';
-import 'package:fitweenV1/view/detail/detail.dart';
-import 'package:fitweenV1/view/developer.dart';
-import 'package:fitweenV1/view/login/login.dart';
-import 'package:fitweenV1/view/main/main.dart';
-import 'package:fitweenV1/view/my/my.dart';
-import 'package:fitweenV1/view/my_crew/my_crew.dart';
-import 'package:fitweenV1/view/register/register.dart';
+import 'package:fitweenV1/view/page/add_crew/add_crew.dart';
+import 'package:fitweenV1/view/page/chat/chat.dart';
+import 'package:fitweenV1/view/page/detail/detail.dart';
+import 'package:fitweenV1/view/page/developer.dart';
+import 'package:fitweenV1/view/page/login/login.dart';
+import 'package:fitweenV1/view/page/main/main.dart';
+import 'package:fitweenV1/view/page/my/my.dart';
+import 'package:fitweenV1/view/page/my_crew/my_crew.dart';
+import 'package:fitweenV1/view/page/register/register.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 

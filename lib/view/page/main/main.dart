@@ -1,6 +1,7 @@
 import 'package:fitweenV1/presenter/model/crew.dart';
+import 'package:fitweenV1/view/page/main/widget.dart';
+import 'package:fitweenV1/view/widget/widget.dart';
 import 'package:flutter/material.dart';
-import 'package:fitweenV1/view/main/widget.dart';
 import 'package:get/get.dart';
 
 
@@ -27,6 +28,7 @@ class MainPage extends StatelessWidget {
       ),
       //body: Center(child: Text('아직 크루가 없어요!')),
       floatingActionButton: const AddCrewButton(),
+      bottomNavigationBar: const FWBottomBar(),
     );
   }
 }

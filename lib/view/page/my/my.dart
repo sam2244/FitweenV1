@@ -1,4 +1,5 @@
-import 'package:fitweenV1/view/my/widget.dart';
+import 'package:fitweenV1/view/page/my/widget.dart';
+import 'package:fitweenV1/view/widget/widget.dart';
 import 'package:flutter/material.dart';
 
 class MyPage extends StatelessWidget {
@@ -15,7 +16,8 @@ class MyPage extends StatelessWidget {
             MyProfileImage(),
           ],
         ),
-      )
+      ),
+      bottomNavigationBar: const FWBottomBar(),
     );
   }
 }
