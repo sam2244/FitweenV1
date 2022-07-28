@@ -17,7 +17,7 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
     return AppBar(
       leading: const Padding(
         padding: EdgeInsets.all(15.0),
-        child: Text("마이페이지"),
+        child: Text("Fitween"),
       ),
       leadingWidth: 600.0,
       actions: [
@@ -46,7 +46,21 @@ class MyProfileImage extends StatelessWidget {
           children: [
             Padding(
               padding: EdgeInsets.all(16.0.h),
-              child: const Text("profile image"),
+              child: Container(
+                width: 70,
+                height: 70,
+                decoration: const BoxDecoration(
+                    color: Colors.black,
+                    borderRadius:
+                    BorderRadius.all(Radius.circular(100)) //모서리를 둥글게
+                ),
+                child: IconButton(
+                  icon: const Icon(Icons.person),
+                  color: Colors.white,
+                  iconSize: 45.0,
+                  onPressed: () => {},
+                ),
+              ),
               /*ProfileImageCircle(
                 size: 100.0.h,
                 user: MyPresenter.userPresenter.user,
