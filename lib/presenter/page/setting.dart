@@ -114,7 +114,7 @@ class SettingPresenter extends GetxController {
     Get.offAllNamed('/login');
   }
 
-  static void askDelete(ThemeData themeData) {
-
+  static void askDelete() {
+    deletePressed();
   }
 }

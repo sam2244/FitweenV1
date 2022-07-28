@@ -148,9 +148,11 @@ class LogOutButton extends StatelessWidget {
                   ),
                   //onPressed: () => controller.AddWeight(Theme.of(context)),
                   onPressed: SettingPresenter.logoutPressed,
-                  child: Text(
+                  child: const Text(
                     '로그아웃',
-                    style: Theme.of(context).textTheme.titleMedium,
+                    style: TextStyle(
+                      color: Colors.black,
+                    )
                   ),
                 ),
               ),
@@ -178,10 +180,12 @@ class DeleteUserButton extends StatelessWidget {
                     shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(12))),
                     primary: Theme.of(context).colorScheme.error,
                   ),
-                  onPressed: () => SettingPresenter.askDelete(Theme.of(context)),
-                  child: Text(
+                  onPressed: () => SettingPresenter.askDelete(),
+                  child: const Text(
                     '계정 삭제하기',
-                    style: Theme.of(context).textTheme.titleMedium,
+                    style: TextStyle(
+                      color: Colors.white,
+                    )
                   ),
                 ),
               ),
