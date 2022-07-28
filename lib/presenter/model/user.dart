@@ -25,4 +25,6 @@ class UserPresenter extends GetxController {
 
   // 데이터베이스에 저장
   void save() => f.collection('users').doc(loggedUser.uid).set(loggedUser.toJson());
+
+  static void deleteDB(FWUser user) => f.collection('users').doc(user.uid).delete();
 }

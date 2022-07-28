@@ -7,6 +7,7 @@ import 'package:fitweenV1/view/page/main/main.dart';
 import 'package:fitweenV1/view/page/my/my.dart';
 import 'package:fitweenV1/view/page/my_crew/my_crew.dart';
 import 'package:fitweenV1/view/page/register/register.dart';
+import 'package:fitweenV1/view/page/setting/setting.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -21,6 +22,7 @@ class FWRoute {
     '/addCrew': const AddCrewPage(),
     '/myCrew': const MyCrewPage(),
     '/my': const MyPage(),
+    '/setting': const SettingPage(),
   };
 
   static const Transition transition = Transition.fadeIn;

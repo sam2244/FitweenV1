@@ -20,14 +20,13 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
         child: Text("Fitween"),
       ),
       leadingWidth: 600.0,
-      actions: [
+      actions: const [
         IconButton(
           icon: Icon(
             Icons.settings,
-            color: Theme.of(context).colorScheme.primary,
+            color: Colors.black
           ),
-          onPressed: () {},
-          //onPressed: MyPresenter.settingPressed,
+          onPressed: MyPresenter.settingPressed,
         ),
       ],
       elevation: 0.0,
@@ -58,7 +57,7 @@ class MyProfileImage extends StatelessWidget {
                   icon: const Icon(Icons.person),
                   color: Colors.white,
                   iconSize: 45.0,
-                  onPressed: () => {},
+                  onPressed: () => controller.profileImageChange(context,Theme.of(context)),
                 ),
               ),
               /*ProfileImageCircle(
@@ -74,3 +73,4 @@ class MyProfileImage extends StatelessWidget {
     );
   }
 }
+
