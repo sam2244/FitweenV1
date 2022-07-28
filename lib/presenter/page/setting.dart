@@ -1,15 +1,16 @@
 import 'package:fitweenV1/presenter/model/user.dart';
 import 'package:fitweenV1/presenter/firebase/login/login.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 // 설정 페이지 프리젠터
 class SettingPresenter extends GetxController {
   static final userPresenter = Get.find<UserPresenter>();
-
+  //static ThemeData themeData = Theme.of(Get.context!);
   static final nameCont = TextEditingController();
 
-  /*void profileImageChange(context, ThemeData themeData) {
+  void profileImageChange(context, ThemeData themeData) {
     showModalBottomSheet<void>(
       context: context,
       shape: RoundedRectangleBorder(
@@ -18,7 +19,7 @@ class SettingPresenter extends GetxController {
       backgroundColor: Theme.of(context).colorScheme.surface,
       builder: (BuildContext context) {
         return Container(
-          height: 175,
+          height: 175.h,
           decoration: const BoxDecoration(
               color: Colors.white,
               borderRadius: BorderRadius.only(
@@ -33,41 +34,41 @@ class SettingPresenter extends GetxController {
               children: <Widget>[
                 Container(
                   margin: const EdgeInsets.fromLTRB(0.0, 10.0, 0.0, 7.5),
-                  width: 311,
+                  width: 311.w,
                   child: ElevatedButton(
                     style: ElevatedButton.styleFrom(
-                      primary: Theme.of(context).colorScheme.primary,
+                      primary: Colors.black,
                       side: BorderSide(width: 1.0, color: Theme.of(context).colorScheme.outline),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(10.0),
                       ),
                     ),
                     onPressed: () => Navigator.pop(context),
-                    child: FWText(
-                      '갤러리',
-                      size: 15.0,
-                      style: Theme.of(context).textTheme.titleMedium,
-                      color: Theme.of(context).colorScheme.onPrimary,
+                    child: const Text(
+                        '갤러리',
+                        style: TextStyle(
+                            color: Colors.white
+                        )
                     ),
                   ),
                 ),
                 Container(
                   margin: const EdgeInsets.fromLTRB(0.0, 7.5, 0.0, 10.0),
-                  width: 311,
+                  width: 311.w,
                   child: ElevatedButton(
                     style: ElevatedButton.styleFrom(
-                      primary: Theme.of(context).colorScheme.primary,
+                      primary: Colors.black,
                       side: BorderSide(width: 1.0, color: Theme.of(context).colorScheme.outline),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(10.0),
                       ),
                     ),
                     onPressed: () => Navigator.pop(context),
-                    child: FWText(
-                      '카메라',
-                      size: 15.0,
-                      style: Theme.of(context).textTheme.titleMedium,
-                      color: Theme.of(context).colorScheme.onPrimary,
+                    child: const Text(
+                        '카메라',
+                        style: TextStyle(
+                            color: Colors.white
+                        )
                     ),
                   ),
                 ),
@@ -77,7 +78,7 @@ class SettingPresenter extends GetxController {
         );
       },
     );
-  }*/
+  }
 
   // 뒤로가기 버튼 클릭 트리거
   void backPressed() {
