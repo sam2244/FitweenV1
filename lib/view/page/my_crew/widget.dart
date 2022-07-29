@@ -1,4 +1,3 @@
-import 'package:fitweenV1/presenter/page/chat.dart';
 import 'package:flutter/material.dart';
 
 class MyCrewPageAppBar extends StatelessWidget implements PreferredSizeWidget {

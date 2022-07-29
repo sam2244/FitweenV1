@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fitweenV1/model/chat.dart';
 import 'package:fitweenV1/model/crew.dart';
@@ -10,24 +12,24 @@ import 'package:get/get.dart';
 class ChatPresenter extends GetxController {
   static const imageUrl = 'https://www.iconsdb.com/icons/preview/black/guest-xxl.png';
   static final messageCont = TextEditingController();
-
-  int count = 0;
-  Crew? currentCrew;
+  static final scrollCont = ScrollController();
 
   static Future toChat(Crew crew) async {
     final chatPresenter = Get.find<ChatPresenter>();
-    chatPresenter.count = 0;
-    await chatPresenter.load(crew.code!);
     chatPresenter.currentCrew = crew;
+    await chatPresenter.loadMembers();
+    chatPresenter.load();
     Get.toNamed('/chat');
   }
 
-  List<Chat> chats = [];
+  Crew? currentCrew;
 
+  final chats = <Chat>[].obs;
   List<FWUser> get members => currentCrew?.members ?? [];
 
-  String? getImageUrl(String uid) => members.firstWhereOrNull((member) => member.uid == uid)?.imageUrl;
-  String? getNickname(String uid) => members.firstWhereOrNull((member) => member.uid == uid)?.nickname;
+  FWUser? getMember(String uid) => members.firstWhereOrNull((member) => member.uid == uid);
+  String getImageUrl(String uid) => getMember(uid)!.imageUrl!;
+  String getNickname(String uid) => getMember(uid)!.nickname!;
 
   bool isFirstChat(int index) {
     if (index < 1) return true;
@@ -44,6 +46,14 @@ class ChatPresenter extends GetxController {
     chats.add(chat); update();
   }
 
+  void scrollDown() {
+    scrollCont.animateTo(
+      scrollCont.position.maxScrollExtent + 40.0,
+      duration: const Duration(milliseconds: 500),
+      curve: Curves.fastOutSlowIn,
+    );
+  }
+
   void messageSubmitted() {
     final userPresenter = Get.find<UserPresenter>();
     if (messageCont.text == '') return;
@@ -54,30 +64,63 @@ class ChatPresenter extends GetxController {
     });
 
     addChat(chat);
-    if (count++ < 5) {
-      saveOne(chat);
-      count = 0; return;
-    }
+    saveOne(chat);
     messageCont.clear();
+    scrollDown();
   }
 
-  Future load(String code) async {
-    final jsonList = (await f
-        .collection('rooms')
-        .doc(currentCrew!.code)
-        .collection('chats')
-        .orderBy('date')
-        .get()
-    ).docs;
+  Future loadMembers() async {
+    if (currentCrew == null) return;
 
-    chats = [];
-    for (var data in jsonList) {
-      Map<String, dynamic> json = data.data();
-      addChat(Chat.fromJson(json));
+    Map<String, dynamic>? json;
+    currentCrew!.members = [];
+
+    for (String uid in currentCrew!.memberUids) {
+      json = (await f.collection('users').doc(uid).get()).data();
+      if (json == null) return;
+      currentCrew!.members.add(FWUser.fromJson(json));
     }
     update();
   }
 
+  @override
+  void onInit() async {
+    if (currentCrew == null) return;
+    chats.bindStream(streamChat());
+    super.onInit();
+  }
+
+  Stream<List<Chat>> streamChat() {
+    Stream<QuerySnapshot> stream = f.collection('rooms')
+        .doc(currentCrew!.code).collection('chats').orderBy('date').snapshots();
+
+    return stream.map((qShot) => qShot.docs.map<Chat>((doc) {
+      var json = doc.data() as Map<String, dynamic>;
+      return Chat.fromJson(json);
+    }).toList());
+  }
+
+  void load() async {
+    await for (List<Chat> chatList in streamChat()) { chats(chatList); }
+  }
+
+  // Future load(String code) async {
+  //   final jsonList = (await f
+  //       .collection('rooms')
+  //       .doc(currentCrew!.code)
+  //       .collection('chats')
+  //       .orderBy('date')
+  //       .get()
+  //   ).docs;
+  //
+  //   chats(<Chat>[].obs);
+  //   for (var data in jsonList) {
+  //     Map<String, dynamic> json = data.data();
+  //     addChat(Chat.fromJson(json));
+  //   }
+  //   update();
+  // }
+  //
   void saveOne(Chat chat) {
     f.collection('rooms')
         .doc(currentCrew!.code)

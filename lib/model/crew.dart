@@ -55,7 +55,6 @@ class Crew {
 
   Crew.fromJson(Map<String, dynamic> json) {
     fromJson(json);
-    generatePlanId();
     startDate ??= today;
     endDate ??= today;
   }
