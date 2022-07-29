@@ -19,8 +19,6 @@ class Crew {
   bool isLocked = false;
   List<String> memberUids = [];
   String? leaderUid;
-  String? leaderImageUrl;
-  String? leaderNickname;
   int memberLimit = 100;
 
   List<FWUser> members = [];
@@ -36,6 +34,25 @@ class Crew {
     endDate = today;
   }
 
+  Crew.fromMap(Map<String, dynamic> map) {
+    fromMap(map);
+  }
+
+  void fromMap(Map<String, dynamic> map) {
+    title = map['title'];
+    imageUrl = map['imageUrl'];
+    categories = map['categories'];
+    memberUids = map['memberUids'];
+  }
+
+  Map<String, dynamic> toMap() => {
+    'title' : title,
+    'imageUrl': imageUrl,
+    'categories': categories,
+    'memberUids': memberUids,
+  };
+
+
   Crew.fromJson(Map<String, dynamic> json) {
     fromJson(json);
     generatePlanId();
@@ -47,6 +64,7 @@ class Crew {
     code = json['code'];
     title = json['title'];
     desc = json['desc'];
+    imageUrl = json['imageUrl'];
     categories = (json['categories'] ?? []).cast<String>();
     tags = (json['tags'] ?? []).cast<String>();
     _startDate = json['startDate'];
@@ -54,8 +72,6 @@ class Crew {
     isLocked = json['isLocked'];
     memberUids = (json['memberUids'] ?? []).cast<String>();
     leaderUid = json['leaderUid'];
-    leaderImageUrl = json['leaderImageUrl'];
-    leaderNickname = json['leaderNickname'];
     memberLimit = json['memberLimit'];
   }
 
@@ -64,6 +80,7 @@ class Crew {
     json['code'] = code;
     json['title'] = title;
     json['desc'] = desc;
+    json['imageUrl'] = imageUrl;
     json['categories'] = categories;
     json['tags'] = tags;
     json['startDate'] = _startDate;
@@ -71,8 +88,6 @@ class Crew {
     json['isLocked'] = isLocked;
     json['memberUids'] = memberUids;
     json['leaderUid'] = leaderUid;
-    json['leaderImageUrl'] = leaderImageUrl;
-    json['leaderNickname'] = leaderNickname;
     json['memberLimit'] = memberLimit;
     return json;
   }

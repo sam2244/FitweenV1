@@ -3,7 +3,6 @@ import 'package:fitweenV1/model/chat.dart';
 import 'package:fitweenV1/model/crew.dart';
 import 'package:fitweenV1/model/user.dart';
 import 'package:fitweenV1/presenter/firebase/firebase.dart';
-import 'package:fitweenV1/presenter/model/crew.dart';
 import 'package:fitweenV1/presenter/model/user.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
@@ -13,15 +12,17 @@ class ChatPresenter extends GetxController {
   static final messageCont = TextEditingController();
 
   int count = 0;
-  Crew? currentCrew = Crew();
+  Crew? currentCrew;
 
-  static void toChat() {
+  static Future toChat(Crew crew) async {
     final chatPresenter = Get.find<ChatPresenter>();
+    chatPresenter.count = 0;
+    await chatPresenter.load(crew.code!);
+    chatPresenter.currentCrew = crew;
     Get.toNamed('/chat');
-    chatPresenter.load();
   }
 
-  final chats = <Chat>[].obs;
+  List<Chat> chats = [];
 
   List<FWUser> get members => currentCrew?.members ?? [];
 
@@ -53,25 +54,14 @@ class ChatPresenter extends GetxController {
     });
 
     addChat(chat);
-    if (count++ < 2) saveOne(chat);
+    if (count++ < 5) {
+      saveOne(chat);
+      count = 0; return;
+    }
     messageCont.clear();
   }
 
-  void load() async {
-    final crewPresenter = Get.find<CrewPresenter>();
-
-    // 'Y308YKQ'
-    currentCrew = crewPresenter.crews.firstWhereOrNull((crew) => crew.code == 'Y308YKQ');
-
-    if (currentCrew == null) return;
-
-    for (String uid in currentCrew!.memberUids) {
-      final json = (await f.collection('users').doc(uid).get()).data();
-      if (json == null) return;
-      currentCrew!.members = [];
-      currentCrew!.members.add(FWUser.fromJson(json));
-    }
-
+  Future load(String code) async {
     final jsonList = (await f
         .collection('rooms')
         .doc(currentCrew!.code)
@@ -80,16 +70,17 @@ class ChatPresenter extends GetxController {
         .get()
     ).docs;
 
-    chats.clear();
+    chats = [];
     for (var data in jsonList) {
       Map<String, dynamic> json = data.data();
       addChat(Chat.fromJson(json));
     }
+    update();
   }
 
   void saveOne(Chat chat) {
     f.collection('rooms')
-        .doc('Y308YKQ')
+        .doc(currentCrew!.code)
         .collection('chats').add(chat.toJson());
   }
 

@@ -1,16 +1,16 @@
 import 'package:fitweenV1/presenter/model/user.dart';
+import 'package:fitweenV1/presenter/firebase/login/login.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+// 설정 페이지 프리젠터
+class SettingPresenter extends GetxController {
+  static final userPresenter = Get.find<UserPresenter>();
+  //static ThemeData themeData = Theme.of(Get.context!);
+  static final nameCont = TextEditingController();
 
-// 마이 페이지 프리젠터
-class MyPresenter extends GetxController {
-
-  static ThemeData themeData = Theme.of(Get.context!);
-
-  static void profileImageChange() {
-    BuildContext context = Get.context!;
+  void profileImageChange(context, ThemeData themeData) {
     showModalBottomSheet<void>(
       context: context,
       shape: RoundedRectangleBorder(
@@ -45,10 +45,10 @@ class MyPresenter extends GetxController {
                     ),
                     onPressed: () => Navigator.pop(context),
                     child: const Text(
-                      '갤러리',
-                      style: TextStyle(
-                          color: Colors.white
-                      )
+                        '갤러리',
+                        style: TextStyle(
+                            color: Colors.white
+                        )
                     ),
                   ),
                 ),
@@ -65,10 +65,10 @@ class MyPresenter extends GetxController {
                     ),
                     onPressed: () => Navigator.pop(context),
                     child: const Text(
-                      '카메라',
-                      style: TextStyle(
-                        color: Colors.white
-                      )
+                        '카메라',
+                        style: TextStyle(
+                            color: Colors.white
+                        )
                     ),
                   ),
                 ),
@@ -80,8 +80,41 @@ class MyPresenter extends GetxController {
     );
   }
 
-  static void settingPressed() {
-    Get.toNamed('/setting');
+  // 뒤로가기 버튼 클릭 트리거
+  void backPressed() {
+    Get.back();
+  }
+
+  // 뒤로가기 버튼 클릭 트리거
+  void backPressedEditName() {
+    Get.back();
+    nameCont.clear();
+  }
+
+  Future editNameDone(String name) async {
+    if(nameCont.text != '') {
+      userPresenter.loggedUser.nickname = nameCont.text;
+      nameCont.clear();
+      Get.back();
+      update();
+    }
+  }
+
+  static void editNamePressed() {
+    Get.toNamed('/editName');
+  }
+
+  static void logoutPressed() {
+    LoginPresenter.fwLogout();
+    Get.offAllNamed('/login');
+  }
+
+  static void deletePressed() {
+    LoginPresenter.fwUserDelete();
+    Get.offAllNamed('/login');
+  }
+
+  static void askDelete() {
+    deletePressed();
   }
 }
-

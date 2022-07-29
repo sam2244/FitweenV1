@@ -105,8 +105,6 @@ class AddCrewPresenter extends GetxController {
           : '${frequency.kr.substring(1)}${timesCont.text}회',
     ];
     newCrew.leaderUid = userPresenter.loggedUser.uid!;
-    newCrew.leaderImageUrl = userPresenter.loggedUser.imageUrl;
-    newCrew.leaderNickname = userPresenter.loggedUser.nickname;
     newCrew.memberUids.add(userPresenter.loggedUser.uid!);
 
     crewPresenter.addCrew(newCrew);

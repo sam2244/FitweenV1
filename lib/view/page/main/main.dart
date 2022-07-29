@@ -1,4 +1,6 @@
+import 'package:fitweenV1/global/config/theme.dart';
 import 'package:fitweenV1/presenter/model/crew.dart';
+import 'package:fitweenV1/presenter/page/main.dart';
 import 'package:fitweenV1/view/page/main/widget.dart';
 import 'package:fitweenV1/view/widget/widget.dart';
 import 'package:flutter/material.dart';
@@ -10,25 +12,41 @@ class MainPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: const MainAppBar(),
-      body: GetBuilder<CrewPresenter>(
-        builder: (controller) {
-          return Padding(
-            padding: const EdgeInsets.all(10.0),
-            child: SingleChildScrollView(
-              child: Column(
-                children: controller.crews.map((crew) {
-                  return CrewCard(crew: crew);
-                }).toList(),
+    return GetBuilder<MainPresenter>(
+      builder: (mainCont) {
+        return Stack(
+          children: [
+            Scaffold(
+              appBar: const MainAppBar(),
+              body: Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: SingleChildScrollView(
+                  child: GetBuilder<CrewPresenter>(
+                    builder: (crewCont) {
+                      return Column(
+                        children: crewCont.crews.map((crew) {
+                          return CrewCard(crew: crew);
+                        }).toList(),
+                      );
+                    }
+                  ),
+                ),
+              ),
+              floatingActionButton: const AddCrewButton(),
+              bottomNavigationBar: const FWBottomBar(),
+            ),
+            if (mainCont.detailLoading)
+            Positioned.fill(
+              child: Container(
+                color: FWTheme.black.withOpacity(.3),
+                child: const Center(
+                  child: CircularProgressIndicator(),
+                ),
               ),
             ),
-          );
-        }
-      ),
-      //body: Center(child: Text('아직 크루가 없어요!')),
-      floatingActionButton: const AddCrewButton(),
-      bottomNavigationBar: const FWBottomBar(),
+          ],
+        );
+      }
     );
   }
 }
