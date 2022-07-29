@@ -219,13 +219,15 @@ class _MyCrewState extends State<MyCrew> {
                             ),
                           ),
                         ),
-                        Padding(
-                          padding: EdgeInsets.only(left: 8.0.w),
-                          child: ListTile(
-                            title: Text('기간',
-                              style: Theme.of(context).textTheme.labelSmall,
+                        Container(
+                          padding: EdgeInsets.only(left: 8.0.w, right: 8.0.w),
+                          child: ElevatedButton(
+                            style: TextButton.styleFrom(
+                            primary: Colors.black,
                             ),
-                          ),
+                            child: const Text('검색하기'),
+                            onPressed: () {},
+                          )
                         ),
                       ],
                     ),
