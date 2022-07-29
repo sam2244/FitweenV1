@@ -12,6 +12,7 @@ class MyPage extends StatelessWidget {
       body: Column(
         children: const [
           MyProfileImage(),
+          MyCrew(),
         ],
       ),
       bottomNavigationBar: const FWBottomBar(),
