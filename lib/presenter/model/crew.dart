@@ -1,5 +1,4 @@
 import 'package:fitweenV1/model/crew.dart';
-import 'package:fitweenV1/model/user.dart';
 import 'package:fitweenV1/presenter/firebase/firebase.dart';
 import 'package:fitweenV1/presenter/model/user.dart';
 import 'package:get/get.dart';
