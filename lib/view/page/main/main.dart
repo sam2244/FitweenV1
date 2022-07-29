@@ -5,6 +5,7 @@ import 'package:fitweenV1/view/page/main/widget.dart';
 import 'package:fitweenV1/view/widget/widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 
 class MainPage extends StatelessWidget {
@@ -20,15 +21,21 @@ class MainPage extends StatelessWidget {
               appBar: const MainAppBar(),
               body: Padding(
                 padding: const EdgeInsets.all(10.0),
-                child: SingleChildScrollView(
-                  child: GetBuilder<CrewPresenter>(
-                    builder: (crewCont) {
-                      return Column(
-                        children: crewCont.crews.map((crew) {
-                          return CrewCard(crew: crew);
-                        }).toList(),
-                      );
-                    }
+                child: SmartRefresher(
+                  enablePullUp: false,
+                  onRefresh: MainPresenter.onRefresh,
+                  onLoading: MainPresenter.onLoading,
+                  controller: MainPresenter.refreshCont,
+                  child: SingleChildScrollView(
+                    child: GetBuilder<CrewPresenter>(
+                      builder: (crewCont) {
+                        return Column(
+                          children: crewCont.crews.map((crew) {
+                            return CrewCard(crew: crew);
+                          }).toList(),
+                        );
+                      }
+                    ),
                   ),
                 ),
               ),

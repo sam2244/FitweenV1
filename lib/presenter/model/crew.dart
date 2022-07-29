@@ -24,7 +24,7 @@ class CrewPresenter extends GetxController {
     update();
   }
 
-  void load() async {
+  Future load() async {
     final jsonList = (await f.collection('crews').get()).docs;
     crews = [];
     for (var data in jsonList) {
