@@ -28,8 +28,7 @@ class MyCrewPage extends StatelessWidget {
                     onTap: () => myCrewCont.chatPressed(crewCont.myCrews[index]),
                     child: ListTile(
                       contentPadding: const EdgeInsets.symmetric(
-                        vertical: 7.0,
-                        horizontal: 15.0,
+                        vertical: 7.0, horizontal: 15.0,
                       ),
                       leading: MyCrewImage(title: crewCont.myCrews[index]),
                       title: Row(

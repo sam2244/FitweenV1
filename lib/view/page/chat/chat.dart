@@ -9,7 +9,7 @@ class ChatPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-    return GetBuilder<ChatPresenter>(
+    return GetX<ChatPresenter>(
       builder: (controller) {
         List<Widget> bubble(int index) => [
           Container(
@@ -49,6 +49,7 @@ class ChatPage extends StatelessWidget {
             children: [
               Expanded(
                 child: SingleChildScrollView(
+                  controller: ChatPresenter.scrollCont,
                   child: Column(
                     children: [
                       Column(
@@ -57,38 +58,36 @@ class ChatPage extends StatelessWidget {
                             Column(
                               children: [
                                 if (controller.isFirstChat(i) && !controller.isMyChat(i))
-                                  Padding(
-                                    padding: const EdgeInsets.symmetric(horizontal: 5.0),
-                                    child: Row(
-                                      children: [
-                                        Material(
-                                          borderRadius: BorderRadius.circular(100.0),
-                                          child: ConstrainedBox(
-                                            constraints: const BoxConstraints(
-                                              minWidth: 40.0,
-                                              minHeight: 40.0,
-                                            ),
-                                            child: InkWell(
-                                              onTap: () {},
-                                              borderRadius: BorderRadius.circular(100.0),
-                                              child: SizedBox(
-                                                width: 40.0,
-                                                height: 40.0,
-                                                child: Padding(
-                                                  padding: const EdgeInsets.all(5.0),
-                                                  child: Image.network(
-                                                    controller.getImageUrl(controller.chats[i].uid!)!,
-                                                  ),
+                                Padding(
+                                  padding: const EdgeInsets.symmetric(horizontal: 5.0),
+                                  child: Row(
+                                    children: [
+                                      Material(
+                                        borderRadius: BorderRadius.circular(100.0),
+                                        child: ConstrainedBox(
+                                          constraints: const BoxConstraints(
+                                            minWidth: 40.0, minHeight: 40.0,
+                                          ),
+                                          child: InkWell(
+                                            onTap: () {},
+                                            borderRadius: BorderRadius.circular(100.0),
+                                            child: SizedBox(
+                                              width: 40.0, height: 40.0,
+                                              child: Padding(
+                                                padding: const EdgeInsets.all(5.0),
+                                                child: Image.network(
+                                                  controller.getImageUrl(controller.chats[i].uid!),
                                                 ),
                                               ),
                                             ),
                                           ),
                                         ),
-                                        const SizedBox(width: 10.0),
-                                        Text(controller.getNickname(controller.chats[i].uid!)!),
-                                      ],
-                                    ),
+                                      ),
+                                      const SizedBox(width: 10.0),
+                                      Text(controller.getNickname(controller.chats[i].uid!)),
+                                    ],
                                   ),
+                                ),
                                 Padding(
                                   padding: const EdgeInsets.fromLTRB(60.0, 0.0, 20.0, 5.0),
                                   child: Row(
