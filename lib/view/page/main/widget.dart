@@ -27,7 +27,7 @@ class MainAppBar extends StatelessWidget implements PreferredSizeWidget {
       actions: const [
         IconButton(
           icon: Icon(Icons.search),
-          onPressed: MainPresenter.searchButtonPressed,
+          onPressed: MainPresenter.searchIconPressed,
         ),
       ],
     );
