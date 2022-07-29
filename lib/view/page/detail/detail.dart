@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../../model/crew.dart';
+import '../../../presenter/page/my_crew.dart';
 
 class DetailPage extends StatelessWidget {
   const DetailPage({Key? key}) : super(key: key);
@@ -11,6 +12,8 @@ class DetailPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // Get.toNamed('/detail', arguments: crew);
+    final myCrewCont = Get.find<MyCrewPresenter>();
+
     return Scaffold(
       body: const Detail(),
       bottomNavigationBar: BottomAppBar(
@@ -44,7 +47,10 @@ class DetailPage extends StatelessWidget {
                 ),
                 Expanded(
                   child: InkWell(
-                    onTap: controller.submitted,
+                    onTap: () {
+                      controller.submitted;
+                      myCrewCont.chatPressed(controller.selectedCrew);
+                    },
                     child: Container(
                       height: 48.0,
                       color: Colors.black,

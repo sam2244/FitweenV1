@@ -8,9 +8,8 @@ import 'package:pull_to_refresh/pull_to_refresh.dart';
 class MainPresenter extends GetxController {
   static final refreshCont = RefreshController(initialRefresh: false);
 
-  static void toMain() async {
+  static void toMain() {
     final crewPresenter = Get.find<CrewPresenter>();
-    await crewPresenter.load();
     Get.offAllNamed('/main');
   }
 

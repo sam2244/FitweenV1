@@ -8,7 +8,7 @@ import 'package:get/get.dart';
 class MyCrewPresenter extends GetxController {
   static void toMyCrew() async {
     final myCrewPresenter = Get.find<MyCrewPresenter>();
-    await myCrewPresenter.getLatestChats();
+    await myCrewPresenter.loadLatestChats();
     Get.offAllNamed('/myCrew');
   }
 
@@ -25,10 +25,10 @@ class MyCrewPresenter extends GetxController {
 
   List<Chat> latestChats = [];
 
-  Future getLatestChats() async {
+  Future loadLatestChats() async {
     final crewPresenter = Get.find<CrewPresenter>();
 
-    latestChats = [];
+    if (latestChats.isNotEmpty) return;
     for (Crew crew in crewPresenter.myCrews) {
       final jsonList = (await f.collection('rooms').doc(crew.code)
           .collection('chats').orderBy('date', descending: true).get()).docs;
