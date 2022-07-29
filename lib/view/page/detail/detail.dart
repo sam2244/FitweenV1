@@ -12,55 +12,56 @@ class DetailPage extends StatelessWidget {
   Widget build(BuildContext context) {
     // Get.toNamed('/detail', arguments: crew);
     return Scaffold(
-      body: Detail(),
+      body: const Detail(),
       bottomNavigationBar: BottomAppBar(
-        child: Row(
-          children: [
-            Container(
-              width: 120.0,
-              height: 48.0,
-              color: Colors.grey.shade400,
-              padding: const EdgeInsets.all(8.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Icon(
-                    Icons.person_outline,
-                    size: 24,
-                    color: Colors.grey.shade800,
-                  ),
-                  const SizedBox(width: 8.0),
-                  GetBuilder<DetailPresenter>(
-                    builder: (controller) {
-                      return Text('${controller.selectedCrew.members.length}',
+        child: GetBuilder<DetailPresenter>(
+          builder: (controller) {
+            return Row(
+              children: [
+                Container(
+                  width: 120.0,
+                  height: 48.0,
+                  color: Colors.grey.shade400,
+                  padding: const EdgeInsets.all(8.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(
+                        Icons.person_outline,
+                        size: 24,
+                        color: Colors.grey.shade800,
+                      ),
+                      const SizedBox(width: 8.0),
+                      Text(
+                        '${controller.selectedCrew.members.length}',
                         style: TextStyle(
                           fontSize: 16.0,
                           color: Colors.grey.shade800,
                         ),
-                      );
-                    }
+                      ),
+                    ],
                   ),
-                ],
-              ),
-            ),
-            Expanded(
-              child: InkWell(
-                onTap: () => print('Pressed'),
-                child: Container(
-                  height: 48.0,
-                  color: Colors.black,
-                  alignment: Alignment.center,
-                  child: const Text(
-                    '크루 참여하기',
-                    style: TextStyle(
-                      fontSize: 16.0,
-                      color: Colors.white,
+                ),
+                Expanded(
+                  child: InkWell(
+                    onTap: controller.submitted,
+                    child: Container(
+                      height: 48.0,
+                      color: Colors.black,
+                      alignment: Alignment.center,
+                      child: const Text(
+                        '크루 참여하기',
+                        style: TextStyle(
+                          fontSize: 16.0,
+                          color: Colors.white,
+                        ),
+                      ),
                     ),
                   ),
                 ),
-              ),
-            ),
-          ],
+              ],
+            );
+          },
         ),
       ),
     );

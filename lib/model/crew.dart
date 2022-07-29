@@ -46,12 +46,11 @@ class Crew {
   }
 
   Map<String, dynamic> toMap() => {
-    'title' : title,
-    'imageUrl': imageUrl,
-    'categories': categories,
-    'memberUids': memberUids,
-  };
-
+        'title': title,
+        'imageUrl': imageUrl,
+        'categories': categories,
+        'memberUids': memberUids,
+      };
 
   Crew.fromJson(Map<String, dynamic> json) {
     fromJson(json);
@@ -95,9 +94,11 @@ class Crew {
     int length = 7;
     const String chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890';
     code = String.fromCharCodes(
-      Iterable.generate(length, (_) => chars.codeUnitAt(
-        Random().nextInt(chars.length),
-      )),
+      Iterable.generate(
+          length,
+          (_) => chars.codeUnitAt(
+                Random().nextInt(chars.length),
+              )),
     );
   }
 
