@@ -20,6 +20,7 @@ class ChatPresenter extends GetxController {
     await chatPresenter.loadMembers();
     chatPresenter.load();
     Get.toNamed('/chat');
+    chatPresenter.scrollDown();
   }
 
   Crew? currentCrew;
@@ -47,8 +48,10 @@ class ChatPresenter extends GetxController {
   }
 
   void scrollDown() {
+    double scrollOffset = scrollCont.position.maxScrollExtent;
+    if (scrollOffset > 0) scrollOffset += 40.0;
     scrollCont.animateTo(
-      scrollCont.position.maxScrollExtent + 40.0,
+      scrollOffset,
       duration: const Duration(milliseconds: 500),
       curve: Curves.fastOutSlowIn,
     );

@@ -3,12 +3,15 @@ import 'package:fitweenV1/presenter/model/crew.dart';
 import 'package:fitweenV1/presenter/page/add_crew/add_crew.dart';
 import 'package:fitweenV1/presenter/page/detail.dart';
 import 'package:get/get.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 class MainPresenter extends GetxController {
-  static void toMain() {
+  static final refreshCont = RefreshController(initialRefresh: false);
+
+  static void toMain() async {
     final crewPresenter = Get.find<CrewPresenter>();
+    await crewPresenter.load();
     Get.offAllNamed('/main');
-    crewPresenter.load();
   }
 
   // 크루 생성 버튼 클릭 시
@@ -18,6 +21,17 @@ class MainPresenter extends GetxController {
     addCrewPresenter.newCrew = Crew();
   }
   static void searchButtonPressed() {}
+
+  static void onRefresh() async {
+    final crewPresenter = Get.find<CrewPresenter>();
+    await crewPresenter.load();
+    refreshCont.refreshCompleted();
+  }
+
+  static void onLoading() async {
+    await Future.delayed(const Duration(milliseconds: 1000));
+    refreshCont.loadComplete();
+  }
 
   bool detailLoading = false;
 
