@@ -19,7 +19,11 @@ class MainPresenter extends GetxController {
     Get.toNamed('/addCrew');
     addCrewPresenter.newCrew = Crew();
   }
-  static void searchButtonPressed() {}
+
+  //검색 버튼 클릭 시
+  static void searchIconPressed() {
+    Get.toNamed('/search');
+  }
 
   static void onRefresh() async {
     final crewPresenter = Get.find<CrewPresenter>();
