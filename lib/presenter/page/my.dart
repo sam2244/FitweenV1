@@ -8,9 +8,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 class MyPresenter extends GetxController {
 
   static ThemeData themeData = Theme.of(Get.context!);
-  static final userPresenter = Get.find<UserPresenter>();
 
-  void profileImageChange(context, ThemeData themeData) {
+  static void profileImageChange() {
+    BuildContext context = Get.context!;
     showModalBottomSheet<void>(
       context: context,
       shape: RoundedRectangleBorder(

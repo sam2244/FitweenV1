@@ -1,3 +1,4 @@
+import 'package:fitweenV1/global/config/theme.dart';
 import 'package:flutter/material.dart';
 import '../../model/crew.dart';
 
@@ -15,8 +16,17 @@ class MyCrewImage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AspectRatio(
-      aspectRatio: 16/16,
-      child: Image.network(title.imageUrl!, fit: BoxFit.fill,),
+      aspectRatio: 1.0,
+      child: title.imageUrl == null
+          ? Container(
+        color: FWTheme.grey.withOpacity(.3),
+        child: const Center(
+          child: Icon(Icons.photo,
+            size: 20.0,
+            color: FWTheme.grey,
+          ),
+        ),
+      ) : Image.network(title.imageUrl!, fit: BoxFit.fill),
     );
   }
 }

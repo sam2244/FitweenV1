@@ -1,10 +1,11 @@
+import 'package:fitweenV1/presenter/page/chat.dart';
 import 'package:flutter/material.dart';
 
 class MyCrewPageAppBar extends StatelessWidget implements PreferredSizeWidget {
   const MyCrewPageAppBar({Key? key}) : super(key: key);
 
   @override
-  Size get preferredSize => const Size.fromHeight(110);
+  Size get preferredSize => const Size.fromHeight(110.0);
 
   @override
   Widget build(BuildContext context) {
@@ -14,7 +15,8 @@ class MyCrewPageAppBar extends StatelessWidget implements PreferredSizeWidget {
       title: Text('마이크루', style: Theme.of(context).textTheme.headlineMedium),
       actions: [
         IconButton(
-          onPressed: () {}, icon: const Icon(Icons.search),
+          onPressed: () {},
+          icon: const Icon(Icons.search),
           color: Theme.of(context).colorScheme.primary,
         ),
       ],

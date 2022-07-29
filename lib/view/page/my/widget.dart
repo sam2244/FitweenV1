@@ -1,3 +1,5 @@
+import 'package:fitweenV1/global/config/theme.dart';
+import 'package:fitweenV1/presenter/model/user.dart';
 import 'package:fitweenV1/presenter/page/my.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -39,7 +41,7 @@ class MyProfileImage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<MyPresenter>(
+    return GetBuilder<UserPresenter>(
       builder: (controller) {
         return Column(
           children: [
@@ -53,20 +55,24 @@ class MyProfileImage extends StatelessWidget {
                     borderRadius:
                     BorderRadius.all(Radius.circular(100)) //모서리를 둥글게
                 ),
-                child: IconButton(
-                  icon: const Icon(Icons.person),
-                  color: Colors.white,
-                  iconSize: 50.0,
-                  onPressed: () => controller.profileImageChange(context,Theme.of(context)),
+                child: Material(
+                  child: InkWell(
+                    borderRadius: BorderRadius.circular(50.0),
+                    onTap: MyPresenter.profileImageChange,
+                    child: Container(
+                      padding: const EdgeInsets.all(8.0),
+                      decoration: BoxDecoration(
+                        color: FWTheme.black.withOpacity(.1),
+                        borderRadius: BorderRadius.circular(50.0),
+                      ),
+                      child: Image.network(controller.loggedUser.imageUrl!,
+                      ),
+                    ),
+                  ),
                 ),
               ),
-              /*ProfileImageCircle(
-                size: 100.0.h,
-                user: MyPresenter.userPresenter.user,
-                //onPressed: () => controller.profileImagePressed(Theme.of(context)),
-              ),*/
             ),
-            Text(MyPresenter.userPresenter.loggedUser.nickname!),
+            Text(controller.loggedUser.nickname!),
           ],
         );
       },

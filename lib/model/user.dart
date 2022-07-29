@@ -17,7 +17,7 @@ class FWUser {
   Sex? sex;
   Timestamp? _regDate;
   Timestamp? _dateOfBirth;
-  String? imageUrl =  MyCrewPresenter.defaultProfile;
+  String? imageUrl;
   List<String> ongoingIds = [];
   List<String> doneIds = [];
   List<String> friendUids = [];

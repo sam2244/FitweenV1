@@ -1,5 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fitweenV1/model/chat.dart';
+import 'package:fitweenV1/model/crew.dart';
+import 'package:fitweenV1/model/user.dart';
+import 'package:fitweenV1/presenter/firebase/firebase.dart';
 import 'package:fitweenV1/presenter/model/user.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
@@ -8,71 +11,23 @@ class ChatPresenter extends GetxController {
   static const imageUrl = 'https://www.iconsdb.com/icons/preview/black/guest-xxl.png';
   static final messageCont = TextEditingController();
 
-  List<Chat> chats = [
-    Chat.fromJson({
-      'date': Timestamp.fromDate(DateTime(2022, 7, 26, 15, 0, 0)),
-      'text': '안녕하세요',
-      'uid': 'a',
-      'userImageUrl': imageUrl,
-      'userNickname': '현승준',
-    }),
-    Chat.fromJson({
-      'date': Timestamp.fromDate(DateTime(2022, 7, 26, 15, 0, 0)),
-      'text': '상윤햄 바보',
-      'uid': 'a',
-      'userImageUrl': imageUrl,
-      'userNickname': '현승준',
-    }),
-    Chat.fromJson({
-      'date': Timestamp.fromDate(DateTime(2022, 7, 26, 15, 4, 32)),
-      'text': '그롬그롬',
-      'uid': 'b',
-      'userImageUrl': imageUrl,
-      'userNickname': '한상윤',
-    }),
-    Chat.fromJson({
-      'date': Timestamp.fromDate(DateTime(2022, 7, 26, 15, 6, 34)),
-      'text': '크롱크롱',
-      'uid': 'c',
-      'userImageUrl': imageUrl,
-      'userNickname': '정윤석',
-    }),
-    Chat.fromJson({
-      'date': Timestamp.fromDate(DateTime(2022, 7, 26, 15, 11, 5)),
-      'text': '크롱크롱크롱',
-      'uid': 'd',
-      'userImageUrl': imageUrl,
-      'userNickname': '이하준',
-    }),
-    Chat.fromJson({
-      'date': Timestamp.fromDate(DateTime(2022, 7, 26, 15, 6, 34)),
-      'text': '크롱크롱',
-      'uid': 'd',
-      'userImageUrl': imageUrl,
-      'userNickname': '이하준',
-    }),
-    Chat.fromJson({
-      'date': Timestamp.fromDate(DateTime(2022, 7, 26, 15, 11, 2)),
-      'text': '크롱크롱',
-      'uid': 'a',
-      'userImageUrl': imageUrl,
-      'userNickname': '현승준',
-    }),
-    Chat.fromJson({
-      'date': Timestamp.fromDate(DateTime(2022, 7, 26, 15, 11, 5)),
-      'text': '크롱크롱크롱',
-      'uid': 'b',
-      'userImageUrl': imageUrl,
-      'userNickname': '한상윤',
-    }),
-    Chat.fromJson({
-      'date': Timestamp.fromDate(DateTime(2022, 7, 26, 15, 6, 34)),
-      'text': '크롱크롱',
-      'uid': 'e',
-      'userImageUrl': imageUrl,
-      'userNickname': '최복원',
-    }),
-  ];
+  int count = 0;
+  Crew? currentCrew;
+
+  static Future toChat(Crew crew) async {
+    final chatPresenter = Get.find<ChatPresenter>();
+    chatPresenter.count = 0;
+    await chatPresenter.load(crew.code!);
+    chatPresenter.currentCrew = crew;
+    Get.toNamed('/chat');
+  }
+
+  List<Chat> chats = [];
+
+  List<FWUser> get members => currentCrew?.members ?? [];
+
+  String? getImageUrl(String uid) => members.firstWhereOrNull((member) => member.uid == uid)?.imageUrl;
+  String? getNickname(String uid) => members.firstWhereOrNull((member) => member.uid == uid)?.nickname;
 
   bool isFirstChat(int index) {
     if (index < 1) return true;
@@ -85,19 +40,48 @@ class ChatPresenter extends GetxController {
     return userPresenter.loggedUser.uid == chats[index].uid;
   }
 
-  void addChat() {
-    final userPresenter = Get.find<UserPresenter>();
+  void addChat(Chat chat) {
+    chats.add(chat); update();
+  }
 
+  void messageSubmitted() {
+    final userPresenter = Get.find<UserPresenter>();
     if (messageCont.text == '') return;
-    chats.add(Chat.fromJson({
+    Chat chat = Chat.fromJson({
       'date': Timestamp.now(),
       'text': messageCont.text,
       'uid': userPresenter.loggedUser.uid,
-      'userNickname': userPresenter.loggedUser.nickname,
-      'userImageUrl': userPresenter.loggedUser.imageUrl,
-    }));
+    });
+
+    addChat(chat);
+    if (count++ < 5) {
+      saveOne(chat);
+      count = 0; return;
+    }
     messageCont.clear();
+  }
+
+  Future load(String code) async {
+    final jsonList = (await f
+        .collection('rooms')
+        .doc(currentCrew!.code)
+        .collection('chats')
+        .orderBy('date')
+        .get()
+    ).docs;
+
+    chats = [];
+    for (var data in jsonList) {
+      Map<String, dynamic> json = data.data();
+      addChat(Chat.fromJson(json));
+    }
     update();
+  }
+
+  void saveOne(Chat chat) {
+    f.collection('rooms')
+        .doc(currentCrew!.code)
+        .collection('chats').add(chat.toJson());
   }
 
 }

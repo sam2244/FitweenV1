@@ -1,10 +1,10 @@
 import 'package:fitweenV1/model/crew.dart';
 import 'package:fitweenV1/presenter/model/crew.dart';
 import 'package:fitweenV1/presenter/page/add_crew/add_crew.dart';
+import 'package:fitweenV1/presenter/page/detail.dart';
 import 'package:get/get.dart';
 
-class MainPresenter {
-
+class MainPresenter extends GetxController {
   static void toMain() {
     final crewPresenter = Get.find<CrewPresenter>();
     Get.offAllNamed('/main');
@@ -18,6 +18,14 @@ class MainPresenter {
     addCrewPresenter.newCrew = Crew();
   }
   static void searchButtonPressed() {}
+
+  bool detailLoading = false;
+
+  void cardPressed(Crew crew) async {
+    detailLoading = true; update();
+    await DetailPresenter.toDetail(crew);
+    detailLoading = false; update();
+  }
 
   // Crew crew = Crew.fromJson({
   //   'title': 'title',

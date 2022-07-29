@@ -1,3 +1,4 @@
+import 'package:fitweenV1/presenter/page/detail.dart';
 import 'package:fitweenV1/view/page/detail/widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -10,10 +11,8 @@ class DetailPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // Get.toNamed('/detail', arguments: crew);
-    Crew crew = Get.arguments;
-    int memberNum = crew.memberUids.length;
     return Scaffold(
-      body: Detail(crew: crew),
+      body: Detail(),
       bottomNavigationBar: BottomAppBar(
         child: Row(
           children: [
@@ -31,21 +30,22 @@ class DetailPage extends StatelessWidget {
                     color: Colors.grey.shade800,
                   ),
                   const SizedBox(width: 8.0),
-                  Text(
-                    '$memberNum',
-                    style: TextStyle(
-                      fontSize: 16.0,
-                      color: Colors.grey.shade800,
-                    ),
+                  GetBuilder<DetailPresenter>(
+                    builder: (controller) {
+                      return Text('${controller.selectedCrew.members.length}',
+                        style: TextStyle(
+                          fontSize: 16.0,
+                          color: Colors.grey.shade800,
+                        ),
+                      );
+                    }
                   ),
                 ],
               ),
             ),
             Expanded(
               child: InkWell(
-                onTap: () {
-                  print('Pressed');
-                },
+                onTap: () => print('Pressed'),
                 child: Container(
                   height: 48.0,
                   color: Colors.black,
