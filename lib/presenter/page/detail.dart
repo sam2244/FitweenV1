@@ -1,12 +1,15 @@
 import 'package:fitweenV1/model/crew.dart';
 import 'package:fitweenV1/model/user.dart';
 import 'package:fitweenV1/presenter/firebase/firebase.dart';
+import 'package:fitweenV1/presenter/model/crew.dart';
+import 'package:fitweenV1/presenter/model/user.dart';
 import 'package:get/get.dart';
 
 class DetailPresenter extends GetxController {
   Crew selectedCrew = Crew();
 
-  FWUser get leader => selectedCrew.members.firstWhere((member) => member.uid == selectedCrew.leaderUid);
+  FWUser get leader => selectedCrew.members
+      .firstWhere((member) => member.uid == selectedCrew.leaderUid);
 
   static Future toDetail(Crew crew) async {
     final detailPresenter = Get.find<DetailPresenter>();
@@ -22,5 +25,17 @@ class DetailPresenter extends GetxController {
       if (json == null) return;
       selectedCrew.members.add(FWUser.fromJson(json));
     }
+  }
+
+  void submitted() async {
+    final userPresenter = Get.find<UserPresenter>();
+    final crewPresenter = Get.find<CrewPresenter>();
+
+    if (!selectedCrew.memberUids.contains(userPresenter.loggedUser.uid!)) {
+      selectedCrew.memberUids.add(userPresenter.loggedUser.uid!);
+    }
+    crewPresenter.saveOne(selectedCrew);
+    await loadMembers();
+    update();
   }
 }
