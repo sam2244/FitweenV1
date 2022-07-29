@@ -107,15 +107,35 @@ class SettingPresenter extends GetxController {
 
   static void logoutPressed() {
     LoginPresenter.fwLogout();
-    Get.offAllNamed('/login');
   }
 
   static void deletePressed() {
     LoginPresenter.fwUserDelete();
-    Get.offAllNamed('/login');
   }
 
-  static void askDelete() {
-    deletePressed();
+  static void askDelete(ThemeData themeData) {
+    Get.dialog(
+        AlertDialog(
+          title: const Text('계정 삭제 확인'),
+          content: SingleChildScrollView(
+            child: ListBody(
+              children: const <Widget>[
+                Text('계정을 정말 삭제하시겠습니까?'),
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            TextButton(
+              child: Text('확인',
+              style: TextStyle(
+                  color: themeData.colorScheme.error,
+              )),
+              onPressed: () {
+                deletePressed();
+              },
+            ),
+          ],
+        )
+    );
   }
 }

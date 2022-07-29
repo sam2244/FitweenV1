@@ -194,7 +194,7 @@ class DeleteUserButton extends StatelessWidget {
                     shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(12))),
                     primary: Theme.of(context).colorScheme.error,
                   ),
-                  onPressed: () => SettingPresenter.askDelete(),
+                  onPressed: () => SettingPresenter.askDelete(Theme.of(context)),
                   child: const Text(
                     '계정 삭제하기',
                     style: TextStyle(
