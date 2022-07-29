@@ -15,7 +15,13 @@ class GlobalPresenter extends GetxController {
 
   void navigate(int index) {
     navIndex = index;
-    Get.offAllNamed(['/main', '/myCrew', '/my'][navIndex]);
+
+    switch (navIndex) {
+      case 0: MainPresenter.toMain(); break;
+      case 1: MyCrewPresenter.toMyCrew(); break;
+      case 2: MyPresenter.toMy(); break;
+    }
+
     update();
   }
 

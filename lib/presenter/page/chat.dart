@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:ui';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -48,13 +49,19 @@ class ChatPresenter extends GetxController {
   }
 
   void scrollDown() {
-    double scrollOffset = scrollCont.position.maxScrollExtent;
-    if (scrollOffset > 0) scrollOffset += 40.0;
-    scrollCont.animateTo(
-      scrollOffset,
-      duration: const Duration(milliseconds: 500),
-      curve: Curves.fastOutSlowIn,
-    );
+    if (scrollCont.hasClients) {
+      double scrollOffset = scrollCont.position.maxScrollExtent;
+      if (scrollOffset > 0) scrollOffset += 40.0;
+      scrollCont.animateTo(
+        scrollOffset,
+        duration: const Duration(milliseconds: 500),
+        curve: Curves.fastOutSlowIn,
+      );
+    }
+    else {
+      Timer(const Duration(milliseconds: 200), () => scrollDown());
+    }
+
   }
 
   void messageSubmitted() {

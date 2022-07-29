@@ -6,6 +6,7 @@ import 'package:fitweenV1/view/widget/image.dart';
 import 'package:fitweenV1/view/widget/widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 
 class MyCrewPage extends StatelessWidget {
   const MyCrewPage({Key? key}) : super(key: key);
@@ -23,7 +24,6 @@ class MyCrewPage extends StatelessWidget {
               body: ListView.builder(
                 itemCount: crewCont.myCrews.length,
                 itemBuilder: (context, index) {
-                  final myCrewCont = Get.find<MyCrewPresenter>();
                   return InkWell(
                     onTap: () => myCrewCont.chatPressed(crewCont.myCrews[index]),
                     child: ListTile(
@@ -50,29 +50,34 @@ class MyCrewPage extends StatelessWidget {
                                     padding: const EdgeInsets.only(right: 5.0),
                                     child: Text('${crewCont.myCrews[index].memberUids.length}',
                                       style: const TextStyle(
-                                          color: Colors.grey,
-                                          fontSize: 14.0,
-                                          fontWeight: FontWeight.w500),
+                                        color: Colors.grey,
+                                        fontSize: 14.0,
+                                        fontWeight: FontWeight.w500,
+                                      ),
                                     ),
                                   ),
                                   if (crewCont.myCrews[index].isLocked)
-                                    const Icon(Icons.lock, size: 14.0),
+                                  const Icon(Icons.lock, size: 14.0),
                                   const Icon(Icons.notifications_active_outlined, size: 14.0),
-
                                 ],
                               ),
-                              const Padding(
-                                padding: EdgeInsets.only(top: 8.0),
-                                child: Text('다들 오늘 식단하셨나요', style: TextStyle(color: Colors.grey, fontSize: 12.0),),
+                              Padding(
+                                padding: const EdgeInsets.only(top: 8.0),
+                                child: Text(myCrewCont.latestChats[index].text ?? '',
+                                  style: const TextStyle(
+                                    color: Colors.grey,
+                                    fontSize: 12.0,
+                                  ),
+                                ),
                               )
                             ],
                           ),
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.end,
                             children: [
-                              const Text(
-                                '오후 7:43',
-                                style: TextStyle(
+                              if (myCrewCont.latestChats[index].date != null)
+                              Text(DateFormat('a h:mm').format(myCrewCont.latestChats[index].date!),
+                                style: const TextStyle(
                                   color: Colors.grey,
                                   fontSize: 12.0,
                                 ),
