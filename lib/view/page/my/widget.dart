@@ -142,55 +142,98 @@ class MyCrew extends StatefulWidget {
 }
 
 class _MyCrewState extends State<MyCrew> {
+  bool ContinueChecked = false;
+  bool DoneChecked = false;
+
   @override
   Widget build(BuildContext context) {
-    bool ContinueChecked = false;
-    bool DoneChecked = false;
 
     return GetBuilder<UserPresenter>(
         builder: (controller) {
           return Column(
             children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              ListView(
+                scrollDirection: Axis.vertical,
+                shrinkWrap: true,
                 children: [
-                  Padding(
-                    padding: EdgeInsets.only(left: 24.0.h),
-                    child: Text("나의 크루",
-                      style: Theme.of(context).textTheme.headlineMedium,
-                    ),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.all(11.0.h),
-                    child: Row(
-                      children: [
-                        Checkbox(
-                          value: ContinueChecked,
-                          onChanged: (bool? value) {
-                            setState(() {
-                              ContinueChecked = value!;
-                            });
-                          },
+                  Theme(
+                    data: Theme.of(context).copyWith(dividerColor: Colors.transparent),
+                    child: ExpansionTile(
+                      trailing: Padding(
+                          padding: EdgeInsets.only(right:8.0.w),
+                          child: const Icon(Icons.manage_search,
+                              color: Colors.black
+                          )
+                      ),
+                      title: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Padding(
+                            padding: EdgeInsets.only(left: 8.0.w),
+                            child: Text("나의 크루",
+                              style: Theme.of(context).textTheme.headlineMedium,
+                            ),
+                          ),
+                          Row(
+                            children: [
+                              Checkbox(
+                                value: ContinueChecked,
+                                onChanged: (bool? value) {
+                                  setState(() {
+                                    ContinueChecked = value!;
+                                  });
+                                },
+                              ),
+                              Text("진행중",
+                                style: Theme.of(context).textTheme.labelSmall,
+                              ),
+                              Checkbox(
+                                value: DoneChecked,
+                                onChanged: (bool? value) {
+                                  setState(() {
+                                    DoneChecked = value!;
+                                  });
+                                },
+                              ),
+                              Text("완료됨",
+                                style: Theme.of(context).textTheme.labelSmall,
+                              )
+                            ],
+                          ),
+                        ],
+                      ),
+                      children: <Widget>[
+                        Padding(
+                          padding: EdgeInsets.only(left: 8.0.w),
+                          child: ListTile(
+                            title: Text('기간',
+                              style: Theme.of(context).textTheme.labelSmall,
+                            ),
+                          ),
                         ),
-                        const Text("진행중"),
-                        Checkbox(
-                          value: DoneChecked,
-                          onChanged: (bool? value) {
-                            setState(() {
-                              DoneChecked = value!;
-                            });
-                          },
+                        Padding(
+                          padding: EdgeInsets.only(left: 8.0.w),
+                          child: ListTile(
+                            title: Text('기간',
+                              style: Theme.of(context).textTheme.labelSmall,
+                            ),
+                          ),
                         ),
-                        const Text("완료됨")
+                        Container(
+                          padding: EdgeInsets.only(left: 8.0.w, right: 8.0.w),
+                          child: ElevatedButton(
+                            style: TextButton.styleFrom(
+                            primary: Colors.black,
+                            ),
+                            child: const Text('검색하기'),
+                            onPressed: () {},
+                          )
+                        ),
                       ],
                     ),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.only(right:24.0.h),
-                    child: const Icon(Icons.manage_search)
-                  ),
+                  )
                 ],
-              )
+              ),
             ],
           );
         }
