@@ -75,7 +75,7 @@ class MyProfileImageButton extends StatelessWidget {
                 ),
               ),
               TextButton.icon(
-                onPressed: () => SettingPresenter.profileImageChange,
+                onPressed: SettingPresenter.profileImageChange,
                 label: const Icon(Icons.add_photo_alternate_outlined, size: 24),
                 icon: Text("사진 변경",
                     style: Theme.of(context).textTheme.labelLarge,
