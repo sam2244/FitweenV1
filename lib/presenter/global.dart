@@ -5,6 +5,7 @@ import 'package:fitweenV1/presenter/page/chat.dart';
 import 'package:fitweenV1/presenter/page/detail.dart';
 import 'package:fitweenV1/presenter/page/main.dart';
 import 'package:fitweenV1/presenter/page/my.dart';
+import 'package:fitweenV1/presenter/page/search.dart';
 import 'package:fitweenV1/presenter/page/setting.dart';
 import 'package:fitweenV1/presenter/page/my_crew.dart';
 import 'package:fitweenV1/presenter/page/register.dart';
@@ -30,6 +31,7 @@ class GlobalPresenter extends GetxController {
     Get.put(AddCrewPresenter());
     Get.put(MyPresenter());
     Get.put(MyCrewPresenter());
+    Get.put(SearchPresenter());
     Get.put(SettingPresenter());
   }
 }

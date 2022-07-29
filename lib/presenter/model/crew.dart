@@ -7,9 +7,17 @@ class CrewPresenter extends GetxController {
   List<Crew> crews = [];
 
   List<Crew> get myCrews => crews.where((crew) {
-        return crew.memberUids
-            .contains(Get.find<UserPresenter>().loggedUser.uid);
-      }).toList();
+    return crew.memberUids
+        .contains(Get.find<UserPresenter>().loggedUser.uid);
+  }).toList();
+
+  List<Crew> getSearchedCrews(String keyword) {
+    List<Crew> filteredCrews = [];
+    for (Crew crew in crews) {
+      if (crew.title!.contains(keyword)) filteredCrews.add(crew);
+    }
+    return filteredCrews;
+  }
 
   void addCrew(Crew crew) {
     crews.add(crew);
