@@ -48,8 +48,8 @@ class MyProfileImage extends StatelessWidget {
             Padding(
               padding: EdgeInsets.all(16.0.h),
               child: Container(
-                width: 70,
-                height: 70,
+                width: 100,
+                height: 100,
                 decoration: const BoxDecoration(
                     color: Colors.black,
                     borderRadius:
@@ -60,12 +60,14 @@ class MyProfileImage extends StatelessWidget {
                     borderRadius: BorderRadius.circular(50.0),
                     onTap: MyPresenter.profileImageChange,
                     child: Container(
-                      padding: const EdgeInsets.all(8.0),
+                      //padding: const EdgeInsets.all(8.0),
                       decoration: BoxDecoration(
                         color: FWTheme.black.withOpacity(.1),
                         borderRadius: BorderRadius.circular(50.0),
                       ),
-                      child: Image.network(controller.loggedUser.imageUrl!,
+                      child: CircleAvatar(
+                        backgroundImage:
+                          NetworkImage(controller.loggedUser.imageUrl!),
                       ),
                     ),
                   ),

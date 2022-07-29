@@ -10,7 +10,8 @@ class SettingPresenter extends GetxController {
   //static ThemeData themeData = Theme.of(Get.context!);
   static final nameCont = TextEditingController();
 
-  void profileImageChange(context, ThemeData themeData) {
+  static void profileImageChange() {
+    BuildContext context = Get.context!;
     showModalBottomSheet<void>(
       context: context,
       shape: RoundedRectangleBorder(

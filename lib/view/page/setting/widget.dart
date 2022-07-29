@@ -1,3 +1,5 @@
+import 'package:fitweenV1/global/config/theme.dart';
+import 'package:fitweenV1/presenter/model/user.dart';
 import 'package:fitweenV1/presenter/page/setting.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -39,30 +41,41 @@ class MyProfileImageButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<SettingPresenter>(
+    return GetBuilder<UserPresenter>(
         builder: (controller) {
           return Column(
             children: [
               Padding(
                 padding: EdgeInsets.all(16.0.h),
                 child: Container(
-                  width: 70,
-                  height: 70,
+                  width: 100,
+                  height: 100,
                   decoration: const BoxDecoration(
                       color: Colors.black,
                       borderRadius:
                       BorderRadius.all(Radius.circular(100)) //모서리를 둥글게
                   ),
-                  child: IconButton(
-                    icon: const Icon(Icons.person),
-                    color: Colors.white,
-                    iconSize: 50.0,
-                    onPressed: () => controller.profileImageChange(context,Theme.of(context)),
+                  child: Material(
+                    child: InkWell(
+                      borderRadius: BorderRadius.circular(50.0),
+                      onTap: SettingPresenter.profileImageChange,
+                      child: Container(
+                        //padding: const EdgeInsets.all(8.0),
+                        decoration: BoxDecoration(
+                          color: FWTheme.black.withOpacity(.1),
+                          borderRadius: BorderRadius.circular(50.0),
+                        ),
+                        child: CircleAvatar(
+                          backgroundImage:
+                          NetworkImage(controller.loggedUser.imageUrl!),
+                        ),
+                      ),
+                    ),
                   ),
                 ),
               ),
               TextButton.icon(
-                onPressed: () => controller.profileImageChange(context,Theme.of(context)),
+                onPressed: () => SettingPresenter.profileImageChange,
                 label: const Icon(Icons.add_photo_alternate_outlined, size: 24),
                 icon: Text("사진 변경",
                     style: Theme.of(context).textTheme.labelLarge,
