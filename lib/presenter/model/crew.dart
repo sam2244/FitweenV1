@@ -7,11 +7,13 @@ class CrewPresenter extends GetxController {
   List<Crew> crews = [];
 
   List<Crew> get myCrews => crews.where((crew) {
-    return crew.memberUids.contains(Get.find<UserPresenter>().loggedUser.uid);
-  }).toList();
+        return crew.memberUids
+            .contains(Get.find<UserPresenter>().loggedUser.uid);
+      }).toList();
 
   void addCrew(Crew crew) {
-    crews.add(crew); update();
+    crews.add(crew);
+    update();
   }
 
   void load() async {
