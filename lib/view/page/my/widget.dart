@@ -74,7 +74,9 @@ class MyProfileImage extends StatelessWidget {
                 ),
               ),
             ),
-            Text(controller.loggedUser.nickname!),
+            Text(controller.loggedUser.nickname!,
+              style: Theme.of(context).textTheme.labelLarge,
+            ),
           ],
         );
       },
