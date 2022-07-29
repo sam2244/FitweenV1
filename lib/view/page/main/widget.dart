@@ -53,9 +53,9 @@ class CrewCard extends StatelessWidget {
                 color: FWTheme.grey.withOpacity(.3),
                 child: crew.imageUrl == null
                     ? const Center(
-                  child:
-                  Icon(Icons.photo, color: FWTheme.grey, size: 40.0),
-                )
+                        child:
+                            Icon(Icons.photo, color: FWTheme.grey, size: 40.0),
+                      )
                     : Image.network(crew.imageUrl!, fit: BoxFit.cover),
               ),
               const SizedBox(height: 10.0),
@@ -77,14 +77,14 @@ class CrewCard extends StatelessWidget {
                           padding: const EdgeInsets.only(right: 5.0),
                           child: crew.tags.isNotEmpty
                               ? Text(
-                            '#${crew.tags.join(" #")}',
-                            overflow: TextOverflow.ellipsis,
-                          )
+                                  '#${crew.tags.join(" #")}',
+                                  overflow: TextOverflow.ellipsis,
+                                )
                               : const Text(''),
                         ),
                         Text(
                           '${DateFormat('yyyy.MM.dd').format(crew.startDate!)}~'
-                              '${DateFormat('yyyy.MM.dd').format(crew.endDate!)}',
+                          '${DateFormat('yyyy.MM.dd').format(crew.endDate!)}',
                           style: const TextStyle(fontSize: 12.0),
                         ),
                         Row(
@@ -97,7 +97,7 @@ class CrewCard extends StatelessWidget {
                                   border: Border.all(color: FWTheme.dark),
                                 ),
                                 child:
-                                Text(category, textAlign: TextAlign.center),
+                                    Text(category, textAlign: TextAlign.center),
                               ),
                             );
                           }).toList(),
@@ -129,6 +129,19 @@ class CrewCard extends StatelessWidget {
         ),
       );
     });
+  }
+}
+
+class AddCrewButton extends StatelessWidget {
+  const AddCrewButton({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return FloatingActionButton(
+      onPressed: MainPresenter.addCrewButtonPressed,
+      backgroundColor: Theme.of(context).colorScheme.primary,
+      child: const Icon(Icons.add, size: 38, color: Colors.white),
+    );
   }
 }
 
