@@ -1,14 +1,18 @@
 import 'package:fitweenV1/global/date.dart';
 import 'package:fitweenV1/presenter/page/add_crew/add_crew.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:material_tag_editor/tag_editor.dart';
 
 class AddCrew extends StatelessWidget {
   const AddCrew({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final FocusNode focusNode = FocusNode();
+
     return GetBuilder<AddCrewPresenter>(
       builder: (controller) {
         return SingleChildScrollView(
@@ -16,7 +20,8 @@ class AddCrew extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 16),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 8, vertical: 16),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -41,7 +46,8 @@ class AddCrew extends StatelessWidget {
               ),
               const Divider(thickness: 1.0),
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 16),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 8, vertical: 16),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -85,7 +91,8 @@ class AddCrew extends StatelessWidget {
                         child: Container(
                           width: 100.0,
                           padding: const EdgeInsets.symmetric(
-                              horizontal: 10, vertical: 5,
+                            horizontal: 10,
+                            vertical: 5,
                           ),
                           decoration: BoxDecoration(
                               color: Colors.white,
@@ -95,7 +102,8 @@ class AddCrew extends StatelessWidget {
                             items: Frequency.values.map((value) {
                               return DropdownMenuItem<Frequency>(
                                 value: value,
-                                child: Text(value.kr,
+                                child: Text(
+                                  value.kr,
                                   style: const TextStyle(fontSize: 20.0),
                                 ),
                               );
@@ -113,7 +121,9 @@ class AddCrew extends StatelessWidget {
                           controller: AddCrewPresenter.timesCont,
                           decoration: InputDecoration(
                             border: const OutlineInputBorder(),
-                            hintText: controller.frequency == Frequency.daily ? '매일': '횟수',
+                            hintText: controller.frequency == Frequency.daily
+                                ? '매일'
+                                : '횟수',
                           ),
                         ),
                       ),
@@ -122,9 +132,47 @@ class AddCrew extends StatelessWidget {
                 ),
               ),
               const Divider(thickness: 1.0),
+              Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Column(
+                  children: <Widget>[
+                    TagEditor(
+                      length: controller.tags.length,
+                      controller: AddCrewPresenter.tagCont,
+                      focusNode: focusNode,
+                      delimiters: const [',', ' '],
+                      hasAddButton: true,
+                      resetTextOnSubmitted: true,
+                      // This is set to grey just to illustrate the `textStyle` prop
+                      textStyle: const TextStyle(color: Colors.grey),
+                      onSubmitted: (tag) {
+                        controller.addTag(tag);
+                      },
+                      inputDecoration: const InputDecoration(
+                        border: InputBorder.none,
+                        hintText: 'Input tag...',
+                      ),
+                      onTagChanged: (tag) {
+                        controller.addTag(tag);
+                      },
+                      tagBuilder: (context, index) => _Chip(
+                        index: index,
+                        label: controller.tags[index],
+                        onDeleted: controller.deleteTag,
+                      ),
+                      // InputFormatters example, this disallow \ and /
+                      inputFormatters: [
+                        FilteringTextInputFormatter.deny(RegExp(r'[/\\]'))
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+              const Divider(thickness: 1.0),
               const Padding(
                 padding: EdgeInsets.symmetric(horizontal: 8, vertical: 16),
-                child: Text('Period',
+                child: Text(
+                  'Period',
                   style: TextStyle(fontSize: 20.0),
                 ),
               ),
@@ -132,11 +180,13 @@ class AddCrew extends StatelessWidget {
               const DateSelectionButton(type: DateType.end),
               const Divider(thickness: 1.0),
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 16),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 8, vertical: 16),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text('Description',
+                    const Text(
+                      'Description',
                       style: TextStyle(fontSize: 20.0),
                     ),
                     const SizedBox(height: 8.0),
@@ -238,5 +288,32 @@ class DateSelectionButton extends StatelessWidget {
         ],
       );
     });
+  }
+}
+
+class _Chip extends StatelessWidget {
+  const _Chip({
+    required this.label,
+    required this.onDeleted,
+    required this.index,
+  });
+
+  final String label;
+  final ValueChanged<int> onDeleted;
+  final int index;
+
+  @override
+  Widget build(BuildContext context) {
+    return Chip(
+      labelPadding: const EdgeInsets.only(left: 8.0),
+      label: Text(label),
+      deleteIcon: const Icon(
+        Icons.close,
+        size: 18,
+      ),
+      onDeleted: () {
+        onDeleted(index);
+      },
+    );
   }
 }

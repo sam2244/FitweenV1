@@ -8,13 +8,18 @@ import 'package:get/get.dart';
 
 // 참여방법 (대면, 비대면) ; categories[0]
 enum ParticipationMethod {
-  online, offline;
+  online,
+  offline;
+
   String get kr => ['대면', '비대면'][index];
 }
 
 // 빈도 (매일, 매주, 매월) ; categories[1]
 enum Frequency {
-  daily, weekly, monthly;
+  daily,
+  weekly,
+  monthly;
+
   String get kr => ['매일', '매주', '매월'][index];
 }
 
@@ -22,6 +27,7 @@ class AddCrewPresenter extends GetxController {
   static final crewCont = TextEditingController();
   static final timesCont = TextEditingController();
   static final descCont = TextEditingController();
+  static final tagCont = TextEditingController();
 
   ParticipationMethod method = ParticipationMethod.offline;
   /* 시작일 ~ 종료일 을 나타내는 워딩과 혼동을 방지하기 위해 period -> frequency 로 바꿨습니다 */
@@ -30,10 +36,23 @@ class AddCrewPresenter extends GetxController {
   // 새로운 크루
   Crew newCrew = Crew();
 
+  List<String> tags = [];
+
   void clearConts() {
     crewCont.clear();
     timesCont.clear();
     descCont.clear();
+    tagCont.clear();
+  }
+
+  void addTag(String tag) {
+    tags.add(tag);
+    update();
+  }
+
+  void deleteTag(int index) {
+    tags.removeAt(index);
+    update();
   }
 
   // 참여방식을 설정
@@ -98,8 +117,10 @@ class AddCrewPresenter extends GetxController {
     final crewPresenter = Get.find<CrewPresenter>();
 
     newCrew.title = crewCont.text;
+    newCrew.tags = tags;
     newCrew.desc = descCont.text;
-    newCrew.categories = [method.kr,
+    newCrew.categories = [
+      method.kr,
       frequency == Frequency.daily
           ? frequency.kr
           : '${frequency.kr.substring(1)}${timesCont.text}회',
