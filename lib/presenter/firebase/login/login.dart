@@ -66,7 +66,8 @@ class LoginPresenter {
   }
 
   static void fwUserDelete(){
-    UserPresenter.deleteDB(UserPresenter().loggedUser);
+    final userPresenter = Get.find<UserPresenter>();
+    UserPresenter.deleteDB(userPresenter.loggedUser);
     fwLogout();
   }
 }
