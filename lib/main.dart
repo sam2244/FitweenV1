@@ -1,9 +1,9 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:fitweenV1/firebase_options.dart';
-import 'package:fitweenV1/global/config/theme.dart';
+import 'package:fitweenV1/global/theme.dart';
 import 'package:fitweenV1/presenter/global.dart';
 import 'package:fitweenV1/route.dart';
-import 'package:fitweenV1/view/page/developer.dart';
+import 'package:fitweenV1/view/page/login/login.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -55,7 +55,7 @@ class Fitween extends StatelessWidget {
               ),
             ),
           ),
-          home: const DeveloperPage(),
+          home: const LoginPage(),
           getPages: FWRoute.getPages,
         );
       },

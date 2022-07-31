@@ -1,5 +1,5 @@
-import 'package:fitweenV1/presenter/page/setting.dart';
-import 'package:fitweenV1/presenter/global.dart';
+import 'package:fitweenV1/global/theme.dart';
+import 'package:fitweenV1/presenter/page/setting/setting.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -14,35 +14,21 @@ class EditNameAppBar extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context) {
-    return PreferredSize(
-      preferredSize: const Size.fromHeight(60.0),
-        child: AppBar(
-          leading: GetBuilder<SettingPresenter>(
-              builder: (controller) {
-                return IconButton(
-                  icon: Icon(
-                    Icons.arrow_back,
-                    color: Theme.of(context).colorScheme.primary,
-                  ),
-                  onPressed: controller.backPressedEditName,
-                );
-              }
-          ),
-          actions: [
-            GetBuilder<SettingPresenter>(
-                builder: (controller) {
-                  return IconButton(
-                    icon: Icon(
-                      Icons.check,
-                      color: Theme.of(context).colorScheme.primary,
-                    ),
-                    onPressed: () => controller.editNameDone(SettingPresenter.nameCont.text),
-                  );
-                }
-            ),
-          ],
-          elevation: 0.0,
-        )
+    return AppBar(
+      actions: [
+        GetBuilder<SettingPresenter>(
+            builder: (controller) {
+              return IconButton(
+                icon: Icon(
+                  Icons.check,
+                  color: colorScheme.primary,
+                ),
+                onPressed: controller.nicknameSubmitted,
+              );
+            }
+        ),
+      ],
+      elevation: 0.0,
     );
   }
 }
@@ -66,11 +52,11 @@ class NameTextField extends StatelessWidget {
                       padding: const EdgeInsets.fromLTRB(0.0, 10.0, 0.0, 8.0),
                       child: Text(
                         "이름",
-                        style: Theme.of(context).textTheme.headlineSmall,
+                        style: textTheme.headlineSmall,
                       ),
                     ),
                     TextFormField(
-                      controller: SettingPresenter.nameCont,
+                      controller: SettingPresenter.nicknameCont,
                       decoration: InputDecoration(
                         fillColor: Colors.white,
                         hintText: '이름을 입력하세요',
@@ -82,20 +68,20 @@ class NameTextField extends StatelessWidget {
                             //padding: const EdgeInsets.all(.0),
                             decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(100),
-                                color: Theme.of(context).colorScheme.surface,
+                                color: colorScheme.surface,
                                 border: Border.all(
                                     width: 2
                                 )
                             ),
                             child: IconButton(
-                                onPressed: SettingPresenter.nameCont.clear,
+                                onPressed: SettingPresenter.nicknameCont.clear,
                                 icon: Icon(Icons.clear,
-                                    color: Theme.of(context).colorScheme.onSurfaceVariant)
+                                    color: colorScheme.onSurfaceVariant)
                               /*CircleAvatar(
-                              backgroundColor: Theme.of(context).colorScheme.surface,
+                              backgroundColor: colorScheme.surface,
                               radius: 100,
                               child: Icon(Icons.clear,
-                              color: Theme.of(context).colorScheme.onSurfaceVariant),
+                              color: colorScheme.onSurfaceVariant),
                               ),*/
                             ),
                           ),
@@ -105,10 +91,10 @@ class NameTextField extends StatelessWidget {
                           borderSide: const BorderSide(),
                         ),
                         enabledBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: Theme.of(context).colorScheme.outline),
+                          borderSide: BorderSide(color: colorScheme.outline),
                         ),
                         focusedBorder: OutlineInputBorder(
-                          borderSide:  BorderSide(color: Theme.of(context).colorScheme.outline),
+                          borderSide:  BorderSide(color: colorScheme.outline),
                         ),
                       ),
                       validator: (value) {

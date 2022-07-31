@@ -1,3 +1,4 @@
+import 'package:fitweenV1/global/theme.dart';
 import 'package:flutter/material.dart';
 
 class MyCrewPageAppBar extends StatelessWidget implements PreferredSizeWidget {
@@ -9,14 +10,14 @@ class MyCrewPageAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      backgroundColor: Theme.of(context).colorScheme.background,
+      backgroundColor: colorScheme.background,
       centerTitle: true,
-      title: Text('마이크루', style: Theme.of(context).textTheme.headlineMedium),
+      title: Text('마이크루', style: textTheme.headlineMedium),
       actions: [
         IconButton(
           onPressed: () {},
           icon: const Icon(Icons.search),
-          color: Theme.of(context).colorScheme.primary,
+          color: colorScheme.primary,
         ),
       ],
     );

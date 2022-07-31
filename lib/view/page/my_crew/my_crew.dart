@@ -1,9 +1,9 @@
-import 'package:fitweenV1/global/config/theme.dart';
+import 'package:fitweenV1/global/theme.dart';
 import 'package:fitweenV1/presenter/model/crew.dart';
 import 'package:fitweenV1/presenter/page/my_crew.dart';
 import 'package:fitweenV1/view/page/my_crew/widget.dart';
 import 'package:fitweenV1/view/widget/image.dart';
-import 'package:fitweenV1/view/widget/widget.dart';
+import 'package:fitweenV1/view/widget/widget/bottom_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
@@ -19,13 +19,13 @@ class MyCrewPage extends StatelessWidget {
         return Stack(
           children: [
             Scaffold(
-              backgroundColor: Theme.of(context).colorScheme.background,
+              backgroundColor: colorScheme.background,
               appBar: const MyCrewPageAppBar(),
               body: ListView.builder(
                 itemCount: crewCont.myCrews.length,
                 itemBuilder: (context, index) {
                   return InkWell(
-                    onTap: () => myCrewCont.chatPressed(crewCont.myCrews[index]),
+                    onTap: () => myCrewCont.crewTilePressed(crewCont.myCrews[index]),
                     child: ListTile(
                       contentPadding: const EdgeInsets.symmetric(
                         vertical: 7.0, horizontal: 15.0,
@@ -43,7 +43,7 @@ class MyCrewPage extends StatelessWidget {
                                     padding: const EdgeInsets.only(right: 10.0),
                                     child: Text(
                                       crewCont.myCrews[index].title!,
-                                      style: Theme.of(context).textTheme.titleSmall,
+                                      style: textTheme.titleSmall,
                                     ),
                                   ),
                                   Padding(
@@ -75,8 +75,8 @@ class MyCrewPage extends StatelessWidget {
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.end,
                             children: [
-                              if (myCrewCont.latestChats[index].date != null)
-                              Text(DateFormat('a h:mm').format(myCrewCont.latestChats[index].date!),
+                              if (myCrewCont.latestChats[index].time != null)
+                              Text(DateFormat('a h:mm').format(myCrewCont.latestChats[index].time!),
                                 style: const TextStyle(
                                   color: Colors.grey,
                                   fontSize: 12.0,

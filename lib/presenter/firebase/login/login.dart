@@ -7,10 +7,14 @@ import 'package:fitweenV1/presenter/model/user.dart';
 import 'package:fitweenV1/presenter/page/main.dart';
 import 'package:get/get.dart';
 
+/// enums
+// 로그인 형식 { 구글, ... }
 enum LoginType { google }
 
+/// class
 class LoginPresenter {
-  // 피트윈 로그인
+  /// static methods
+  // 로그인 형식에 따른 피트윈 로그인
   static Future fwLogin(LoginType type) async {
     final userPresenter = Get.find<UserPresenter>();
     UserCredential? userCredential;
@@ -18,7 +22,7 @@ class LoginPresenter {
     // 신규회원 여부
     bool isNewcomer = false;
 
-    // 로그인 타입에 따른 로그인 방식
+    // 로그인 형식에 따른 로그인 방식
     switch (type) {
       case LoginType.google:
         userCredential = await GoogleLoginPresenter.signInWithGoogle();
@@ -33,7 +37,7 @@ class LoginPresenter {
         .get()
     ).data();
 
-    // 파이어베이스에 문서가 없거나 닉네임 필드가 null 일 경우 신규 회원
+    // 파이어베이스에 문서가 없거나 json 데이터에 닉네임이 없을 경우 신규 회원
     isNewcomer = json == null || json['nickname'] == null;
 
     Map<String, dynamic> data = {};
@@ -59,15 +63,17 @@ class LoginPresenter {
     }
   }
 
+  // 피트윈 로그아웃
   static void fwLogout() {
     final userPresenter = Get.find<UserPresenter>();
     Get.offAllNamed('/login');
     userPresenter.logout();
   }
 
-  static void fwUserDelete(){
+  // 피트윈 계정삭제
+  static void fwDeleteAccount(){
     final userPresenter = Get.find<UserPresenter>();
-    UserPresenter.deleteDB(userPresenter.loggedUser);
+    userPresenter.delete();
     fwLogout();
   }
 }

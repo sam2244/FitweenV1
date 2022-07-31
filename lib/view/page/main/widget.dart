@@ -1,7 +1,8 @@
-import 'package:fitweenV1/global/config/theme.dart';
+import 'package:fitweenV1/global/theme.dart';
 import 'package:fitweenV1/model/crew.dart';
-import 'package:fitweenV1/presenter/page/detail.dart';
+import 'package:fitweenV1/presenter/page/add_crew.dart';
 import 'package:fitweenV1/presenter/page/main.dart';
+import 'package:fitweenV1/presenter/page/search.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
@@ -27,7 +28,7 @@ class MainAppBar extends StatelessWidget implements PreferredSizeWidget {
       actions: const [
         IconButton(
           icon: Icon(Icons.search),
-          onPressed: MainPresenter.searchIconPressed,
+          onPressed: SearchPresenter.toSearch,
         ),
       ],
     );
@@ -41,94 +42,96 @@ class CrewCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<MainPresenter>(builder: (controller) {
-      return InkWell(
-        onTap: () => controller.cardPressed(crew),
-        child: Padding(
-          padding: const EdgeInsets.all(10.0),
-          child: Column(
-            children: [
-              Container(
-                height: 250.0,
-                color: FWTheme.grey.withOpacity(.3),
-                child: crew.imageUrl == null
-                    ? const Center(
-                        child:
-                            Icon(Icons.photo, color: FWTheme.grey, size: 40.0),
-                      )
-                    : Image.network(crew.imageUrl!, fit: BoxFit.cover),
-              ),
-              const SizedBox(height: 10.0),
-              Row(
-                children: [
-                  const SizedBox(width: 10.0),
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          crew.title!,
-                          style: const TextStyle(
-                            fontSize: 20.0,
-                            fontWeight: FontWeight.bold,
+    return GetBuilder<MainPresenter>(
+      builder: (controller) {
+        return InkWell(
+          onTap: () => controller.crewCardPressed(crew),
+          child: Padding(
+            padding: const EdgeInsets.all(10.0),
+            child: Column(
+              children: [
+                Container(
+                  height: 250.0,
+                  color: FWTheme.grey.withOpacity(.3),
+                  child: crew.imageUrl == null
+                      ? const Center(
+                          child:
+                              Icon(Icons.photo, color: FWTheme.grey, size: 40.0),
+                        )
+                      : Image.network(crew.imageUrl!, fit: BoxFit.cover),
+                ),
+                const SizedBox(height: 10.0),
+                Row(
+                  children: [
+                    const SizedBox(width: 10.0),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            crew.title!,
+                            style: const TextStyle(
+                              fontSize: 20.0,
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(right: 5.0),
-                          child: crew.tags.isNotEmpty
-                              ? Text(
-                                  '#${crew.tags.join(" #")}',
-                                  overflow: TextOverflow.ellipsis,
-                                )
-                              : const Text(''),
-                        ),
-                        Text(
-                          '${DateFormat('yyyy.MM.dd').format(crew.startDate!)}~'
-                          '${DateFormat('yyyy.MM.dd').format(crew.endDate!)}',
-                          style: const TextStyle(fontSize: 12.0),
-                        ),
-                        Row(
-                          children: crew.categories.map((category) {
-                            return Padding(
-                              padding: const EdgeInsets.only(right: 5.0),
-                              child: Container(
-                                width: 50.0,
-                                decoration: BoxDecoration(
-                                  border: Border.all(color: FWTheme.dark),
+                          Padding(
+                            padding: const EdgeInsets.only(right: 5.0),
+                            child: crew.tags.isNotEmpty
+                                ? Text(
+                                    '#${crew.tags.join(" #")}',
+                                    overflow: TextOverflow.ellipsis,
+                                  )
+                                : const Text(''),
+                          ),
+                          Text(
+                            '${DateFormat('yyyy.MM.dd').format(crew.startDate!)}~'
+                            '${DateFormat('yyyy.MM.dd').format(crew.endDate!)}',
+                            style: const TextStyle(fontSize: 12.0),
+                          ),
+                          Row(
+                            children: crew.categories.map((category) {
+                              return Padding(
+                                padding: const EdgeInsets.only(right: 5.0),
+                                child: Container(
+                                  width: 50.0,
+                                  decoration: BoxDecoration(
+                                    border: Border.all(color: FWTheme.dark),
+                                  ),
+                                  child:
+                                      Text(category, textAlign: TextAlign.center),
                                 ),
-                                child:
-                                    Text(category, textAlign: TextAlign.center),
-                              ),
-                            );
-                          }).toList(),
-                        ),
-                      ],
+                              );
+                            }).toList(),
+                          ),
+                        ],
+                      ),
                     ),
-                  ),
-                  Container(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 8.0,
-                      vertical: 3.0,
+                    Container(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 8.0,
+                        vertical: 3.0,
+                      ),
+                      decoration: BoxDecoration(
+                        color: FWTheme.grey.withOpacity(.3),
+                        borderRadius: BorderRadius.circular(20.0),
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          const Icon(Icons.person),
+                          Text('${crew.memberLimit}명'),
+                        ],
+                      ),
                     ),
-                    decoration: BoxDecoration(
-                      color: FWTheme.grey.withOpacity(.3),
-                      borderRadius: BorderRadius.circular(20.0),
-                    ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        const Icon(Icons.person),
-                        Text('${crew.memberLimit}명'),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-            ],
+                  ],
+                ),
+              ],
+            ),
           ),
-        ),
-      );
-    });
+        );
+      },
+    );
   }
 }
 
@@ -138,88 +141,9 @@ class AddCrewButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FloatingActionButton(
-      onPressed: MainPresenter.addCrewButtonPressed,
-      backgroundColor: Theme.of(context).colorScheme.primary,
+      onPressed: AddCrewPresenter.toAddCrew,
+      backgroundColor: colorScheme.primary,
       child: const Icon(Icons.add, size: 38, color: Colors.white),
     );
   }
 }
-
-// class MainCard extends StatefulWidget {
-//   MainCard({required Key key, required this.imageUrl, required this.category, required this.title, required this.hashtag, required this.srtDate, required this.endDate, required this.memberNum}) : super(key: key);
-//
-//   String imageUrl;
-//   String category;
-//   String title;
-//   String hashtag;
-//   String srtDate;
-//   String endDate;
-//   num memberNum;
-//
-//   @override
-//   State<MainCard> createState() => _MainCardState();
-// }
-//
-// class _MainCardState extends State<MainCard> {
-//   @override
-//   Widget build(BuildContext context) {
-//     return Container(
-//       padding: EdgeInsets.only(top: 16.h, bottom: 16.h, left: 32.w, right: 32.w),
-//       child: Column(
-//         mainAxisAlignment: MainAxisAlignment.start,
-//         crossAxisAlignment: CrossAxisAlignment.start,
-//         children: [
-//           Text(widget.imageUrl),
-//           Row(
-//             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-//             children: [
-//               Text(widget.title,
-//                 style: const TextStyle(
-//                     fontWeight: FontWeight.bold
-//                 ,)
-//               ),
-//               Container(
-//                 width: 63.w,
-//                 height: 25.h,
-//                 color: Colors.grey,
-//                 child: Row(
-//                   mainAxisAlignment: MainAxisAlignment.center,
-//                   children: [
-//                     const Icon(Icons.person),
-//                     Text("${widget.memberNum}명")
-//                   ],
-//                 ),
-//               )
-//             ],
-//           ),
-//           Text(widget.hashtag),
-//           Text("기간 ${widget.srtDate} ~ ${widget.endDate}"),
-//           Column(
-//             mainAxisAlignment: MainAxisAlignment.center,
-//             children: <Widget>[
-//               ElevatedButton.icon(
-//                 style: ButtonStyle(
-//                   backgroundColor: MaterialStateProperty.all<Color>(Theme.of(context).colorScheme.primary,),
-//                   shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-//                       const RoundedRectangleBorder(
-//                       borderRadius: BorderRadius.zero,
-//                       )
-//                   )
-//                 ),
-//                 label: const Icon(Icons.chevron_right,
-//                   color: Colors.white,
-//                 ),
-//                 icon: const Text("자세히 보기",
-//                     style: TextStyle(
-//                         color: Colors.white
-//                     )
-//                 ),
-//                 onPressed: () {},
-//               ),
-//             ],
-//           ),
-//         ],
-//       )
-//     );
-//   }
-// }

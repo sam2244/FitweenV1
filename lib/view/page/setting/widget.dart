@@ -1,8 +1,8 @@
-import 'package:fitweenV1/global/config/theme.dart';
+import 'package:fitweenV1/global/theme.dart';
 import 'package:fitweenV1/presenter/model/user.dart';
-import 'package:fitweenV1/presenter/page/setting.dart';
+import 'package:fitweenV1/presenter/page/setting/edit_name.dart';
+import 'package:fitweenV1/presenter/page/setting/setting.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 // 설정 페이지의 위젯 모음
@@ -16,23 +16,7 @@ class SettingAppBar extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context) {
-    return PreferredSize(
-      preferredSize: const Size.fromHeight(60.0),
-        child: AppBar(
-          leading: GetBuilder<SettingPresenter>(
-              builder: (controller) {
-                return IconButton(
-                  icon: const Icon(
-                    Icons.arrow_back,
-                    color: Colors.black,
-                  ),
-                  onPressed: controller.backPressed,
-                );
-              }
-          ),
-          elevation: 0.0,
-        )
-    );
+    return AppBar();
   }
 }
 
@@ -41,49 +25,41 @@ class MyProfileImageButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<UserPresenter>(
-        builder: (controller) {
-          return Column(
-            children: [
-              Padding(
-                padding: EdgeInsets.all(16.0.h),
+    final userPresenter = Get.find<UserPresenter>();
+    return Column(
+      children: [
+        Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Container(
+            width: 100,
+            height: 100,
+            decoration: const BoxDecoration(
+              color: Colors.black,
+              borderRadius: BorderRadius.all(Radius.circular(20.0)),
+            ),
+            child: Material(
+              child: InkWell(
+                borderRadius: BorderRadius.circular(50.0),
+                onTap: () {},
                 child: Container(
-                  width: 100,
-                  height: 100,
-                  decoration: const BoxDecoration(
-                      color: Colors.black,
-                      borderRadius:
-                      BorderRadius.all(Radius.circular(100)) //모서리를 둥글게
+                  decoration: BoxDecoration(
+                    color: FWTheme.black.withOpacity(.1),
+                    borderRadius: BorderRadius.circular(50.0),
                   ),
-                  child: Material(
-                    child: InkWell(
-                      borderRadius: BorderRadius.circular(50.0),
-                      onTap: SettingPresenter.profileImageChange,
-                      child: Container(
-                        //padding: const EdgeInsets.all(8.0),
-                        decoration: BoxDecoration(
-                          color: FWTheme.black.withOpacity(.1),
-                          borderRadius: BorderRadius.circular(50.0),
-                        ),
-                        child: CircleAvatar(
-                          backgroundImage:
-                          NetworkImage(controller.loggedUser.imageUrl!),
-                        ),
-                      ),
-                    ),
+                  child: CircleAvatar(
+                    backgroundImage: NetworkImage(userPresenter.loggedUser.imageUrl!),
                   ),
                 ),
               ),
-              TextButton.icon(
-                onPressed: SettingPresenter.profileImageChange,
-                label: const Icon(Icons.add_photo_alternate_outlined, size: 24),
-                icon: Text("사진 변경",
-                    style: Theme.of(context).textTheme.labelLarge,
-                ),
-              )
-            ],
-          );
-        }
+            ),
+          ),
+        ),
+        TextButton.icon(
+          onPressed: SettingPresenter.imageEditButtonPressed,
+          label: const Icon(Icons.add_photo_alternate_outlined, size: 24),
+          icon: Text('사진 변경', style: textTheme.labelLarge),
+        ),
+      ],
     );
   }
 }
@@ -94,85 +70,88 @@ class NameTextField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetBuilder<SettingPresenter>(
-        builder: (controller) {
-          return Column(
-            children: [
-              Container(
-                padding: const EdgeInsets.fromLTRB(20.0, 0.0, 20.0, 0.0),
-                child: Column(
-                  children: [
-                    Container(
-                      alignment: Alignment.centerLeft,
-                      padding: EdgeInsets.fromLTRB(0.0, 10.0.h, 0.0, 8.0.h),
-                      child: Text(
-                        "이름",
-                        style: Theme.of(context).textTheme.headlineSmall,
-                      ),
+      builder: (controller) {
+        final userPresenter = Get.find<UserPresenter>();
+        return Column(
+          children: [
+            Container(
+              padding: const EdgeInsets.fromLTRB(20.0, 0.0, 20.0, 0.0),
+              child: Column(
+                children: [
+                  Container(
+                    alignment: Alignment.centerLeft,
+                    padding: const EdgeInsets.fromLTRB(0.0, 10.0, 0.0, 8.0),
+                    child: Text('이름',
+                      style: textTheme.headlineSmall,
                     ),
-                    OutlinedButton(
-                      style: ElevatedButton.styleFrom(
-                          shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(12))),
-                          primary: Colors.white,
-                          side: BorderSide(width: 1.0, color: Theme.of(context).colorScheme.outline)
+                  ),
+                  OutlinedButton(
+                    style: ElevatedButton.styleFrom(
+                      shape: const RoundedRectangleBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(12)),
                       ),
-                      onPressed: SettingPresenter.editNamePressed,
-                      child: Stack(
-                        children: <Widget>[
-                          const Align(
-                              alignment: Alignment.centerRight,
-                              child: Icon(Icons.keyboard_arrow_right_outlined)
+                      primary: Colors.white,
+                      side: BorderSide(width: 1.0, color: colorScheme.outline),
+                    ),
+                    onPressed: EditNicknamePresenter.toEditNickname,
+                    child: Stack(
+                      children: [
+                        const Align(
+                            alignment: Alignment.centerRight,
+                            child: Icon(Icons.keyboard_arrow_right_outlined)
+                        ),
+                        Align(
+                          alignment: Alignment.centerLeft,
+                          child: Text(
+                            userPresenter.loggedUser.nickname!,
+                            style: textTheme.labelLarge,
                           ),
-                          Align(
-                              alignment: Alignment.centerLeft,
-                              child: Text(
-                                SettingPresenter.userPresenter.loggedUser.nickname!,
-                                style: Theme.of(context).textTheme.labelLarge,
-                              ),
-                          )
-                        ],
-                      ),
+                        )
+                      ],
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
-            ],
-          );
-        }
+            ),
+          ],
+        );
+      },
     );
   }
 }
 
-class LogOutButton extends StatelessWidget {
-  const LogOutButton({Key? key}) : super(key: key);
+class LogoutButton extends StatelessWidget {
+  const LogoutButton({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return GetBuilder<SettingPresenter>(
-        builder: (controller) {
-          return Column(
-            children: [
-              Container(
-                margin: EdgeInsets.fromLTRB(0.0, 50.0.h, 0.0, 10.0.h),
-                width: 343,
-                child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                      shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(12))),
-                      primary: Colors.white,
-                      side: BorderSide(width: 1.0, color: Theme.of(context).colorScheme.outline)
+      builder: (controller) {
+        return Column(
+          children: [
+            Container(
+              margin: const EdgeInsets.fromLTRB(0.0, 50.0, 0.0, 10.0),
+              width: 343.0,
+              child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  shape: const RoundedRectangleBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(12)),
                   ),
-                  //onPressed: () => controller.AddWeight(Theme.of(context)),
-                  onPressed: SettingPresenter.logoutPressed,
-                  child: const Text(
-                    '로그아웃',
-                    style: TextStyle(
-                      color: Colors.black,
-                    )
+                  primary: Colors.white,
+                  side: BorderSide(
+                    width: 1.0,
+                    color: colorScheme.outline,
                   ),
                 ),
+                onPressed: SettingPresenter.logoutButtonPressed,
+                child: const Text('로그아웃',
+                  style: TextStyle(color: Colors.black),
+                ),
               ),
-            ],
-          );
-        }
+            ),
+          ],
+        );
+      },
     );
   }
 }
@@ -183,29 +162,28 @@ class DeleteUserButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetBuilder<SettingPresenter>(
-        builder: (controller) {
-          return Column(
-            children: [
-              Container(
-                margin: const EdgeInsets.fromLTRB(0.0, 10.0, 0.0, 20.0),
-                width: 343,
-                child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(12))),
-                    primary: Theme.of(context).colorScheme.error,
+      builder: (controller) {
+        return Column(
+          children: [
+            Container(
+              margin: const EdgeInsets.fromLTRB(0.0, 10.0, 0.0, 20.0),
+              width: 343.0,
+              child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12.0),
                   ),
-                  onPressed: () => SettingPresenter.askDelete(Theme.of(context)),
-                  child: const Text(
-                    '계정 삭제하기',
-                    style: TextStyle(
-                      color: Colors.white,
-                    )
-                  ),
+                  primary: colorScheme.error,
+                ),
+                onPressed: SettingPresenter.showAddPhotoSelectionModalSheet,
+                child: const Text('계정 삭제하기',
+                  style: TextStyle(color: FWTheme.white),
                 ),
               ),
-            ],
-          );
-        }
+            ),
+          ],
+        );
+      },
     );
   }
 }

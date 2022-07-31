@@ -1,5 +1,5 @@
 import 'package:fitweenV1/view/page/my/widget.dart';
-import 'package:fitweenV1/view/widget/widget.dart';
+import 'package:fitweenV1/view/widget/widget/bottom_bar.dart';
 import 'package:flutter/material.dart';
 
 class MyPage extends StatelessWidget {

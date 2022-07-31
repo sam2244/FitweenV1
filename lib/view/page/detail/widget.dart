@@ -1,4 +1,4 @@
-import 'package:fitweenV1/global/config/theme.dart';
+import 'package:fitweenV1/global/theme.dart';
 import 'package:fitweenV1/presenter/page/detail.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';

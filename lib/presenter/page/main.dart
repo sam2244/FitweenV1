@@ -1,55 +1,47 @@
+/* 메인 페이지 프리젠터 */
+
 import 'package:fitweenV1/model/crew.dart';
 import 'package:fitweenV1/presenter/model/crew.dart';
-import 'package:fitweenV1/presenter/page/add_crew/add_crew.dart';
 import 'package:fitweenV1/presenter/page/detail.dart';
 import 'package:get/get.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
+/// class
 class MainPresenter extends GetxController {
+  /// static variables
+  // 리프레시 컨트롤러
   static final refreshCont = RefreshController(initialRefresh: false);
 
+  /// static methods
+  // 메인 페이지로 이동
   static void toMain() {
     final crewPresenter = Get.find<CrewPresenter>();
+    if (crewPresenter.crews.isEmpty) crewPresenter.load();
     Get.offAllNamed('/main');
   }
 
-  // 크루 생성 버튼 클릭 시
-  static void addCrewButtonPressed() {
-    final addCrewPresenter = Get.find<AddCrewPresenter>();
-    Get.toNamed('/addCrew');
-    addCrewPresenter.newCrew = Crew();
-  }
-
-  //검색 버튼 클릭 시
-  static void searchIconPressed() {
-    Get.toNamed('/search');
-  }
-
+  // 리프레시 중 실행 함수
   static void onRefresh() async {
     final crewPresenter = Get.find<CrewPresenter>();
     await crewPresenter.load();
     refreshCont.refreshCompleted();
   }
 
+  // 로딩 중 실행 함수
   static void onLoading() async {
     await Future.delayed(const Duration(milliseconds: 1000));
     refreshCont.loadComplete();
   }
 
+  /// attributes
+  // 로딩 여부
   bool detailLoading = false;
 
-  void cardPressed(Crew crew) async {
+  /// methods
+  // 특정 크루 카드 클릭 시
+  void crewCardPressed(Crew crew) async {
     detailLoading = true; update();
     await DetailPresenter.toDetail(crew);
     detailLoading = false; update();
   }
-
-  // Crew crew = Crew.fromJson({
-  //   'title': 'title',
-  //   'tags': ['a', 'b', 'c'],
-  //   'startDate': toTimestamp(today.subtract(const Duration(days: 10))),
-  //   'endDate': toTimestamp(today.add(const Duration(days: 30))),
-  //   'isLocked': false,
-  //   'memberLimit': 30,
-  // });
 }

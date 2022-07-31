@@ -1,16 +1,17 @@
+/* 상세 페이지 프리젠터 */
+
 import 'package:fitweenV1/model/crew.dart';
 import 'package:fitweenV1/model/user.dart';
 import 'package:fitweenV1/presenter/firebase/firebase.dart';
 import 'package:fitweenV1/presenter/model/crew.dart';
 import 'package:fitweenV1/presenter/model/user.dart';
+import 'package:fitweenV1/presenter/page/chat.dart';
 import 'package:get/get.dart';
 
+/// class
 class DetailPresenter extends GetxController {
-  Crew selectedCrew = Crew();
-
-  FWUser get leader => selectedCrew.members
-      .firstWhere((member) => member.uid == selectedCrew.leaderUid);
-
+  /// static methods
+  // 상세 페이지로 이동
   static Future toDetail(Crew crew) async {
     final detailPresenter = Get.find<DetailPresenter>();
     detailPresenter.selectedCrew = crew;
@@ -18,6 +19,12 @@ class DetailPresenter extends GetxController {
     Get.toNamed('/detail');
   }
 
+  /// attributes
+  // 선택된 크루
+  Crew selectedCrew = Crew();
+
+  /// methods
+  // 파이어베이스에서 구성원 정보 로드
   Future loadMembers() async {
     selectedCrew.members = [];
     for (String uid in selectedCrew.memberUids) {
@@ -27,7 +34,12 @@ class DetailPresenter extends GetxController {
     }
   }
 
-  void submitted() async {
+  // 선택된 크루의 리더 객체 반환
+  FWUser get leader => selectedCrew.members
+      .firstWhere((member) => member.uid == selectedCrew.leaderUid);
+
+  // 참여하기 버튼 클릭 시
+  void joinButtonPressed() async {
     final userPresenter = Get.find<UserPresenter>();
     final crewPresenter = Get.find<CrewPresenter>();
 
@@ -36,6 +48,8 @@ class DetailPresenter extends GetxController {
     }
     crewPresenter.saveOne(selectedCrew);
     await loadMembers();
+
+    ChatPresenter.toChat(selectedCrew);
     update();
   }
 }

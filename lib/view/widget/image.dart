@@ -1,4 +1,4 @@
-import 'package:fitweenV1/global/config/theme.dart';
+import 'package:fitweenV1/global/theme.dart';
 import 'package:flutter/material.dart';
 import '../../model/crew.dart';
 
@@ -17,8 +17,7 @@ class MyCrewImage extends StatelessWidget {
   Widget build(BuildContext context) {
     return AspectRatio(
       aspectRatio: 1.0,
-      child: title.imageUrl == null
-          ? Container(
+      child: title.imageUrl == null ? Container(
         color: FWTheme.grey.withOpacity(.3),
         child: const Center(
           child: Icon(Icons.photo,

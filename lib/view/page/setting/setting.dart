@@ -1,6 +1,6 @@
-import 'package:fitweenV1/presenter/page/setting.dart';
+import 'package:fitweenV1/global/theme.dart';
 import 'package:fitweenV1/view/page/setting/widget.dart';
-import 'package:fitweenV1/view/widget/widget.dart';
+import 'package:fitweenV1/view/widget/widget/bottom_bar.dart';
 import 'package:flutter/material.dart';
 
 // 세팅 페이지
@@ -10,7 +10,7 @@ class SettingPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Theme.of(context).colorScheme.surface,
+      backgroundColor: colorScheme.surface,
       appBar: const SettingAppBar(),
       body: Center(
         child: Column(
@@ -18,7 +18,7 @@ class SettingPage extends StatelessWidget {
             MyProfileImageButton(),
             NameTextField(),
             Expanded(child: SizedBox()),
-            LogOutButton(),
+            LogoutButton(),
             DeleteUserButton(),
           ],
         ),

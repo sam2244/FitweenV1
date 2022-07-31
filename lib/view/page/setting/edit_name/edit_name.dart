@@ -1,4 +1,5 @@
-import 'package:fitweenV1/presenter/page/setting.dart';
+import 'package:fitweenV1/global/theme.dart';
+import 'package:fitweenV1/presenter/page/setting/setting.dart';
 import 'package:fitweenV1/view/page/setting/edit_name/widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -12,7 +13,7 @@ class EditNamePage extends StatelessWidget {
     return GetBuilder<SettingPresenter>(
       builder: (controller) {
         return Scaffold(
-          backgroundColor: Theme.of(context).colorScheme.surface,
+          backgroundColor: colorScheme.surface,
           appBar: const EditNameAppBar(),
           body: Center(
             child: Column(
