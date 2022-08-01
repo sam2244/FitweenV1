@@ -1,10 +1,13 @@
 /* 마이 페이지 위젯 */
 
+import 'package:fitweenV1/global/date.dart';
 import 'package:fitweenV1/global/theme.dart';
 import 'package:fitweenV1/presenter/model/user.dart';
+import 'package:fitweenV1/presenter/page/my.dart';
 import 'package:fitweenV1/presenter/page/setting/setting.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 
 class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
   const MyAppBar({Key? key}) : super(key: key);
@@ -232,3 +235,75 @@ class _MyCrewState extends State<MyCrew> {
     );
   }
 }
+
+/*
+class DateSelectionButton extends StatelessWidget {
+  const DateSelectionButton({Key? key, required this.type}) : super(key: key);
+
+  final DateType type;
+
+  @override
+  Widget build(BuildContext context) {
+    return GetBuilder<MyPresenter>(
+      builder: (controller) {
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Padding(
+              padding:
+              const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
+              child: Text({
+                DateType.start: '시작일',
+                DateType.end: '종료일',
+              }[type]!,
+                style: textTheme.labelLarge,
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16.0),
+              child: Row(
+                children: [
+                  Expanded(
+                    child: InkWell(
+                      onTap: {
+                        DateType.start: controller.startDateButtonPressed,
+                        DateType.end: controller.endDateButtonPressed,
+                      }[type]!,
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(vertical: 8.0),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(4.0),
+                          border: Border.all(
+                            color: colorScheme.onSurfaceVariant,
+                          ),
+                        ),
+                        child: Stack(
+                          children: [
+                            const Positioned(
+                              right: 8.0,
+                              child: Icon(Icons.calendar_month),
+                            ),
+                            Positioned(
+                              child: Center(
+                                child: Text(
+                                  DateFormat('yyyy년 MM월 dd일').format((type == DateType.start
+                                      ? controller.newCrew.startDate
+                                      : controller.newCrew.endDate) ?? DateTime.now()),
+                                  style: textTheme.labelLarge,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        );
+      },
+    );
+  }
+}*/

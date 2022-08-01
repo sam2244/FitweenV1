@@ -19,19 +19,16 @@ class MyPage extends StatelessWidget {
       appBar: const MyAppBar(),
       body: Column(
         children: const [
-          /*Column(
+          /*
+          ProfileImageButton(user: userPresenter.loggedUser),
+          const SizedBox(height: 10.0),
+          Column(
             children: [
-              ProfileImageButton(user: userPresenter.loggedUser),
-              const SizedBox(height: 10.0),
-              Column(
-                children: [
-                  FWText(userPresenter.loggedUser.nickname!,
-                    style: textTheme.titleLarge,
-                  ),
-                  FWText(userPresenter.loggedUser.statusMessage ?? '',
-                    style: textTheme.bodyMedium,
-                  ),
-                ],
+              FWText(userPresenter.loggedUser.nickname!,
+                style: textTheme.titleLarge,
+              ),
+              FWText(userPresenter.loggedUser.statusMessage ?? '',
+                style: textTheme.bodyMedium,
               ),
             ],
           ),*/
