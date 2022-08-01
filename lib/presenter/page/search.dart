@@ -7,8 +7,6 @@ import 'package:get/get.dart';
 /// class
 class SearchPresenter extends GetxController {
   /// static methods
-  // 검색 페이지로 이동
-  static void toSearch() => Get.toNamed('/search');
 
   /// attributes
   // 검색된 크루 리스트
