@@ -43,7 +43,7 @@ class ChatPresenter extends GetxController {
       );
       return;
     }
-    Timer(const Duration(milliseconds: 200), () => scrollDown());
+    Timer(const Duration(milliseconds: 200), scrollDown);
   }
 
   /// attributes
@@ -104,7 +104,7 @@ class ChatPresenter extends GetxController {
     final userPresenter = Get.find<UserPresenter>();
     if (textCont.text == '') return;
     Chat chat = Chat.fromJson({
-      'date': Timestamp.now(),
+      'time': Timestamp.now(),
       'text': textCont.text,
       'uid': userPresenter.loggedUser.uid,
     });
@@ -125,7 +125,7 @@ class ChatPresenter extends GetxController {
 
   Stream<List<Chat>> streamChat() {
     Stream<QuerySnapshot> stream = f.collection('rooms')
-        .doc(currentCrew!.code).collection('chats').orderBy('date').snapshots();
+        .doc(currentCrew!.code).collection('chats').orderBy('time').snapshots();
 
     return stream.map((qShot) => qShot.docs.map<Chat>((doc) {
       var json = doc.data() as Map<String, dynamic>;

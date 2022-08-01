@@ -1,3 +1,5 @@
+/* 메인 페이지 */
+
 import 'package:fitweenV1/global/theme.dart';
 import 'package:fitweenV1/presenter/model/crew.dart';
 import 'package:fitweenV1/presenter/page/main.dart';

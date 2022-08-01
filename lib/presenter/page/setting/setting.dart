@@ -3,7 +3,7 @@
 import 'package:fitweenV1/global/theme.dart';
 import 'package:fitweenV1/presenter/firebase/login/login.dart';
 import 'package:fitweenV1/presenter/model/user.dart';
-import 'package:fitweenV1/view/widget/function.dart';
+import 'package:fitweenV1/view/widget/function/modal_bottom_sheet.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 

@@ -1,3 +1,5 @@
+/* 디테일 페이지 */
+
 import 'package:fitweenV1/global/theme.dart';
 import 'package:fitweenV1/presenter/page/detail.dart';
 import 'package:fitweenV1/presenter/page/my_crew.dart';
@@ -10,8 +12,6 @@ class DetailPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final myCrewCont = Get.find<MyCrewPresenter>();
-
     return Scaffold(
       body: const Detail(),
       bottomNavigationBar: BottomAppBar(

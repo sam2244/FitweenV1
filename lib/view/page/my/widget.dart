@@ -1,3 +1,5 @@
+/* 마이 페이지 위젯 */
+
 import 'package:fitweenV1/global/theme.dart';
 import 'package:fitweenV1/presenter/model/user.dart';
 import 'package:fitweenV1/presenter/page/setting/setting.dart';

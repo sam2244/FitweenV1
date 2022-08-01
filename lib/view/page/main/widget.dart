@@ -1,3 +1,5 @@
+/* 메인 페이지 위젯 */
+
 import 'package:fitweenV1/global/theme.dart';
 import 'package:fitweenV1/model/crew.dart';
 import 'package:fitweenV1/presenter/page/add_crew.dart';
@@ -7,9 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
-// 메인 페이지의 위젯 모음
-
-// 메인 페이지 AppBar
+/// classes
 class MainAppBar extends StatelessWidget implements PreferredSizeWidget {
   const MainAppBar({Key? key}) : super(key: key);
 

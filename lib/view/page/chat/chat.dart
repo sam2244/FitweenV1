@@ -1,5 +1,8 @@
+/* 채팅 페이지 */
+
 import 'package:fitweenV1/global/theme.dart';
 import 'package:fitweenV1/presenter/page/chat.dart';
+import 'package:fitweenV1/view/widget/widget/text.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -33,10 +36,9 @@ class ChatPage extends StatelessWidget {
           ),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 10.0),
-            child: Text(controller.chats[index].timeString!,
-              style: textTheme.labelSmall!.apply(
-                color: FWTheme.grey,
-              ),
+            child: FWText(controller.chats[index].timeString!,
+              style: textTheme.labelSmall!,
+              color: FWTheme.grey,
             ),
           ),
         ];
@@ -116,9 +118,12 @@ class ChatPage extends StatelessWidget {
                       child: Container(
                         padding: const EdgeInsets.symmetric(horizontal: 20.0),
                         height: 30.0,
-                        child: TextFormField(
-                          controller: ChatPresenter.textCont,
-                          onFieldSubmitted: (_) => controller.chatSubmitted,
+                        child: Form(
+                          key: GlobalKey<FormState>(),
+                          child: TextFormField(
+                            controller: ChatPresenter.textCont,
+                            onFieldSubmitted: (_) => controller.chatSubmitted,
+                          ),
                         ),
                       ),
                     ),

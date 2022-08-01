@@ -1,7 +1,10 @@
+/* 커스텀 하단 바 위젯 */
+
 import 'package:fitweenV1/presenter/global.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+/// class
 class FWBottomBar extends StatelessWidget {
   const FWBottomBar({Key? key}) : super(key: key);
 

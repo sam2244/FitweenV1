@@ -1,13 +1,12 @@
+/* 이름 수정 페이지 위젯 */
+
 import 'package:fitweenV1/global/theme.dart';
 import 'package:fitweenV1/presenter/page/setting/setting.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-// 이름 수정 페이지의 위젯 모음
-
-// 이름 수정 페이지 앱바
-class EditNameAppBar extends StatelessWidget implements PreferredSizeWidget {
-  const EditNameAppBar({Key? key}) : super(key: key);
+class EditNicknameAppBar extends StatelessWidget implements PreferredSizeWidget {
+  const EditNicknameAppBar({Key? key}) : super(key: key);
 
   @override
   Size get preferredSize => const Size.fromHeight(60.0);
@@ -15,27 +14,26 @@ class EditNameAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
+      elevation: 0.0,
       actions: [
         GetBuilder<SettingPresenter>(
-            builder: (controller) {
-              return IconButton(
-                icon: Icon(
-                  Icons.check,
-                  color: colorScheme.primary,
-                ),
-                onPressed: controller.nicknameSubmitted,
-              );
-            }
+          builder: (controller) {
+            return IconButton(
+              icon: Icon(
+                Icons.check,
+                color: colorScheme.primary,
+              ),
+              onPressed: controller.nicknameSubmitted,
+            );
+          },
         ),
       ],
-      elevation: 0.0,
     );
   }
 }
 
-class NameTextField extends StatelessWidget {
-  const NameTextField({Key? key}) : super(key: key);
-  //static final _nameController = TextEditingController();
+class NicknameTextField extends StatelessWidget {
+  const NicknameTextField({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

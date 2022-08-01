@@ -3,7 +3,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fitweenV1/global/date.dart';
 import 'package:get/get.dart';
-import 'package:intl/intl.dart';
 
 /// enums
 // 성별 { 남성, 여성 }

@@ -14,8 +14,8 @@ class MyCrewPresenter extends GetxController {
   // 내 크루 페이지로 이동
   static void toMyCrew() async {
     final myCrewPresenter = Get.find<MyCrewPresenter>();
-    Get.offAllNamed('/myCrew');
     await myCrewPresenter.loadLatestChats();
+    Get.offAllNamed('/myCrew');
   }
 
   /// attributes
@@ -23,6 +23,7 @@ class MyCrewPresenter extends GetxController {
   bool chatLoading = false;
 
   // 각 크루의 최근 채팅 리스트
+  // final latestChats = <Chat>[].obs;
   List<Chat> latestChats = [];
 
   /// methods

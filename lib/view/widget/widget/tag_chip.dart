@@ -1,5 +1,8 @@
+/* 커스텀 태그 칩 위젯 */
+
 import 'package:flutter/material.dart';
 
+/// class
 class FWTagChip extends StatelessWidget {
   const FWTagChip({
     Key? key,

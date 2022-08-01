@@ -1,3 +1,6 @@
+/* 크루 추가 페이지 위젯 */
+import 'dart:io';
+
 import 'package:fitweenV1/global/date.dart';
 import 'package:fitweenV1/global/theme.dart';
 import 'package:fitweenV1/presenter/page/add_crew.dart';
@@ -8,8 +11,26 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:material_tag_editor/tag_editor.dart';
 
-class AddCrew extends StatelessWidget {
-  const AddCrew({Key? key}) : super(key: key);
+/// classes
+// 크루 추가 페이지 앱바
+class MainAppBar extends StatelessWidget implements PreferredSizeWidget {
+  const MainAppBar({Key? key}) : super(key: key);
+
+  @override
+  Size get preferredSize => const Size.fromHeight(60.0);
+
+  @override
+  Widget build(BuildContext context) {
+    return AppBar(
+      elevation: 0.0,
+      title: const Text('크루 추가'),
+    );
+  }
+}
+
+// 크루 추가 전체 뷰
+class AddCrewView extends StatelessWidget {
+  const AddCrewView({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -146,9 +167,7 @@ class AddCrew extends StatelessWidget {
                       resetTextOnSubmitted: true,
                       // This is set to grey just to illustrate the `textStyle` prop
                       textStyle: const TextStyle(color: Colors.grey),
-                      onSubmitted: (tag) {
-                        controller.addTag(tag);
-                      },
+                      onSubmitted: controller.addTag,
                       inputDecoration: const InputDecoration(
                         border: InputBorder.none,
                         hintText: 'Input tag...',
@@ -204,9 +223,48 @@ class AddCrew extends StatelessWidget {
                   ],
                 ),
               ),
+              const Divider(thickness: 1.0),
+              Padding(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 8, vertical: 16),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Text(
+                      'Image(Optional)',
+                      style: TextStyle(fontSize: 20.0),
+                    ),
+                    controller.image == null
+                        ? Container()
+                        : Container(
+                            height: 200.0,
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 8,
+                              vertical: 16,
+                            ),
+                            child: Image.file(File(controller.image!.path))),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 16.0),
+                      child: SizedBox(
+                        height: 20,
+                        child: OutlinedButton(
+                          onPressed: controller.selectImage,
+                          child: const Text('Select'),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
               Center(
                 child: OutlinedButton(
-                  onPressed: controller.submitted,
+                  onPressed: () {
+                    if (controller.image != null) {
+                      controller.saveImage();
+                    } else {
+                      controller.submitted;
+                    }
+                  },
                   child: const Text('추가하기'),
                 ),
               ),

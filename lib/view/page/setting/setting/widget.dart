@@ -1,13 +1,12 @@
+/* 설정 페이지 위젯 */
+
 import 'package:fitweenV1/global/theme.dart';
 import 'package:fitweenV1/presenter/model/user.dart';
-import 'package:fitweenV1/presenter/page/setting/edit_name.dart';
+import 'package:fitweenV1/presenter/page/setting/edit_nickname.dart';
 import 'package:fitweenV1/presenter/page/setting/setting.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-// 설정 페이지의 위젯 모음
-
-// 설정 페이지 앱바
 class SettingAppBar extends StatelessWidget implements PreferredSizeWidget {
   const SettingAppBar({Key? key}) : super(key: key);
 

@@ -22,9 +22,10 @@ class GlobalPresenter extends GetxController {
       case 1: MyCrewPresenter.toMyCrew(); break;
       case 2: MyPresenter.toMy(); break;
     }
-
     update();
   }
+
+  static void profileImagePressed() {}
 
   static void initControllers() {
     Get.put(GlobalPresenter());

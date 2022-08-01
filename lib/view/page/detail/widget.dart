@@ -1,3 +1,5 @@
+/* 디테일 페이지 위젯 */
+
 import 'package:fitweenV1/global/theme.dart';
 import 'package:fitweenV1/presenter/page/detail.dart';
 import 'package:flutter/material.dart';

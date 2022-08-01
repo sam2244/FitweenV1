@@ -1,7 +1,10 @@
+/* 하단 모달 시트 */
+
 import 'package:fitweenV1/global/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+/// function
 // 하단 모달 시트 표시
 void showFWModalBottomSheet(Map<String, VoidCallback> buttonData) {
   Widget modalButton({

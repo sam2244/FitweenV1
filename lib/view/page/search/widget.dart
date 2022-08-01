@@ -1,6 +1,6 @@
-import 'package:fitweenV1/presenter/page/search.dart';
+/* 검색 페이지 위젯 */
+
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
 class SearchAppBar extends StatelessWidget implements PreferredSizeWidget{
   const SearchAppBar({Key? key}) : super(key: key);

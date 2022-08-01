@@ -1,13 +1,17 @@
+/* 내 크루 페이지 */
+
+import 'package:fitweenV1/global/date.dart';
 import 'package:fitweenV1/global/theme.dart';
 import 'package:fitweenV1/presenter/model/crew.dart';
 import 'package:fitweenV1/presenter/page/my_crew.dart';
 import 'package:fitweenV1/view/page/my_crew/widget.dart';
-import 'package:fitweenV1/view/widget/image.dart';
 import 'package:fitweenV1/view/widget/widget/bottom_bar.dart';
+import 'package:fitweenV1/view/widget/widget/text.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:intl/intl.dart';
 
+/// class
 class MyCrewPage extends StatelessWidget {
   const MyCrewPage({Key? key}) : super(key: key);
 
@@ -23,14 +27,29 @@ class MyCrewPage extends StatelessWidget {
               appBar: const MyCrewPageAppBar(),
               body: ListView.builder(
                 itemCount: crewCont.myCrews.length,
-                itemBuilder: (context, index) {
+                itemBuilder: (_, index) {
                   return InkWell(
                     onTap: () => myCrewCont.crewTilePressed(crewCont.myCrews[index]),
                     child: ListTile(
                       contentPadding: const EdgeInsets.symmetric(
                         vertical: 7.0, horizontal: 15.0,
                       ),
-                      leading: MyCrewImage(title: crewCont.myCrews[index]),
+                      leading: AspectRatio(
+                        aspectRatio: 1.0,
+                        child: crewCont.myCrews[index].imageUrl == null
+                            ? Container(
+                          color: FWTheme.grey.withOpacity(.3),
+                          child: const Center(
+                            child: Icon(Icons.photo,
+                              size: 20.0,
+                              color: FWTheme.grey,
+                            ),
+                          ),
+                        ) : Image.network(
+                          crewCont.myCrews[index].imageUrl!,
+                          fit: BoxFit.fill,
+                        ),
+                      ),
                       title: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
@@ -48,12 +67,8 @@ class MyCrewPage extends StatelessWidget {
                                   ),
                                   Padding(
                                     padding: const EdgeInsets.only(right: 5.0),
-                                    child: Text('${crewCont.myCrews[index].memberUids.length}',
-                                      style: const TextStyle(
-                                        color: Colors.grey,
-                                        fontSize: 14.0,
-                                        fontWeight: FontWeight.w500,
-                                      ),
+                                    child: FWText('${crewCont.myCrews[index].memberUids.length}',
+                                      color: FWTheme.grey,
                                     ),
                                   ),
                                   if (crewCont.myCrews[index].isLocked)
@@ -61,39 +76,35 @@ class MyCrewPage extends StatelessWidget {
                                   const Icon(Icons.notifications_active_outlined, size: 14.0),
                                 ],
                               ),
-                              Padding(
+                              Container(
+                                width: 220.0.w,
                                 padding: const EdgeInsets.only(top: 8.0),
-                                child: Text(myCrewCont.latestChats[index].text ?? '',
-                                  style: const TextStyle(
-                                    color: Colors.grey,
-                                    fontSize: 12.0,
-                                  ),
+                                child: FWText(
+                                  myCrewCont.latestChats[index].text ?? '',
+                                  style: textTheme.labelSmall,
+                                  color: FWTheme.grey,
                                 ),
-                              )
+                              ),
                             ],
                           ),
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.end,
                             children: [
-                              if (myCrewCont.latestChats[index].time != null)
-                              Text(DateFormat('a h:mm').format(myCrewCont.latestChats[index].time!),
-                                style: const TextStyle(
-                                  color: Colors.grey,
-                                  fontSize: 12.0,
-                                ),
+                            if (myCrewCont.latestChats[index].time != null)
+                              FWText(dateToString('a hh:mm', myCrewCont.latestChats[index].time!)!,
+                                style: textTheme.labelSmall,
+                                color: FWTheme.grey,
                               ),
                               Container(
-                                width: 40,
-                                height: 20,
-                                decoration: BoxDecoration(borderRadius: BorderRadius.circular(10), color: Colors.red),
-                                child: const Center(
-                                  child: Text(
-                                    '196',
-                                    style: TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 12.0,
-                                        fontWeight: FontWeight.w600
-                                    ),
+                                constraints: const BoxConstraints(minWidth: 20.0),
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(10.0),
+                                  color: Colors.red,
+                                ),
+                                child: Center(
+                                  child: FWText('1',
+                                    style: textTheme.labelSmall,
+                                    color: FWTheme.white,
                                   ),
                                 ),
                               ),
@@ -118,8 +129,7 @@ class MyCrewPage extends StatelessWidget {
             ),
           ],
         );
-      }
+      },
     );
   }
 }
-

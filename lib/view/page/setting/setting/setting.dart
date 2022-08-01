@@ -1,5 +1,7 @@
+/* 설정 페이지 */
+
 import 'package:fitweenV1/global/theme.dart';
-import 'package:fitweenV1/view/page/setting/widget.dart';
+import 'package:fitweenV1/view/page/setting/setting/widget.dart';
 import 'package:fitweenV1/view/widget/widget/bottom_bar.dart';
 import 'package:flutter/material.dart';
 

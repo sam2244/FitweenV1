@@ -1,5 +1,8 @@
 /* 크루 추가 페이지 프리젠터 */
 
+import 'dart:io';
+
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:fitweenV1/global/date.dart';
 import 'package:fitweenV1/model/crew.dart';
 import 'package:fitweenV1/presenter/model/crew.dart';
@@ -7,6 +10,7 @@ import 'package:fitweenV1/presenter/model/user.dart';
 import 'package:fitweenV1/presenter/page/main.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
 
 /// enums
 // 활동방식 { 대면, 비대면 } ; categories[0]
@@ -38,7 +42,7 @@ class AddCrewPresenter extends GetxController {
 
   /// static methods
   // 컨트롤러를 모두 초기화
-  static void clearConts() {
+  void clearConts() {
     titleCont.clear();
     countCont.clear();
     descCont.clear();
@@ -62,8 +66,15 @@ class AddCrewPresenter extends GetxController {
   // 빈도
   Frequency frequency = Frequency.daily;
 
-  /// methods
+  // 태그 리스트
+  List<String> tags = [];
 
+  // 이미지 관련
+  XFile? image;
+  UploadTask? uploadTask;
+  String? urlDownload;
+
+  /// methods
   /* 태그 관련 */
   // 태그 추가
   void addTag(String tag) {
@@ -136,6 +147,28 @@ class AddCrewPresenter extends GetxController {
     update();
   }
 
+  // 이미지 선택
+  Future selectImage() async {
+    image = await ImagePicker().pickImage(source: ImageSource.gallery);
+    update();
+  }
+
+  // 이미지 저장
+  Future saveImage() async {
+    final path = 'crews/${newCrew.code}';
+    final file = File(image!.path);
+
+    final ref = FirebaseStorage.instance.ref().child(path);
+    uploadTask = ref.putFile(file);
+
+    final snapshot = await uploadTask?.whenComplete(() {});
+
+    urlDownload = await snapshot?.ref.getDownloadURL();
+    print('Download Link: $urlDownload');
+
+    submitted();
+  }
+
   // 새 크루 정보 제출 시
   void submitted() {
     final userPresenter = Get.find<UserPresenter>();
@@ -151,6 +184,7 @@ class AddCrewPresenter extends GetxController {
     ];
     newCrew.leaderUid = userPresenter.loggedUser.uid!;
     newCrew.memberUids.add(userPresenter.loggedUser.uid!);
+    newCrew.imageUrl = urlDownload;
 
     crewPresenter.addCrew(newCrew);
     crewPresenter.saveOne(newCrew);
