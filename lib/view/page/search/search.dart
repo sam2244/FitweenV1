@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import '../../../presenter/page/chat.dart';
 import '../add_crew/widget.dart';
 
 import '../add_crew/widget.dart';
