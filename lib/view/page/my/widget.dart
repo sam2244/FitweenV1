@@ -73,7 +73,7 @@ class MyProfileImage extends StatelessWidget {
                     Text(controller.loggedUser.nickname!,
                       style: textTheme.headlineMedium,
                     ),
-                    Text(controller.loggedUser.statusMessage ?? '',
+                    Text(controller.loggedUser.statusMessage ?? '#반가워요',
                       style: textTheme.bodySmall,
                     ),
                   ],

@@ -18,8 +18,8 @@ class MyPage extends StatelessWidget {
     return Scaffold(
       appBar: const MyAppBar(),
       body: Column(
-        children: [
-          Column(
+        children: const [
+          /*Column(
             children: [
               ProfileImageButton(user: userPresenter.loggedUser),
               const SizedBox(height: 10.0),
@@ -34,8 +34,9 @@ class MyPage extends StatelessWidget {
                 ],
               ),
             ],
-          ),
-          const MyCrew(),
+          ),*/
+          MyProfileImage(),
+          MyCrew(),
         ],
       ),
       bottomNavigationBar: const FWBottomBar(),
