@@ -1,31 +1,9 @@
 /* 검색 페이지 위젯 */
 
-import 'package:fitweenV1/view/page/search/search.dart';
 import 'package:flutter/material.dart';
-/*
-class SearchAppBar extends StatelessWidget implements PreferredSizeWidget{
-  const SearchAppBar({Key? key}) : super(key: key);
+import 'package:get/get.dart';
+import '../../../presenter/page/search.dart';
 
-  @override
-  Size get preferredSize => const Size.fromHeight(110.0);
-
-  @override
-  Widget build(BuildContext context) {
-    return AppBar(
-      actions: [
-        IconButton(
-          icon: const Icon(Icons.search),
-          onPressed: () {
-            showSearch(context: context, delegate: SearchBar(),
-            );
-          },
-        )
-      ],
-
-    );
-  }
-}
-*/
 class CrewSearch{
   final String title;
   final String urlImage;
@@ -54,6 +32,12 @@ const allCrews = [
 class SearchBar extends SearchDelegate{
   List<CrewSearch> searchResults = allCrews;
 
+  SearchBar()
+  : super(
+    searchFieldLabel: "크루, 채팅, 친구 검색",
+    keyboardType: TextInputType.text,
+    textInputAction: TextInputAction.search);
+
   @override
   List<Widget>? buildActions(BuildContext context) => [
     IconButton(
@@ -76,28 +60,39 @@ class SearchBar extends SearchDelegate{
 
   @override
   Widget buildSuggestions(BuildContext context) {
-    List<CrewSearch> suggestions = allCrews.where((book) {
-      final bookTitle = book.title.toLowerCase();
+    /*
+    final Iterable<int> suggestions = query.isEmpty
+        ? _history
+        : allCrews.where((crewSearch);
+    */
+
+    List<CrewSearch> suggestions = allCrews.where((crewSearch) {
+      final crewTitle = crewSearch.title.toLowerCase();
       final input = query.toLowerCase();
 
-      return bookTitle.contains(input);
+      return crewTitle.contains(input);
     }).toList();
 
-    return ListView.builder(
-      itemCount: suggestions.length,
-      itemBuilder: (context, index) {
-        final book = suggestions[index];
+    return GetBuilder<SearchPresenter>(
+      builder: (controller) {
+        return ListView.builder(
+          itemCount: suggestions.length,
+          itemBuilder: (context, index) {
+            final crewSearch = suggestions[index];
 
-        return ListTile(
-          leading: Image.network(
-            book.urlImage,
-            fit: BoxFit.cover,
-            width: 50,
-            height: 50,
-          ),
-          title: Text(book.title),
+            return ListTile(
+              leading: Image.network(
+                crewSearch.urlImage,
+                fit: BoxFit.cover,
+                width: 50,
+                height: 50,
+              ),
+              title: Text(crewSearch.title),
+              onTap: () => controller.searchButtonPressed,
+            );
+          },
         );
-      },
+      }
     );
   }
 
@@ -107,21 +102,3 @@ class SearchBar extends SearchDelegate{
     throw UnimplementedError();
   }
 }
-
-/*
-class RecentSearchPageView extends StatelessWidget {
-  const RecentSearchPageView({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return GetBuilder<SearchPresenter>(
-      builder: (controller) {
-        return Column(
-          children: controller.searchedCrews.map((crew) =>
-              Text(crew.title!)).toList(),
-        );
-      },
-    );
-  }
-}
-*/
