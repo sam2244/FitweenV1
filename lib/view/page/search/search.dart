@@ -6,6 +6,8 @@ import 'package:fitweenV1/view/page/search/widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../add_crew/widget.dart';
+
 class SearchPage extends StatelessWidget {
   const SearchPage({Key? key}) : super(key: key);
 
@@ -17,7 +19,7 @@ class SearchPage extends StatelessWidget {
         return Stack(
           children: const [
             Scaffold(
-              appBar: SearchAppBar(),
+              appBar: MainAppBar(),
               //body: RecentSearchPageView(),
             ),
           ],
