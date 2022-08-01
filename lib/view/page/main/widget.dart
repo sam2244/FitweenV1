@@ -27,15 +27,10 @@ class MainAppBar extends StatelessWidget implements PreferredSizeWidget {
         child: Text('Fitween'),
       ),
       leadingWidth: 600.0,
-      actions: [
+      actions: const [
         IconButton(
-          icon: const Icon(Icons.search),
-          onPressed: ()
-          {
-            showSearch(
-              context: context, delegate: SearchBar(),
-            );
-          }
+          icon: Icon(Icons.search),
+          onPressed: SearchPresenter.toSearch,
         ),
       ],
     );
@@ -60,12 +55,9 @@ class CrewCard extends StatelessWidget {
                 Container(
                   height: 250.0,
                   color: FWTheme.grey.withOpacity(.3),
-                  child: crew.imageUrl == null
-                      ? const Center(
-                          child:
-                              Icon(Icons.photo, color: FWTheme.grey, size: 40.0),
-                        )
-                      : Image.network(crew.imageUrl!, fit: BoxFit.cover),
+                  child: crew.imageUrl == null ? const Center(
+                    child: Icon(Icons.photo, color: FWTheme.grey, size: 40.0),
+                  ) : Image.network(crew.imageUrl!, fit: BoxFit.cover),
                 ),
                 const SizedBox(height: 10.0),
                 Row(
