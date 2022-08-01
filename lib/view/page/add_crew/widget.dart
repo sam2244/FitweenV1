@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:fitweenV1/global/date.dart';
 import 'package:fitweenV1/presenter/page/add_crew/add_crew.dart';
 import 'package:flutter/material.dart';
@@ -205,9 +207,50 @@ class AddCrew extends StatelessWidget {
                   ],
                 ),
               ),
+              const Divider(thickness: 1.0),
+              Padding(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 8, vertical: 16),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Text(
+                      'Image(Optional)',
+                      style: TextStyle(fontSize: 20.0),
+                    ),
+                    controller.image == null
+                        ? Container()
+                        : Container(
+                            height: 200.0,
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 8,
+                              vertical: 16,
+                            ),
+                            child: Image.file(File(controller.image!.path))),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 16.0),
+                      child: SizedBox(
+                        height: 20,
+                        child: OutlinedButton(
+                          onPressed: () {
+                            controller.imageSelect();
+                          },
+                          child: const Text('Select'),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
               Center(
                 child: OutlinedButton(
-                  onPressed: controller.submitted,
+                  onPressed: () {
+                    if (controller.image != null) {
+                      controller.imageUpload();
+                    } else {
+                      controller.submitted;
+                    }
+                  },
                   child: const Text('추가하기'),
                 ),
               ),
