@@ -76,7 +76,6 @@ class SettingPresenter extends GetxController {
   void statusSubmitted() {
     final userPresenter = Get.find<UserPresenter>();
 
-    if (statusCont.text == '') return;
     userPresenter.loggedUser.statusMessage = statusCont.text;
     statusCont.clear();
     Get.back();

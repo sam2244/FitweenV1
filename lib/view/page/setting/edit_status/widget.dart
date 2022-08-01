@@ -54,7 +54,7 @@ class StatusMessageTextField extends StatelessWidget {
                       ),
                     ),
                     TextFormField(
-                      controller: SettingPresenter.nicknameCont,
+                      controller: SettingPresenter.statusCont,
                       decoration: InputDecoration(
                         fillColor: Colors.white,
                         hintText: '상태메세지를 입력하세요',
@@ -72,7 +72,7 @@ class StatusMessageTextField extends StatelessWidget {
                                 )
                             ),
                             child: IconButton(
-                                onPressed: SettingPresenter.nicknameCont.clear,
+                                onPressed: SettingPresenter.statusCont.clear,
                                 icon: Icon(Icons.clear,
                                     color: colorScheme.onSurfaceVariant)
                               /*CircleAvatar(
