@@ -14,9 +14,9 @@ class MainPresenter extends GetxController {
 
   /// static methods
   // 메인 페이지로 이동
-  static void toMain() {
+  static void toMain() async {
     final crewPresenter = Get.find<CrewPresenter>();
-    if (crewPresenter.crews.isEmpty) crewPresenter.load();
+    if (crewPresenter.crews.isEmpty) await crewPresenter.load();
     Get.offAllNamed('/main');
   }
 

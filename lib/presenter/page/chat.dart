@@ -100,12 +100,12 @@ class ChatPresenter extends GetxController {
   }
 
   // 채팅 제출 시
-  void chatSubmitted() {
+  void chatSubmitted([String? value]) {
     final userPresenter = Get.find<UserPresenter>();
     if (textCont.text == '') return;
     Chat chat = Chat.fromJson({
       'time': Timestamp.now(),
-      'text': textCont.text,
+      'text': value ?? textCont.text,
       'uid': userPresenter.loggedUser.uid,
     });
 
@@ -126,7 +126,6 @@ class ChatPresenter extends GetxController {
   Stream<List<Chat>> streamChat() {
     Stream<QuerySnapshot> stream = f.collection('rooms')
         .doc(currentCrew!.code).collection('chats').orderBy('time').snapshots();
-
     return stream.map((qShot) => qShot.docs.map<Chat>((doc) {
       var json = doc.data() as Map<String, dynamic>;
       return Chat.fromJson(json);
@@ -135,7 +134,7 @@ class ChatPresenter extends GetxController {
 
   //  파이어베이스에서 채팅 데이터를 실시간 로드
   void load() async {
-    await for (List<Chat> chatList in streamChat()) { chats(chatList); }
+    await for (List<Chat> chatList in streamChat()) { chats(chatList); scrollDown(); }
   }
 
   // 추가된 채팅 데이터를 파이어베이스에 저장

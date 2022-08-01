@@ -11,7 +11,6 @@ class ChatPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     return GetX<ChatPresenter>(
       builder: (controller) {
         List<Widget> bubble(int index) => [
@@ -118,12 +117,9 @@ class ChatPage extends StatelessWidget {
                       child: Container(
                         padding: const EdgeInsets.symmetric(horizontal: 20.0),
                         height: 30.0,
-                        child: Form(
-                          key: GlobalKey<FormState>(),
-                          child: TextFormField(
-                            controller: ChatPresenter.textCont,
-                            onFieldSubmitted: (_) => controller.chatSubmitted,
-                          ),
+                        child: TextFormField(
+                          controller: ChatPresenter.textCont,
+                          onFieldSubmitted: controller.chatSubmitted,
                         ),
                       ),
                     ),

@@ -17,6 +17,8 @@ class UserPresenter extends GetxController {
   // 로그인 여부
   bool get isLogged => loggedUser.uid != null;
 
+  final notifications = <Map<String, dynamic>>[].obs;
+
   /// methods
   /* 로그인 관련 */
   // 로그인
@@ -37,4 +39,28 @@ class UserPresenter extends GetxController {
 
   // 파이어베이스에서 삭제
   void delete() => f.collection('users').doc(loggedUser.uid).delete();
+
+  /* 파이어베이스 변경 사항 실시간 반영 GetX 사용 */
+//   @override
+//   void onInit() async {
+//     notifications.bindStream(streamNotification());
+//     super.onInit();
+//   }
+//
+//   Stream<List<Map<String, dynamic>>> streamNotification() {
+//     Stream<DocumentSnapshot> stream = f.collection('users').doc(loggedUser.uid).snapshots();
+//     return stream.map((dShot) => dShot.data() as Map<String, dynamic>).toList();
+//   }
+//
+//    // 파이어베이스에서 채팅 데이터를 실시간 로드
+//   void load() async {
+//     await for (List<Chat> chatList in streamChat()) { chats(chatList); scrollDown(); }
+//   }
+//
+//   // 추가된 채팅 데이터를 파이어베이스에 저장
+//   void saveOne(Chat chat) {
+//     f.collection('rooms')
+//         .doc(currentCrew!.code)
+//         .collection('chats').add(chat.toJson());
+//   }
 }
