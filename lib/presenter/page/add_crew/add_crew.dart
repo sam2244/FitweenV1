@@ -1,3 +1,6 @@
+import 'dart:io';
+
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:fitweenV1/global/date.dart';
 import 'package:fitweenV1/model/crew.dart';
 import 'package:fitweenV1/presenter/model/crew.dart';
@@ -5,6 +8,7 @@ import 'package:fitweenV1/presenter/model/user.dart';
 import 'package:fitweenV1/presenter/page/main.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
 
 // 참여방법 (대면, 비대면) ; categories[0]
 enum ParticipationMethod {
@@ -37,6 +41,10 @@ class AddCrewPresenter extends GetxController {
   Crew newCrew = Crew();
 
   List<String> tags = [];
+
+  XFile? image;
+  UploadTask? uploadTask;
+  String? urlDownload;
 
   void clearConts() {
     crewCont.clear();
@@ -112,6 +120,26 @@ class AddCrewPresenter extends GetxController {
     update();
   }
 
+  Future imageSelect() async {
+    image = await ImagePicker().pickImage(source: ImageSource.gallery);
+    update();
+  }
+
+  Future imageUpload() async {
+    final path = 'crews/${newCrew.code}';
+    final file = File(image!.path);
+
+    final ref = FirebaseStorage.instance.ref().child(path);
+    uploadTask = ref.putFile(file);
+
+    final snapshot = await uploadTask?.whenComplete(() {});
+
+    urlDownload = await snapshot?.ref.getDownloadURL();
+    print('Download Link: $urlDownload');
+
+    submitted();
+  }
+
   void submitted() {
     final userPresenter = Get.find<UserPresenter>();
     final crewPresenter = Get.find<CrewPresenter>();
@@ -127,6 +155,7 @@ class AddCrewPresenter extends GetxController {
     ];
     newCrew.leaderUid = userPresenter.loggedUser.uid!;
     newCrew.memberUids.add(userPresenter.loggedUser.uid!);
+    newCrew.imageUrl = urlDownload;
 
     crewPresenter.addCrew(newCrew);
     crewPresenter.saveOne(newCrew);
