@@ -9,6 +9,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
+import '../search/widget.dart';
+
 /// classes
 class MainAppBar extends StatelessWidget implements PreferredSizeWidget {
   const MainAppBar({Key? key}) : super(key: key);
@@ -25,10 +27,15 @@ class MainAppBar extends StatelessWidget implements PreferredSizeWidget {
         child: Text('Fitween'),
       ),
       leadingWidth: 600.0,
-      actions: const [
+      actions: [
         IconButton(
-          icon: Icon(Icons.search),
-          onPressed: SearchPresenter.toSearch,
+          icon: const Icon(Icons.search),
+          onPressed: ()
+          {
+            showSearch(
+              context: context, delegate: SearchBar(),
+            );
+          }
         ),
       ],
     );
