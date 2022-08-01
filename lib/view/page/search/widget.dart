@@ -80,7 +80,6 @@ class SearchBar extends SearchDelegate{
 
 }
 
-/*
 class RecentSearchPageView extends StatelessWidget {
   const RecentSearchPageView({Key? key}) : super(key: key);
 
@@ -96,4 +95,3 @@ class RecentSearchPageView extends StatelessWidget {
     );
   }
 }
-*/
