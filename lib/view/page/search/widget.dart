@@ -35,6 +35,12 @@ class SearchBar extends SearchDelegate{
   SearchBar()
   : super(
     searchFieldLabel: "크루, 채팅, 친구 검색",
+    searchFieldDecorationTheme: const InputDecorationTheme(
+        hintStyle: TextStyle(
+          fontSize: 14.0,
+          fontWeight: FontWeight.w300,
+        )
+    ),
     keyboardType: TextInputType.text,
     textInputAction: TextInputAction.search);
 
@@ -46,6 +52,7 @@ class SearchBar extends SearchDelegate{
           close(context, null); //close searchbar
         } else {
           query = '';
+          showSuggestions(context);
         }
       },
     ),
@@ -61,10 +68,10 @@ class SearchBar extends SearchDelegate{
   @override
   Widget buildSuggestions(BuildContext context) {
     /*
-    final Iterable<int> suggestions = query.isEmpty
-        ? _history
+    final Iterable<String> suggestions = query.isEmpty
+          ? _history
         : allCrews.where((crewSearch);
-    */
+     */
 
     List<CrewSearch> suggestions = allCrews.where((crewSearch) {
       final crewTitle = crewSearch.title.toLowerCase();

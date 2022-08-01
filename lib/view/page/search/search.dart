@@ -18,7 +18,6 @@ class SearchPage extends StatelessWidget {
           children: const [
             Scaffold(
               appBar: MainAppBar(),
-              //body: RecentSearchPageView(),
             ),
           ],
         );
