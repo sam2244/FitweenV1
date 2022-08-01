@@ -1,12 +1,12 @@
 import 'package:fitweenV1/presenter/model/crew.dart';
 import 'package:fitweenV1/presenter/model/user.dart';
-import 'package:fitweenV1/presenter/page/add_crew/add_crew.dart';
+import 'package:fitweenV1/presenter/page/add_crew.dart';
 import 'package:fitweenV1/presenter/page/chat.dart';
 import 'package:fitweenV1/presenter/page/detail.dart';
 import 'package:fitweenV1/presenter/page/main.dart';
 import 'package:fitweenV1/presenter/page/my.dart';
 import 'package:fitweenV1/presenter/page/search.dart';
-import 'package:fitweenV1/presenter/page/setting.dart';
+import 'package:fitweenV1/presenter/page/setting/setting.dart';
 import 'package:fitweenV1/presenter/page/my_crew.dart';
 import 'package:fitweenV1/presenter/page/register.dart';
 import 'package:get/get.dart';
@@ -22,9 +22,10 @@ class GlobalPresenter extends GetxController {
       case 1: MyCrewPresenter.toMyCrew(); break;
       case 2: MyPresenter.toMy(); break;
     }
-
     update();
   }
+
+  static void profileImagePressed() {}
 
   static void initControllers() {
     Get.put(GlobalPresenter());

@@ -1,15 +1,36 @@
+/* 크루 추가 페이지 위젯 */
 import 'dart:io';
 
 import 'package:fitweenV1/global/date.dart';
-import 'package:fitweenV1/presenter/page/add_crew/add_crew.dart';
+import 'package:fitweenV1/global/theme.dart';
+import 'package:fitweenV1/presenter/page/add_crew.dart';
+import 'package:fitweenV1/view/widget/widget/tag_chip.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:material_tag_editor/tag_editor.dart';
 
-class AddCrew extends StatelessWidget {
-  const AddCrew({Key? key}) : super(key: key);
+/// classes
+// 크루 추가 페이지 앱바
+class MainAppBar extends StatelessWidget implements PreferredSizeWidget {
+  const MainAppBar({Key? key}) : super(key: key);
+
+  @override
+  Size get preferredSize => const Size.fromHeight(60.0);
+
+  @override
+  Widget build(BuildContext context) {
+    return AppBar(
+      elevation: 0.0,
+      title: const Text('크루 추가'),
+    );
+  }
+}
+
+// 크루 추가 전체 뷰
+class AddCrewView extends StatelessWidget {
+  const AddCrewView({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -35,7 +56,7 @@ class AddCrew extends StatelessWidget {
                     SizedBox(
                       width: double.infinity,
                       child: TextFormField(
-                        controller: AddCrewPresenter.crewCont,
+                        controller: AddCrewPresenter.titleCont,
                         decoration: const InputDecoration(
                           border: OutlineInputBorder(),
                           hintText: '제목',
@@ -67,13 +88,13 @@ class AddCrew extends StatelessWidget {
                       ),
                     ),
                     Column(
-                      children: ParticipationMethod.values.map((method) {
+                      children: ActivityType.values.map((method) {
                         return ListTile(
                           title: Text(method.name),
-                          leading: Radio<ParticipationMethod>(
+                          leading: Radio<ActivityType>(
                             value: method,
-                            groupValue: controller.method,
-                            onChanged: controller.setMethod,
+                            groupValue: controller.type,
+                            onChanged: controller.setType,
                           ),
                         );
                       }).toList(),
@@ -120,12 +141,11 @@ class AddCrew extends StatelessWidget {
                         width: 150.0,
                         child: TextFormField(
                           enabled: controller.frequency != Frequency.daily,
-                          controller: AddCrewPresenter.timesCont,
+                          controller: AddCrewPresenter.countCont,
                           decoration: InputDecoration(
                             border: const OutlineInputBorder(),
                             hintText: controller.frequency == Frequency.daily
-                                ? '매일'
-                                : '횟수',
+                                ? '매일' : '횟수',
                           ),
                         ),
                       ),
@@ -139,7 +159,7 @@ class AddCrew extends StatelessWidget {
                 child: Column(
                   children: <Widget>[
                     TagEditor(
-                      length: controller.tags.length,
+                      length: controller.newCrew.tags.length,
                       controller: AddCrewPresenter.tagCont,
                       focusNode: focusNode,
                       delimiters: const [',', ' '],
@@ -147,9 +167,7 @@ class AddCrew extends StatelessWidget {
                       resetTextOnSubmitted: true,
                       // This is set to grey just to illustrate the `textStyle` prop
                       textStyle: const TextStyle(color: Colors.grey),
-                      onSubmitted: (tag) {
-                        controller.addTag(tag);
-                      },
+                      onSubmitted: controller.addTag,
                       inputDecoration: const InputDecoration(
                         border: InputBorder.none,
                         hintText: 'Input tag...',
@@ -157,9 +175,9 @@ class AddCrew extends StatelessWidget {
                       onTagChanged: (tag) {
                         controller.addTag(tag);
                       },
-                      tagBuilder: (context, index) => _Chip(
+                      tagBuilder: (context, index) => FWTagChip(
                         index: index,
-                        label: controller.tags[index],
+                        label: controller.newCrew.tags[index],
                         onDeleted: controller.deleteTag,
                       ),
                       // InputFormatters example, this disallow \ and /
@@ -173,8 +191,7 @@ class AddCrew extends StatelessWidget {
               const Divider(thickness: 1.0),
               const Padding(
                 padding: EdgeInsets.symmetric(horizontal: 8, vertical: 16),
-                child: Text(
-                  'Period',
+                child: Text('Period',
                   style: TextStyle(fontSize: 20.0),
                 ),
               ),
@@ -187,8 +204,7 @@ class AddCrew extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text(
-                      'Description',
+                    const Text('Description',
                       style: TextStyle(fontSize: 20.0),
                     ),
                     const SizedBox(height: 8.0),
@@ -232,9 +248,7 @@ class AddCrew extends StatelessWidget {
                       child: SizedBox(
                         height: 20,
                         child: OutlinedButton(
-                          onPressed: () {
-                            controller.imageSelect();
-                          },
+                          onPressed: controller.selectImage,
                           child: const Text('Select'),
                         ),
                       ),
@@ -246,7 +260,7 @@ class AddCrew extends StatelessWidget {
                 child: OutlinedButton(
                   onPressed: () {
                     if (controller.image != null) {
-                      controller.imageUpload();
+                      controller.saveImage();
                     } else {
                       controller.submitted;
                     }
@@ -269,93 +283,65 @@ class DateSelectionButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<AddCrewPresenter>(builder: (controller) {
-      return Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Padding(
-            padding:
-                const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
-            child: Text(
-              {
-                DateType.start: '시작일',
-                DateType.end: '종료일',
-              }[type]!,
-              style: Theme.of(context).textTheme.labelLarge,
+    return GetBuilder<AddCrewPresenter>(
+      builder: (controller) {
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Padding(
+              padding:
+                  const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
+              child: Text({
+                  DateType.start: '시작일',
+                  DateType.end: '종료일',
+                }[type]!,
+                style: textTheme.labelLarge,
+              ),
             ),
-          ),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16.0),
-            child: Row(
-              children: [
-                Expanded(
-                  child: InkWell(
-                    onTap: {
-                      DateType.start: controller.startDateButtonPressed,
-                      DateType.end: controller.endDateButtonPressed,
-                    }[type]!,
-                    child: Container(
-                      padding: const EdgeInsets.symmetric(vertical: 8.0),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(4.0),
-                        border: Border.all(
-                          color: Theme.of(context).colorScheme.onSurfaceVariant,
-                        ),
-                      ),
-                      child: Stack(
-                        children: [
-                          const Positioned(
-                            right: 8.0,
-                            child: Icon(Icons.calendar_month),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16.0),
+              child: Row(
+                children: [
+                  Expanded(
+                    child: InkWell(
+                      onTap: {
+                        DateType.start: controller.startDateButtonPressed,
+                        DateType.end: controller.endDateButtonPressed,
+                      }[type]!,
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(vertical: 8.0),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(4.0),
+                          border: Border.all(
+                            color: colorScheme.onSurfaceVariant,
                           ),
-                          Positioned(
-                            child: Center(
-                              child: Text(
-                                DateFormat('yyyy년 MM월 dd일').format(
-                                    (type == DateType.start
-                                            ? controller.newCrew.startDate
-                                            : controller.newCrew.endDate) ??
-                                        DateTime.now()),
-                                style: Theme.of(context).textTheme.labelLarge,
+                        ),
+                        child: Stack(
+                          children: [
+                            const Positioned(
+                              right: 8.0,
+                              child: Icon(Icons.calendar_month),
+                            ),
+                            Positioned(
+                              child: Center(
+                                child: Text(
+                                  DateFormat('yyyy년 MM월 dd일').format((type == DateType.start
+                                      ? controller.newCrew.startDate
+                                      : controller.newCrew.endDate) ?? DateTime.now()),
+                                  style: textTheme.labelLarge,
+                                ),
                               ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                     ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
-          ),
-        ],
-      );
-    });
-  }
-}
-
-class _Chip extends StatelessWidget {
-  const _Chip({
-    required this.label,
-    required this.onDeleted,
-    required this.index,
-  });
-
-  final String label;
-  final ValueChanged<int> onDeleted;
-  final int index;
-
-  @override
-  Widget build(BuildContext context) {
-    return Chip(
-      labelPadding: const EdgeInsets.only(left: 8.0),
-      label: Text(label),
-      deleteIcon: const Icon(
-        Icons.close,
-        size: 18,
-      ),
-      onDeleted: () {
-        onDeleted(index);
+          ],
+        );
       },
     );
   }

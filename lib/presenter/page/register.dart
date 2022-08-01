@@ -1,14 +1,22 @@
+/* 회원가입 페이지 프리젠터 */
+
 import 'package:fitweenV1/model/user.dart';
 import 'package:fitweenV1/presenter/model/user.dart';
 import 'package:fitweenV1/presenter/page/main.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+/// class
 class RegisterPresenter extends GetxController {
+  /// static variables
+  // 닉네임 텍스트 수정 컨트롤러
   static final nicknameCont = TextEditingController();
 
+  /// attributes
+  // 신규 사용자
   FWUser newcomer = FWUser();
 
+  /// methods
   // 생년월일 설정
   void setDateOfBirth(DateTime? date) {
     if (date == null) return;

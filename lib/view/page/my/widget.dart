@@ -1,13 +1,11 @@
-import 'package:fitweenV1/global/config/theme.dart';
+/* 마이 페이지 위젯 */
+
+import 'package:fitweenV1/global/theme.dart';
 import 'package:fitweenV1/presenter/model/user.dart';
-import 'package:fitweenV1/presenter/page/my.dart';
+import 'package:fitweenV1/presenter/page/setting/setting.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
-// 마이 페이지의 위젯 모음
-
-// 마이 페이지 앱바
 class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
   const MyAppBar({Key? key}) : super(key: key);
 
@@ -17,10 +15,7 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      /*leading: const Padding(
-        padding: EdgeInsets.all(15.0),
-        child: Text("Fitween"),
-      ),*/
+      elevation: 0.0,
       leadingWidth: 600.0,
       actions: const [
         IconButton(
@@ -28,10 +23,9 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
             Icons.settings,
             color: Colors.black
           ),
-          onPressed: MyPresenter.settingPressed,
+          onPressed: SettingPresenter.toSetting,
         ),
       ],
-      elevation: 0.0,
     );
   }
 }
@@ -48,80 +42,71 @@ class MyProfileImage extends StatelessWidget {
             Row(
               children: [
                 Padding(
-                  padding: EdgeInsets.only(left:16.0.w, right: 11.0.w),
+                  padding: const EdgeInsets.only(left: 16.0, right: 11.0),
                   child: Container(
-                    width: 64,
-                    height: 64,
-                    decoration: const BoxDecoration(
+                    width: 64.0,
+                    height: 64.0,
+                    decoration: BoxDecoration(
                         color: Colors.black,
-                        borderRadius:
-                        BorderRadius.all(Radius.circular(100)) //모서리를 둥글게
+                        borderRadius: BorderRadius.circular(30.0),
                     ),
                     child: Material(
                       child: InkWell(
                         borderRadius: BorderRadius.circular(50.0),
-                        onTap: MyPresenter.profileImageChange,
+                        onTap: () {},
                         child: Container(
-                          //padding: const EdgeInsets.all(8.0),
                           decoration: BoxDecoration(
                             color: FWTheme.black.withOpacity(.1),
                             borderRadius: BorderRadius.circular(50.0),
                           ),
                           child: CircleAvatar(
-                            backgroundImage:
-                            NetworkImage(controller.loggedUser.imageUrl!),
+                            backgroundImage: NetworkImage(controller.loggedUser.imageUrl!),
                           ),
                         ),
                       ),
                     ),
                   ),
                 ),
-                Align(
-                    alignment: Alignment.topLeft,
-                    child: Container(
-                      //padding: EdgeInsets.all(16.0.h),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(controller.loggedUser.nickname!,
-                            style: Theme.of(context).textTheme.headlineMedium,
-                          ),
-                          Text("#러너 #열심왕 \nig: sam_sy_han",
-                            style: Theme.of(context).textTheme.bodySmall,
-                          ),
-                        ],
-                      ),
-                    )
-                )
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(controller.loggedUser.nickname!,
+                      style: textTheme.headlineMedium,
+                    ),
+                    Text(controller.loggedUser.statusMessage ?? '',
+                      style: textTheme.bodySmall,
+                    ),
+                  ],
+                ),
               ],
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Padding(
-                  padding: EdgeInsets.only(left:39.0.h, top: 16.0.h, bottom: 40.0.h),
+                  padding: const EdgeInsets.only(left: 39.0, top: 16.0, bottom: 40.0),
                   child: Column(
                     children: const [
                       Text("진행중"),
-                      Text("10")
+                      Text("10"),
                     ],
                   ),
                 ),
                 Padding(
-                  padding: EdgeInsets.only(top: 16.0.h, bottom: 40.0.h),
+                  padding: const EdgeInsets.only(top: 16.0, bottom: 40.0),
                   child: Column(
                     children: const [
                       Text("팔로워"),
-                      Text("10")
+                      Text("10"),
                     ],
                   ),
                 ),
                 Padding(
-                  padding: EdgeInsets.only(right:39.0.h, top: 16.0.h, bottom: 40.0.h),
+                  padding: EdgeInsets.only(right:39.0, top: 16.0, bottom: 40.0),
                   child: Column(
                     children: const [
                       Text("팔로잉"),
-                      Text("10")
+                      Text("10"),
                     ],
                   ),
                 ),
@@ -142,8 +127,8 @@ class MyCrew extends StatefulWidget {
 }
 
 class _MyCrewState extends State<MyCrew> {
-  bool ContinueChecked = false;
-  bool DoneChecked = false;
+  bool continueChecked = false;
+  bool doneChecked = false;
 
   @override
   Widget build(BuildContext context) {
@@ -160,7 +145,7 @@ class _MyCrewState extends State<MyCrew> {
                     data: Theme.of(context).copyWith(dividerColor: Colors.transparent),
                     child: ExpansionTile(
                       trailing: Padding(
-                          padding: EdgeInsets.only(right:8.0.w),
+                          padding: EdgeInsets.only(right: 8.0),
                           child: const Icon(Icons.manage_search,
                               color: Colors.black
                           )
@@ -169,34 +154,34 @@ class _MyCrewState extends State<MyCrew> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Padding(
-                            padding: EdgeInsets.only(left: 8.0.w),
+                            padding: EdgeInsets.only(left: 8.0),
                             child: Text("나의 크루",
-                              style: Theme.of(context).textTheme.headlineMedium,
+                              style: textTheme.headlineMedium,
                             ),
                           ),
                           Row(
                             children: [
                               Checkbox(
-                                value: ContinueChecked,
+                                value: continueChecked,
                                 onChanged: (bool? value) {
                                   setState(() {
-                                    ContinueChecked = value!;
+                                    continueChecked = value!;
                                   });
                                 },
                               ),
                               Text("진행중",
-                                style: Theme.of(context).textTheme.labelSmall,
+                                style: textTheme.labelSmall,
                               ),
                               Checkbox(
-                                value: DoneChecked,
+                                value: doneChecked,
                                 onChanged: (bool? value) {
                                   setState(() {
-                                    DoneChecked = value!;
+                                    doneChecked = value!;
                                   });
                                 },
                               ),
                               Text("완료됨",
-                                style: Theme.of(context).textTheme.labelSmall,
+                                style: textTheme.labelSmall,
                               )
                             ],
                           ),
@@ -204,23 +189,23 @@ class _MyCrewState extends State<MyCrew> {
                       ),
                       children: <Widget>[
                         Padding(
-                          padding: EdgeInsets.only(left: 8.0.w),
+                          padding: EdgeInsets.only(left: 8.0),
                           child: ListTile(
                             title: Text('기간',
-                              style: Theme.of(context).textTheme.labelSmall,
+                              style: textTheme.labelSmall,
                             ),
                           ),
                         ),
                         Padding(
-                          padding: EdgeInsets.only(left: 8.0.w),
+                          padding: EdgeInsets.only(left: 8.0),
                           child: ListTile(
                             title: Text('기간',
-                              style: Theme.of(context).textTheme.labelSmall,
+                              style: textTheme.labelSmall,
                             ),
                           ),
                         ),
                         Container(
-                          padding: EdgeInsets.only(left: 8.0.w, right: 8.0.w),
+                          padding: EdgeInsets.only(left: 8.0, right: 8.0),
                           child: ElevatedButton(
                             style: TextButton.styleFrom(
                             primary: Colors.black,

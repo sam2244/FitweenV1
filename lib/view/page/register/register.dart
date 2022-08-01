@@ -1,3 +1,5 @@
+/* 회원가입 페이지 */
+
 import 'package:fitweenV1/model/user.dart';
 import 'package:fitweenV1/presenter/page/register.dart';
 import 'package:flutter/material.dart';

@@ -1,3 +1,4 @@
+import 'package:fitweenV1/global/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -15,7 +16,7 @@ class _DeveloperPageState extends State<DeveloperPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Theme.of(context).colorScheme.surface,
+      backgroundColor: colorScheme.surface,
       appBar: AppBar(
         leading: IconButton(
           onPressed: () {

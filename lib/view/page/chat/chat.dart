@@ -1,5 +1,8 @@
-import 'package:fitweenV1/global/config/theme.dart';
+/* 채팅 페이지 */
+
+import 'package:fitweenV1/global/theme.dart';
 import 'package:fitweenV1/presenter/page/chat.dart';
+import 'package:fitweenV1/view/widget/widget/text.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -16,8 +19,8 @@ class ChatPage extends StatelessWidget {
             padding: const EdgeInsets.all(8.0),
             decoration: BoxDecoration(
               color: controller.isMyChat(index)
-                  ? Theme.of(context).colorScheme.tertiaryContainer
-                  : Theme.of(context).colorScheme.primaryContainer,
+                  ? colorScheme.tertiaryContainer
+                  : colorScheme.primaryContainer,
               borderRadius: BorderRadius.only(
                 topLeft: controller.isFirstChat(index) && !controller.isMyChat(index)
                     ? Radius.zero
@@ -33,10 +36,9 @@ class ChatPage extends StatelessWidget {
           ),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 10.0),
-            child: Text(controller.chats[index].timeString!,
-              style: Theme.of(context).textTheme.labelSmall!.apply(
-                color: FWTheme.grey,
-              ),
+            child: FWText(controller.chats[index].timeString!,
+              style: textTheme.labelSmall!,
+              color: FWTheme.grey,
             ),
           ),
         ];
@@ -116,14 +118,17 @@ class ChatPage extends StatelessWidget {
                       child: Container(
                         padding: const EdgeInsets.symmetric(horizontal: 20.0),
                         height: 30.0,
-                        child: TextFormField(
-                          controller: ChatPresenter.messageCont,
-                          onFieldSubmitted: (_) => controller.messageSubmitted,
+                        child: Form(
+                          key: GlobalKey<FormState>(),
+                          child: TextFormField(
+                            controller: ChatPresenter.textCont,
+                            onFieldSubmitted: (_) => controller.chatSubmitted,
+                          ),
                         ),
                       ),
                     ),
                     TextButton(
-                      onPressed: controller.messageSubmitted,
+                      onPressed: controller.chatSubmitted,
                       child: const Text('전송'),
                     ),
                   ],
