@@ -11,6 +11,7 @@ import 'package:fitweenV1/view/page/my_crew/my_crew.dart';
 import 'package:fitweenV1/view/page/register/register.dart';
 import 'package:fitweenV1/view/page/search/search.dart';
 import 'package:fitweenV1/view/page/setting/edit_nickname/edit_nickname.dart';
+import 'package:fitweenV1/view/page/setting/edit_status/edit_status.dart';
 import 'package:fitweenV1/view/page/setting/setting/setting.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -37,7 +38,8 @@ class FWRoute {
     '/myCrew': const MyCrewPage(),
     '/my': const MyPage(),
     '/setting': const SettingPage(),
-    '/editName': const EditNicknamePage(),
+    '/editNickname': const EditNicknamePage(),
+    '/editStatus': const EditStatusPage(),
     '/search': const SearchPage(),
   };
 

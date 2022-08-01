@@ -3,6 +3,7 @@
 import 'package:fitweenV1/global/theme.dart';
 import 'package:fitweenV1/presenter/model/user.dart';
 import 'package:fitweenV1/presenter/page/setting/edit_nickname.dart';
+import 'package:fitweenV1/presenter/page/setting/edit_status.dart';
 import 'package:fitweenV1/presenter/page/setting/setting.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -119,6 +120,62 @@ class NameTextField extends StatelessWidget {
   }
 }
 
+class StatusMessageTextField extends StatelessWidget {
+  const StatusMessageTextField({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return GetBuilder<SettingPresenter>(
+      builder: (controller) {
+        final userPresenter = Get.find<UserPresenter>();
+        return Column(
+          children: [
+            Container(
+              padding: const EdgeInsets.fromLTRB(20.0, 0.0, 20.0, 0.0),
+              child: Column(
+                children: [
+                  Container(
+                    alignment: Alignment.centerLeft,
+                    padding: const EdgeInsets.fromLTRB(0.0, 10.0, 0.0, 8.0),
+                    child: Text('상태메세지',
+                      style: textTheme.headlineSmall,
+                    ),
+                  ),
+                  OutlinedButton(
+                    style: ElevatedButton.styleFrom(
+                      shape: const RoundedRectangleBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(12)),
+                      ),
+                      primary: Colors.white,
+                      side: BorderSide(width: 1.0, color: colorScheme.outline),
+                    ),
+                    onPressed: EditStatusPresenter.toEditStatus,
+                    child: Stack(
+                      children: [
+                        const Align(
+                            alignment: Alignment.centerRight,
+                            child: Icon(Icons.keyboard_arrow_right_outlined)
+                        ),
+                        Align(
+                          alignment: Alignment.centerLeft,
+                          child: Text(
+                            userPresenter.loggedUser.statusMessage ?? '',
+                            style: textTheme.labelLarge,
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        );
+      },
+    );
+  }
+}
+
 class LogoutButton extends StatelessWidget {
   const LogoutButton({Key? key}) : super(key: key);
 
@@ -174,7 +231,7 @@ class DeleteUserButton extends StatelessWidget {
                   ),
                   primary: colorScheme.error,
                 ),
-                onPressed: SettingPresenter.showAddPhotoSelectionModalSheet,
+                onPressed: SettingPresenter.showDeleteAccountConfirmDialog,
                 child: const Text('계정 삭제하기',
                   style: TextStyle(color: FWTheme.white),
                 ),

@@ -6,6 +6,7 @@ import 'package:fitweenV1/model/chat.dart';
 import 'package:fitweenV1/model/crew.dart';
 import 'package:fitweenV1/presenter/model/crew.dart';
 import 'package:fitweenV1/presenter/page/my_crew.dart';
+import 'package:fitweenV1/view/page/main/widget.dart';
 import 'package:fitweenV1/view/page/my_crew/widget.dart';
 import 'package:fitweenV1/view/widget/widget/bottom_bar.dart';
 import 'package:fitweenV1/view/widget/widget/text.dart';
@@ -56,10 +57,7 @@ class MyCrewPage extends StatelessWidget {
                             color: FWTheme.grey,
                           ),
                         ),
-                      ) : Image.network(
-                        crew.imageUrl!,
-                        fit: BoxFit.fill,
-                      ),
+                      ) : Image.network(crew.imageUrl!, fit: BoxFit.cover),
                     ),
                     title: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,

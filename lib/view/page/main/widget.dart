@@ -9,6 +9,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
+import '../search/widget.dart';
+
 /// classes
 class MainAppBar extends StatelessWidget implements PreferredSizeWidget {
   const MainAppBar({Key? key}) : super(key: key);
@@ -53,12 +55,9 @@ class CrewCard extends StatelessWidget {
                 Container(
                   height: 250.0,
                   color: FWTheme.grey.withOpacity(.3),
-                  child: crew.imageUrl == null
-                      ? const Center(
-                          child:
-                              Icon(Icons.photo, color: FWTheme.grey, size: 40.0),
-                        )
-                      : Image.network(crew.imageUrl!, fit: BoxFit.cover),
+                  child: crew.imageUrl == null ? const Center(
+                    child: Icon(Icons.photo, color: FWTheme.grey, size: 40.0),
+                  ) : Image.network(crew.imageUrl!, fit: BoxFit.cover),
                 ),
                 const SizedBox(height: 10.0),
                 Row(

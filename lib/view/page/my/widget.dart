@@ -1,10 +1,13 @@
 /* 마이 페이지 위젯 */
 
+import 'package:fitweenV1/global/date.dart';
 import 'package:fitweenV1/global/theme.dart';
 import 'package:fitweenV1/presenter/model/user.dart';
+import 'package:fitweenV1/presenter/page/my.dart';
 import 'package:fitweenV1/presenter/page/setting/setting.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 
 class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
   const MyAppBar({Key? key}) : super(key: key);
@@ -73,7 +76,7 @@ class MyProfileImage extends StatelessWidget {
                     Text(controller.loggedUser.nickname!,
                       style: textTheme.headlineMedium,
                     ),
-                    Text(controller.loggedUser.statusMessage ?? '',
+                    Text(controller.loggedUser.statusMessage ?? '#반가워요',
                       style: textTheme.bodySmall,
                     ),
                   ],
@@ -144,9 +147,9 @@ class _MyCrewState extends State<MyCrew> {
                   Theme(
                     data: Theme.of(context).copyWith(dividerColor: Colors.transparent),
                     child: ExpansionTile(
-                      trailing: Padding(
+                      trailing: const Padding(
                           padding: EdgeInsets.only(right: 8.0),
-                          child: const Icon(Icons.manage_search,
+                          child: Icon(Icons.manage_search,
                               color: Colors.black
                           )
                       ),
@@ -188,32 +191,39 @@ class _MyCrewState extends State<MyCrew> {
                         ],
                       ),
                       children: <Widget>[
-                        Padding(
+                        /*Padding(
                           padding: EdgeInsets.only(left: 8.0),
                           child: ListTile(
                             title: Text('기간',
                               style: textTheme.labelSmall,
                             ),
                           ),
+                        ),*/
+                        const Padding(
+                          padding: EdgeInsets.only(left: 8.0),
+                          child: DateSelectionButton(type: DateType.start),
                         ),
-                        Padding(
-                          padding: EdgeInsets.only(left: 8.0),
-                          child: ListTile(
-                            title: Text('기간',
-                              style: textTheme.labelSmall,
-                            ),
-                          ),
+                        const Padding(
+                          padding: EdgeInsets.only(left: 8.0, bottom: 10.0),
+                          child: DateSelectionButton(type: DateType.end),
                         ),
                         Container(
                           padding: EdgeInsets.only(left: 8.0, right: 8.0),
+                          width: 316,
+                          height: 44,
                           child: ElevatedButton(
                             style: TextButton.styleFrom(
-                            primary: Colors.black,
+                              primary: Colors.white,
+                              backgroundColor: Colors.black,
+                              shape: const RoundedRectangleBorder(
+                                borderRadius: BorderRadius.all(Radius.circular(2.0)),
+                              ),
                             ),
                             child: const Text('검색하기'),
                             onPressed: () {},
                           )
                         ),
+
                       ],
                     ),
                   )
@@ -222,6 +232,77 @@ class _MyCrewState extends State<MyCrew> {
             ],
           );
         }
+    );
+  }
+}
+
+class DateSelectionButton extends StatelessWidget {
+  const DateSelectionButton({Key? key, required this.type}) : super(key: key);
+
+  final DateType type;
+
+  @override
+  Widget build(BuildContext context) {
+    return GetBuilder<MyPresenter>(
+      builder: (controller) {
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Padding(
+              padding:
+              const EdgeInsets.symmetric(vertical: 3.0, horizontal: 16.0),
+              child: Text({
+                DateType.start: '시작일',
+                DateType.end: '종료일',
+              }[type]!,
+                style: textTheme.labelLarge,
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16.0),
+              child: Row(
+                children: [
+                  Expanded(
+                    child: InkWell(
+                      onTap: {
+                        DateType.start: controller.startDateButtonPressed,
+                        DateType.end: controller.endDateButtonPressed,
+                      }[type]!,
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(vertical: 8.0),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(4.0),
+                          border: Border.all(
+                            color: colorScheme.onSurfaceVariant,
+                          ),
+                        ),
+                        child: Stack(
+                          children: [
+                            const Positioned(
+                              right: 8.0,
+                              child: Icon(Icons.calendar_month),
+                            ),
+                            Positioned(
+                              child: Center(
+                                child: Text(
+                                  DateFormat('yyyy년 MM월 dd일').format((type == DateType.start
+                                      ? controller.startTimeController
+                                      : controller.endTimeController) ?? DateTime.now()),
+                                  style: textTheme.labelLarge,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        );
+      },
     );
   }
 }
