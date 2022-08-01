@@ -283,64 +283,66 @@ class DateSelectionButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<AddCrewPresenter>(builder: (controller) {
-      return Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Padding(
-            padding:
-                const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
-            child: Text({
-                DateType.start: '시작일',
-                DateType.end: '종료일',
-              }[type]!,
-              style: textTheme.labelLarge,
+    return GetBuilder<AddCrewPresenter>(
+      builder: (controller) {
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Padding(
+              padding:
+                  const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
+              child: Text({
+                  DateType.start: '시작일',
+                  DateType.end: '종료일',
+                }[type]!,
+                style: textTheme.labelLarge,
+              ),
             ),
-          ),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16.0),
-            child: Row(
-              children: [
-                Expanded(
-                  child: InkWell(
-                    onTap: {
-                      DateType.start: controller.startDateButtonPressed,
-                      DateType.end: controller.endDateButtonPressed,
-                    }[type]!,
-                    child: Container(
-                      padding: const EdgeInsets.symmetric(vertical: 8.0),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(4.0),
-                        border: Border.all(
-                          color: colorScheme.onSurfaceVariant,
-                        ),
-                      ),
-                      child: Stack(
-                        children: [
-                          const Positioned(
-                            right: 8.0,
-                            child: Icon(Icons.calendar_month),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16.0),
+              child: Row(
+                children: [
+                  Expanded(
+                    child: InkWell(
+                      onTap: {
+                        DateType.start: controller.startDateButtonPressed,
+                        DateType.end: controller.endDateButtonPressed,
+                      }[type]!,
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(vertical: 8.0),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(4.0),
+                          border: Border.all(
+                            color: colorScheme.onSurfaceVariant,
                           ),
-                          Positioned(
-                            child: Center(
-                              child: Text(
-                                DateFormat('yyyy년 MM월 dd일').format((type == DateType.start
-                                    ? controller.newCrew.startDate
-                                    : controller.newCrew.endDate) ?? DateTime.now()),
-                                style: textTheme.labelLarge,
+                        ),
+                        child: Stack(
+                          children: [
+                            const Positioned(
+                              right: 8.0,
+                              child: Icon(Icons.calendar_month),
+                            ),
+                            Positioned(
+                              child: Center(
+                                child: Text(
+                                  DateFormat('yyyy년 MM월 dd일').format((type == DateType.start
+                                      ? controller.newCrew.startDate
+                                      : controller.newCrew.endDate) ?? DateTime.now()),
+                                  style: textTheme.labelLarge,
+                                ),
                               ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                     ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
-          ),
-        ],
-      );
-    });
+          ],
+        );
+      },
+    );
   }
 }
