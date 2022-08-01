@@ -4,7 +4,7 @@ import 'package:fitweenV1/global/date.dart';
 import 'package:fitweenV1/global/theme.dart';
 import 'package:fitweenV1/presenter/model/crew.dart';
 import 'package:fitweenV1/presenter/page/my_crew.dart';
-import 'package:fitweenV1/view/page/my_crew/widget.dart';
+import 'package:fitweenV1/view/page/main/widget.dart';
 import 'package:fitweenV1/view/widget/widget/bottom_bar.dart';
 import 'package:fitweenV1/view/widget/widget/text.dart';
 import 'package:flutter/material.dart';
@@ -24,7 +24,7 @@ class MyCrewPage extends StatelessWidget {
           children: [
             Scaffold(
               backgroundColor: colorScheme.background,
-              appBar: const MyCrewPageAppBar(),
+              appBar: const MainAppBar(),
               body: ListView.builder(
                 itemCount: crewCont.myCrews.length,
                 itemBuilder: (_, index) {
