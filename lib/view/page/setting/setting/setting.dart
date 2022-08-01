@@ -19,6 +19,7 @@ class SettingPage extends StatelessWidget {
           children: const [
             MyProfileImageButton(),
             NameTextField(),
+            StatusMessageTextField(),
             Expanded(child: SizedBox()),
             LogoutButton(),
             DeleteUserButton(),

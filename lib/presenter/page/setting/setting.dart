@@ -13,6 +13,9 @@ class SettingPresenter extends GetxController {
   // 닉네임 텍스트 수정 컨트롤러
   static final nicknameCont = TextEditingController();
 
+  // 상태메세지 텍스트 수정 컨트롤러
+  static final statusCont = TextEditingController();
+
   /// static methods
   // 설정 페이지로 이동
   static void toSetting() => Get.toNamed('/setting');
@@ -65,6 +68,17 @@ class SettingPresenter extends GetxController {
     if (nicknameCont.text == '') return;
     userPresenter.loggedUser.nickname = nicknameCont.text;
     nicknameCont.clear();
+    Get.back();
+    update();
+  }
+
+  // 상태메세지 제출 시
+  void statusSubmitted() {
+    final userPresenter = Get.find<UserPresenter>();
+
+    if (statusCont.text == '') return;
+    userPresenter.loggedUser.statusMessage = statusCont.text;
+    statusCont.clear();
     Get.back();
     update();
   }
