@@ -37,7 +37,7 @@ class FWRoute {
     '/myCrew': const MyCrewPage(),
     '/my': const MyPage(),
     '/setting': const SettingPage(),
-    '/editName': const EditNicknamePage(),
+    '/editNickname': const EditNicknamePage(),
     '/search': const SearchPage(),
   };
 
