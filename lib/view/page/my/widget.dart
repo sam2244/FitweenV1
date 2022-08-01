@@ -206,14 +206,21 @@ class _MyCrewState extends State<MyCrew> {
                         ),
                         Container(
                           padding: EdgeInsets.only(left: 8.0, right: 8.0),
+                          width: 316,
+                          height: 44,
                           child: ElevatedButton(
                             style: TextButton.styleFrom(
-                            primary: Colors.black,
+                              primary: Colors.white,
+                              backgroundColor: Colors.black,
+                              shape: const RoundedRectangleBorder(
+                                borderRadius: BorderRadius.all(Radius.circular(2.0)),
+                              ),
                             ),
                             child: const Text('검색하기'),
                             onPressed: () {},
                           )
                         ),
+
                       ],
                     ),
                   )
