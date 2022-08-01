@@ -231,7 +231,7 @@ class DeleteUserButton extends StatelessWidget {
                   ),
                   primary: colorScheme.error,
                 ),
-                onPressed: SettingPresenter.showAddPhotoSelectionModalSheet,
+                onPressed: SettingPresenter.showDeleteAccountConfirmDialog,
                 child: const Text('계정 삭제하기',
                   style: TextStyle(color: FWTheme.white),
                 ),
