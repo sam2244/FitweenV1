@@ -1,5 +1,6 @@
 /* 검색 페이지 */
 
+import 'package:fitweenV1/view/page/search/widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../../presenter/page/chat.dart';
@@ -12,14 +13,11 @@ class SearchPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GetX<ChatPresenter>(
+    return GetBuilder<ChatPresenter>(
       builder: (controller) {
-        return Stack(
-          children: const [
-            Scaffold(
-              appBar: MainAppBar(),
-            ),
-          ],
+        return const Scaffold(
+          appBar: SearchAppBar(),
+          body: SearchedView(),
         );
       },
     );
